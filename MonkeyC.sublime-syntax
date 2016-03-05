@@ -1,0 +1,159 @@
+%YAML 1.2
+---
+name: MonkeyC
+file_extensions:
+  - mc
+first_line_match: ^\s*using\s+Toybox\b.*$\n?
+scope: source.mc
+
+contexts:
+  comments:
+    - match: \/\/
+      scope: punctuation.definition.comment.mc
+      push:
+        - meta_scope: comment.line.mc
+        - match: '$'
+          pop: true
+    - match: /\*
+      scope: punctuation.definition.comment.mc
+      push:
+        - meta_scope: comment.block.mc
+        - match: \*/
+          pop: true
+
+
+  strings:
+    - match: '"'
+      scope: punctuation.definition.string.begin.mc
+      push:
+        - meta_scope: string.quoted.double.mc
+        - match: \\.
+          scope: constant.character.escape.mc
+        - match: '"'
+          scope: punctuation.definition.string.end.mc
+          pop: true
+    - match: "'"
+      scope: punctuation.definition.string.begin.mc
+      push:
+        - meta_scope: string.quoted.single.mc
+        - match: \\.
+          scope: constant.character.escape.mc
+        - match: "'"
+          scope: punctuation.definition.string.end.mc
+          pop: true
+
+  keywords:
+    - match: '\b(if|else|for|while|switch|case|do|try|catch|finally|return|throw)\b'
+      scope: keyword.control.flow.mc
+    - match: '\b(using|as)\b'
+      scope: keyword.control.import.mc
+    - match: '\b(and|or|instanceof|has|extends)\b'
+      scope: keyword.operator.mc
+    - match: '\bvar\b'
+      scope: storage.type.mc
+    - match: '\b(const|hidden|public)\b'
+      scope: storage.modifier.mc
+    - match: '\b(true|false|null)\b'
+      scope: constant.language.mc
+    - match: '\bfunction\b'
+      scope: storage.type.function.mc
+
+
+  operators:
+    - match: '(\b|\s*)([<>]=?|[!=]=)(\b|\s*)'
+      scope: keyword.operator.comparison.mc
+    - match: '(\b|\s*)(!|&&|\|\|)(\b|\s*)'
+      scope: keyword.operator.logic.mc
+    - match: '(\b|\s*)[~%+\-\|\^](\b|\s*)'
+      scope: keyword.operator.mc
+
+  string_symbols:
+    - match: '(\b|\s*):\w+\b'
+      scope: constant.other.symbol.mc
+
+  brackets:
+    - match: \)
+      pop: true
+    - include: main
+
+  numbers:
+    - match: '\b(-)?(0x[0-9a-fA-F]+|[0-9.]+[df]?|[0-9]+l?)\b'
+      scope: constant.numeric.mc
+
+  functions:
+    # function definition
+    - match: '(function)\s+([a-zA-Z_]\w*)\s*(\()'
+      captures:
+        1: storage.type.function.mc
+        2: entity.name.function.mc
+        3: punctuation.definition.parameters.mc
+      push:
+        - meta_scope: meta.function.method.with-arguments.mc
+        - meta_content_scope: variable.parameter.function.mc
+        - match: \)
+          scope: punctuation.definition.parameters.mc
+          pop: true
+        - include: main
+    # function call
+    - match: '\b[a-zA-Z_][\w.]*(\()'
+      captures:
+        1: punctuation.definition.arguments.begin.mc
+      push:
+        - meta_scope: meta.function-call.mc
+        - meta_content_scope: meta.function-call.arguments.mc
+        - match: \)
+          scope: punctuation.definition.arguments.end.mc
+          pop: true
+        - include: main
+
+  oop:
+    - match: '(class)\s+([a-zA-Z_]\w*)(\s*(extends)\s*([a-zA-Z_.]+))?\s*(\{)?'
+      captures:
+        1: storage.type.class.mc
+        2: entity.name.type.class.mc
+        4: keyword.operator.mc
+        5: entity.other.inherited-class.mc
+        6: punctuation.definition.class.mc
+
+  provided:
+    - match: '\b(Toybox|Activity(Monitor|Recording)?|Ant|Application|Attention|Communications|Graphics|Lang|Math|PersistedLocations|Position|Sensor|System|Test|Time(r)?|UserProfile|WatchUi)\b'
+      scope: support.class.mc
+    - match: '\bmethod\b'
+      scope: support.function.mc
+    - match: '\bSystem\.(print(ln)?|getTimer|getClockTime|getSystemStats|trap|exit|error)\b'
+      scope: support.function.mc
+
+
+  main:
+    - include: functions
+    - include: oop
+    - include: keywords
+    - include: comments
+    - include: strings
+    - include: numbers
+    - include: operators
+    - include: string_symbols
+    - include: provided
+    - match: \(
+      push: brackets
+    - match: \)
+      scope: invalid.illegal.stray-bracket-end
+
+
+
+###### known reserved words
+# new extends  module  enum
+
+###### operators
+# << >>(ternary ?:)
+
+
+#######
+# var myarr = new [20];
+
+
+#### symbols, like ruby :lightweight_strings
+
+
+###special system functions?
+# method

@@ -51,12 +51,14 @@ contexts:
       scope: keyword.operator.mc
     - match: '\bvar\b'
       scope: storage.type.mc
-    - match: '\b(const|hidden|public)\b'
+    - match: '\b(const|hidden|public|enum)\b'
       scope: storage.modifier.mc
     - match: '\b(true|false|null)\b'
       scope: constant.language.mc
     - match: '\bfunction\b'
       scope: storage.type.function.mc
+    - match: '\bnew\b'
+      scope: meta.instance.constructor.mc keyword.control.new.mc
 
 
   operators:
@@ -116,7 +118,7 @@ contexts:
         6: punctuation.definition.class.mc
 
   provided:
-    - match: '\b(Toybox|Activity(Monitor|Recording)?|Ant|Application|Attention|Communications|Graphics|Lang|Math|PersistedLocations|Position|Sensor|System|Test|Time(r)?|UserProfile|WatchUi)\b'
+    - match: '\b(Toybox|Activity(Monitor|Recording)?|Ant|Application|Attention|Communications|Graphics|Lang|Math|PersistedLocations|Position|Sensor|System|Test|Time(r)?|UserProfile|WatchUi|Rez)\b'
       scope: support.class.mc
     - match: '\bmethod\b'
       scope: support.function.mc
@@ -157,3 +159,4 @@ contexts:
 
 ###special system functions?
 # method
+# Rez: http://developer.garmin.com/connect-iq/programmers-guide/resource-compiler/

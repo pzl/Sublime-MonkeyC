@@ -14,12 +14,12 @@ contexts:
         - meta_scope: comment.line.mc
         - match: '$'
           pop: true
-    - match: /\*
-      scope: punctuation.definition.comment.mc
-      push:
-        - meta_scope: comment.block.mc
-        - match: \*/
-          pop: true
+#    - match: /\*
+#      scope: punctuation.definition.comment.mc
+#      push:
+#        - meta_scope: comment.block.mc
+#        - match: \*/
+#          pop: true
 
 
   strings:

@@ -32,15 +32,15 @@ contexts:
         - match: '"'
           scope: punctuation.definition.string.end.mc
           pop: true
-    - match: "'"
-      scope: punctuation.definition.string.begin.mc
-      push:
-        - meta_scope: string.quoted.single.mc
-        - match: \\.
-          scope: constant.character.escape.mc
-        - match: "'"
-          scope: punctuation.definition.string.end.mc
-          pop: true
+#    - match: "'"
+#      scope: punctuation.definition.string.begin.mc
+#      push:
+#        - meta_scope: string.quoted.single.mc
+#        - match: \\.
+#          scope: constant.character.escape.mc
+#        - match: "'"
+#          scope: punctuation.definition.string.end.mc
+#          pop: true
 
   keywords:
     - match: '\b(if|else|for|while|switch|case|do|try|catch|finally|return|throw)\b'

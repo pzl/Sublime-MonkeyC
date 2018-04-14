@@ -82,7 +82,7 @@ contexts:
       scope: keyword.operator.other.mc
 
   string_symbols:
-    - match: '(\b|\s*):\w+\b'
+    - match: '(\b|\s*):{{identifier}}+\b'
       scope: constant.other.symbol.mc
 
   brackets:
@@ -204,7 +204,27 @@ contexts:
         - meta_scope: meta.block.mc
         - match: '\}'
           pop: true
+  arrays:
+    - match: '\['
+      scope: punctuation.section.array.begin.mc
+      push:
+        - meta_scope: meta.array.mc
+        - match: '\]'
+          scope: punctuation.section.array.end.mc
+          pop: true
+        - include: main
+  dicts:
+    - match: '\{'
+      push:
+        - meta_scope: meta.block.dict.mc
+        - match: '\}'
+          pop: true
+        - include: main
 
+  block-types:
+    - include: enums
+    - include: arrays
+    - include: dicts
 
 
   main:
@@ -219,6 +239,7 @@ contexts:
     - include: string_symbols
     - include: provided
     - include: separators
+    - include: block-types
     - include: modules
     - match: \(
       push: brackets

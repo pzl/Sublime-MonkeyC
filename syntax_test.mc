@@ -111,6 +111,10 @@ if(!failed)
 #            ^ keyword.operator.comparison.mc
 #             ^ keyword.operator.comparison.mc
 
+=>
+#<- keyword.operator.assignment.mc
+#^  keyword.operator.assignment.mc
+
 and or
 #^ keyword.operator.word.mc
 #   ^ keyword.operator.word.mc

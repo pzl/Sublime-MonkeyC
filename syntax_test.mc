@@ -5,18 +5,13 @@
 # ^  string.quoted.double.mc
 #      ^  punctuation.definition.string.end.mc
 
-'foobar'
-#<- punctuation.definition.string.begin.mc
-# ^  string.quoted.single.mc
-#      ^  punctuation.definition.string.end.mc
-
 //foo
 #<-  punctuation.definition.comment.mc
-# ^  comment.line.mc 
+# ^  comment.line.mc
 
-/* multi-line comment */
-#<-  punctuation.definition.comment.mc
-#  ^  comment.block.mc
+   // spaced comment
+#   ^ punctuation.definition.comment.mc
+#       ^ comment.line.mc
 
 if for else do while switch case try catch finally return throw
 # <-  keyword.control.flow.mc
@@ -38,36 +33,39 @@ using Toybox.System as Sys;
 #                ^  support.class.mc
 #                   ^  keyword.control.import.mc
 
-50  400.6 4.0d 5.0f  0x500 5l 0xface
-# <-  constant.numeric.mc
-#    ^  constant.numeric.mc
-#           ^  constant.numeric.mc
-#              ^  constant.numeric.mc
-#                     ^  constant.numeric.mc
-#                          ^  constant.numeric.mc
-#                                ^  constant.numeric.mc
+50  400.6 4.0d 5.0f  0x500 5l 0xface 0x80000000l
+# <-  constant.numeric.integer.mc
+#    ^  constant.numeric.float.mc
+#           ^  constant.numeric.float.mc
+#              ^  constant.numeric.float.mc
+#                     ^  constant.numeric.hex.mc
+#                          ^  constant.numeric.integer.mc
+#                                ^  constant.numeric.hex.mc
+#                                     ^  constant.numeric.hex.mc
 
-and or instanceof has extends
+
+instanceof has extends
 #^  keyword.operator.mc
-#   ^  keyword.operator.mc
-#       ^  keyword.operator.mc
-#                   ^  keyword.operator.mc
-#                        ^ keyword.operator.mc
+#           ^  keyword.operator.mc
+#               ^  keyword.operator.mc
 
-const hidden public 
-#^  storage.modifier.mc
+const hidden public private
+#^  storage.type.mc
 #      ^  storage.modifier.mc
 #              ^  storage.modifier.mc
+#                    ^ storage.modifier.mc
 
-
-true false null
+true false null NaN
 #^  constant.language.mc
 #       ^  constant.language.mc
 #           ^  constant.language.mc
+#                ^ constant.language.mc
 
 
-function
-#^  storage.type.function.mc
+var function f(){} const
+#<- storage.type.mc
+#     ^  storage.type.function.mc
+#                   ^ storage.type.mc
 
 :symbol :my_symbol
 #^  constant.other.symbol.mc
@@ -77,24 +75,66 @@ function
 if ( a < 5 ) {
 #      ^  keyword.operator.comparison.mc
 
-< > <= >= == !=
-#<-  keyword.operator.comparison.mc
-# ^  keyword.operator.comparison.mc
-#   ^  keyword.operator.comparison.mc
-#      ^  keyword.operator.comparison.mc
-#         ^  keyword.operator.comparison.mc
-#            ^  keyword.operator.comparison.mc
-
-function myFunc(arg1, arg2) {
-# ^  meta.function.method.with-arguments.mc storage.type.function.mc
-#         ^  meta.function.method.with-arguments.mc entity.name.function.mc
-#              ^  meta.function.method.with-arguments.mc punctuation.definition.parameters.mc
-#                ^  meta.function.method.with-arguments.mc variable.parameter.function.mc
+if(!failed)
+#^ keyword.control.flow.mc
 
 
-class MyProjectApp extends App.AppBase {
+?
+#<- keyword.operator.other.mc
+
+! && ||
+#<- keyword.operator.logic.mc
+# ^ keyword.operator.logic.mc
+#    ^ keyword.operator.logic.mc
+
++ - * / % 
+#<- keyword.operator.arithmetic.mc
+# ^ keyword.operator.arithmetic.mc
+#   ^ keyword.operator.arithmetic.mc
+#     ^ keyword.operator.arithmetic.mc
+#       ^ keyword.operator.arithmetic.mc
+
+~ & << >> | ^ 
+#<- keyword.operator.bitwise.mc
+# ^ keyword.operator.bitwise.mc
+#   ^ keyword.operator.bitwise.mc
+#      ^ keyword.operator.bitwise.mc
+#         ^ keyword.operator.bitwise.mc
+#           ^ keyword.operator.bitwise.mc
+
+< <= > >= == !=
+#<- keyword.operator.comparison.mc
+# ^ keyword.operator.comparison.mc
+#    ^ keyword.operator.comparison.mc
+#      ^ keyword.operator.comparison.mc
+#         ^ keyword.operator.comparison.mc
+#            ^ keyword.operator.comparison.mc
+#             ^ keyword.operator.comparison.mc
+
+and or
+#^ keyword.operator.word.mc
+#   ^ keyword.operator.word.mc
+
+function myFunc(arg1, arg2) {}
+# ^  meta.function.method.with-parameters.mc storage.type.function.mc
+#         ^  meta.function.method.with-parameters.mc entity.name.function.mc
+#              ^  meta.function.parameters.mc punctuation.section.group.begin.mc
+#                ^  meta.function.parameters.mc variable.parameter.function.mc
+
+
+class MyProjectApp extends App.AppBase {}
 # ^  storage.type.class.mc
 #       ^ entity.name.type.class.mc
 #                    ^ keyword.operator.mc
 #                             ^ entity.other.inherited-class.mc
 #                                      ^ punctuation.definition.class.mc
+}
+
+
+Toybox.thing(sdsd,asdasda);
+
+var n = null;
+#^ storage.type.mc
+#     ^ keyword.operator.assignment.mc
+#        ^ constant.language.mc
+#           ^ punctuation.terminator.mc

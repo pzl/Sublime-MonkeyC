@@ -181,7 +181,7 @@ contexts:
       scope: support.class.mc
     - match: '\bmethod\b'
       scope: support.function.mc
-    - match: '\b(Toybox|Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|FitContributor|Graphics|Lang|Math|PersistedLocations|Position|Sensor(History|Logging)?|StringUtil|System|Test|Time(r)?|UserProfile|WatchUi|Rez)\b'
+    - match: '\b(Toybox|Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|Cryptography|FitContributor|Graphics|Lang|Math|Media|Persisted(Content|Locations)|Position|Sensor(History|Logging)?|StringUtil|System|Test|Time(r)?|UserProfile|WatchUi|Rez)\b'
       scope: support.class.mc meta.path.mc
 
   separators:

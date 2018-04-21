@@ -25,6 +25,10 @@ This package is currently not supported on ST2, as it uses `.sublime-syntax` fil
 Versions
 --------
 
+### 2.1.0
+
+Updates to include new packages in Connect IQ 3.0.0 (beta)
+
 ### 2.0.0
 Updates to include (some? most?) language features as of SDK 2.4.4
 

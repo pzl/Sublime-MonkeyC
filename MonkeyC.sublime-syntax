@@ -68,7 +68,7 @@ contexts:
 
 
   operators:
-    - match: '=>'
+    - match: '=>|[+-]='
       scope: keyword.operator.assignment.mc
     - match: '&&|\|\|'
       scope: keyword.operator.logic.mc

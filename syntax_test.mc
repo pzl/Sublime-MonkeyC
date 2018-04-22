@@ -27,6 +27,14 @@ if for else do while switch case try catch finally return throw
 #                                                     ^  keyword.control.flow.mc    
 #                                                           ^  keyword.control.flow.mc    
 
+x += 5
+# ^ keyword.operator.assignment.mc
+#  ^ keyword.operator.assignment.mc
+
+-=
+#<- keyword.operator.assignment.mc
+#^ keyword.operator.assignment.mc
+
 using Toybox.System as Sys;
 # ^  keyword.control.import.mc
 #       ^  support.class.mc

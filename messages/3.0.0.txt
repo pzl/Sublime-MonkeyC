@@ -16,6 +16,7 @@ Internal:
 
 
 Fix:
+- += and -= not registering as a single operator
 
 Enhancement:
 - Autocomplete definitions now included

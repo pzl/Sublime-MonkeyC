@@ -11,6 +11,38 @@ variables:
   identifier: '\b{{id_start}}[[:alnum:]_]*\b'
 
 contexts:
+  expressions:
+    - include: operators
+    - include: literals
+    - include: function-call
+    - include: separators
+    - include: 'scope:support.toybox.mc'
+    - include: identifiers
+
+  statements:
+    - include: function-definition
+    - include: oop
+    - include: keywords
+    - include: expressions
+
+  identifiers:
+    - match: '\b{{identifier}}\b'
+      scope: variable.other.mc
+
+  literals:
+    - include: numbers
+    - include: string_symbols
+    - include: strings
+    - include: chars
+    - include: block-types
+    - match: '\b(true|false|null|NaN)\b'
+      scope: constant.language.mc
+
+  block-types:
+    - include: enums
+    - include: arrays
+    - include: dicts
+
   comments:
     - match: \/\/
       scope: punctuation.definition.comment.mc
@@ -24,26 +56,6 @@ contexts:
         - meta_scope: comment.block.mc
         - match: \*/
           pop: true
-
-  expressions:
-    - include: operators
-    - include: literals
-    - include: function-call
-    - include: separators
-    - include: 'scope:support.toybox.mc'
-    - include: identifiers
-
-
-  statements:
-    - include: function-definition
-    - include: oop
-    - include: keywords
-    - include: expressions
-
-
-  identifiers:
-    - match: '\b{{identifier}}\b'
-      scope: variable.other.mc
 
   strings:
     - match: '"'
@@ -70,15 +82,6 @@ contexts:
           pop: true
 
 
-  literals:
-    - include: numbers
-    - include: string_symbols
-    - include: strings
-    - include: chars
-    - include: block-types
-    - match: '\b(true|false|null|NaN)\b'
-      scope: constant.language.mc
-
   keywords:
     - match: '\b(if|else|for|while|switch|case|break|continue|default|do|try|catch|finally|return|throw)\b'
       scope: keyword.control.flow.mc
@@ -88,7 +91,6 @@ contexts:
       scope: storage.type.mc
     - match: '\b(hidden|public|private|hidden|static)\b'
       scope: storage.modifier.mc
-
 
   operators:
     - match: '=>|[+-]='
@@ -118,11 +120,6 @@ contexts:
     - match: '(\b|\s*):{{identifier}}+\b'
       scope: constant.other.symbol.mc
 
-  brackets:
-    - match: \)
-      pop: true
-    - include: main
-
   numbers:
     - match: '\b(-)?([0-9]+\.[0-9]+[df]?)\b'
       scope: constant.numeric.float.mc
@@ -130,6 +127,38 @@ contexts:
       scope: constant.numeric.integer.mc
     - match: '\b(-)?(0x[0-9a-fA-F]+l?)\b'
       scope: constant.numeric.hex.mc
+
+  enums:
+    - match: '\benum\s*\{'
+      push:
+        - meta_scope: meta.block.mc
+        - match: '\}'
+          pop: true
+        - include: comments
+        - include: expressions
+  arrays:
+    - match: '\['
+      scope: punctuation.section.array.begin.mc
+      push:
+        - meta_scope: meta.array.mc
+        - match: '\]'
+          scope: punctuation.section.array.end.mc
+          pop: true
+        - include: comments
+        - include: expressions
+  dicts:
+    - match: '\{'
+      push:
+        - meta_scope: meta.block.dict.mc
+        - match: '\}'
+          pop: true
+        - include: main
+
+  separators:
+    - match: '\.'
+      scope: punctuation.separator.mc
+    - match: ';'
+      scope: punctuation.terminator.mc
 
   function-call:
     - match: '(\b|\.)({{identifier}}*)(\()'
@@ -142,8 +171,8 @@ contexts:
         - match: \)
           scope: punctuation.definition.parameters.end.mc punctuation.definition.group.end.mc
           pop: true
-        - include: main
-    - include: provided
+        - include: comments
+        - include: expressions
 
   function-definition:
     - match: '\b((?:public|private|protected|static)\s+)*(function)\s+({{identifier}})'
@@ -188,7 +217,20 @@ contexts:
 
 
   oop:
-    - include: modules
+    #modules
+    - match: '\b(\([:\w]+\))?\s*(module)\s*(\w+)\s*'
+      captures:
+        1: label
+        2: entity.name.namespace.mc storage.type.module.mc
+        3: entity.type.namespace.mc
+      push:
+        - meta_scope: meta.namespace.mc
+        - match: '\{'
+          scope: meta.block.mc punctuation.section.block.mc
+        - match: \}
+          pop: true
+        - include: main
+    # classes
     - match: '(class)\s+([a-zA-Z_]\w*)(\s*(extends)\s*([a-zA-Z_.]+))?\s*(\{)?'
       captures:
         1: storage.type.class.mc
@@ -202,55 +244,10 @@ contexts:
           pop: true
         - include: main
 
-  separators:
-    - match: '\.'
-      scope: punctuation.separator.mc
-    - match: ';'
-      scope: punctuation.terminator.mc
-
-
-  modules:
-    - match: '\b(\([:\w]+\))?\s*(module)\s*(\w+)\s*'
-      captures:
-        1: label
-        2: entity.name.namespace.mc storage.type.module.mc
-        3: entity.type.namespace.mc
-      push:
-        - meta_scope: meta.namespace.mc
-        - match: '\{'
-          scope: meta.block.mc punctuation.section.block.mc
-        - match: \}
-          pop: true
-        - include: main
-
-  enums:
-    - match: '\benum\s*\{'
-      push:
-        - meta_scope: meta.block.mc
-        - match: '\}'
-          pop: true
-  arrays:
-    - match: '\['
-      scope: punctuation.section.array.begin.mc
-      push:
-        - meta_scope: meta.array.mc
-        - match: '\]'
-          scope: punctuation.section.array.end.mc
-          pop: true
-        - include: main
-  dicts:
-    - match: '\{'
-      push:
-        - meta_scope: meta.block.dict.mc
-        - match: '\}'
-          pop: true
-        - include: main
-
-  block-types:
-    - include: enums
-    - include: arrays
-    - include: dicts
-
+  brackets:
+    - match: \)
+      pop: true
+    - include: main
 
   main:
     - include: comments

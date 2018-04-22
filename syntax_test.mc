@@ -79,8 +79,7 @@ var function f(){} const
 #^  constant.other.symbol.mc
 #         ^  constant.other.symbol.mc
 
-
-if ( a < 5 ) {
+if ( a < 5 ) { }
 #      ^  keyword.operator.comparison.mc
 
 if(!failed)

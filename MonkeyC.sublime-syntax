@@ -115,6 +115,8 @@ contexts:
       scope: keyword.operator.mc
     - match: '\bnew\b'
       scope: meta.instance.constructor.mc keyword.control.new.mc
+    - match: ':'
+      scope: keyword.operator.other.mc
 
   string_symbols:
     - match: '(\b|\s*):{{identifier}}+\b'

@@ -175,14 +175,130 @@ contexts:
         - include: main
 
   provided:
+    - match: '\b(Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|Cryptography|FitContributor|Graphics|Gregorian|Lang|Math|Media|Persisted(Content|Locations)|Position|Properties|Sensor(History|Logging)?|Storage|StringUtil|System|Test|Time(r)?|Toybox|UserProfile|WatchUi|Rez)\b'
+      scope: support.module.mc meta.path.mc
+    - match: |-
+          \b(
+            AccelerometerData|
+            ActiveMinutes|
+            AlbumArt|
+            AppBase|
+            Array|
+            Audio(ContentProviderApp|Format)|
+            BatteryStatus|
+            BehaviorDelegate|
+            Bike(
+              Cadence(Info|Listener)?|
+              Light|
+              Power(Listener)?|
+              Radar(Listener)?|
+              Speed(Cadence(Info|Listener)?|Info|Listener)?
+            )|
+            Bitmap(Resource)?|
+            Boolean|
+            BufferedBitmap|
+            Burst(Listener|Payload(Iterator)?)|
+            Button|
+            ByteArray|
+            CacheStatistics|
+            Calculated(Cadence|Power|Wheel(Distance|Speed))|
+            ChannelAssignment|
+            Char|
+            CheckboxMenu(Item)?|
+            Cipher(BasedMessageAuthenticationCode)?|
+            ClickEvent|
+            ClockTime|
+            CommonData|
+            Confirmation(Delegate)?|
+            Connection(Info|Listener)?|
+            Content(Delegate|Iterator|Metadata|Ref(Iterator)?)?|
+            Course|
+            CryptoConfig|
+            DataField|
+            Dc|
+            Device(Config|Listener|Settings|State)?|
+            Dictionary|
+            Double|
+            Drawable|
+            Duration|
+            Exception|
+            Field|
+            (Fir|Iir)?Filter|
+            FitnessEquipment(Data|Listener|Mode)?|
+            Float|
+            FontResource|
+            GenericChannel|
+            Hash(BasedMessageAuthenticationCode)?|
+            HeartRate(Data|Iterator|Sample)|
+            History|
+            IconMenuItem|
+            Info|
+            InputDelegate|
+            Intent|
+            InvalidOptionsException|
+            Iterator|
+            Key(Agreement|Event|Pair)?|
+            LightNetwork(Listener)?|
+            Location|
+            Logger|
+            Long|
+            MailboxIterator|
+            ManufacturerInfo|
+            Map(Marker|Polyline|TrackView|View)?|
+            Menu(2(InputDelegate)?|InputDelegate|Item)?|
+            Message|
+            Method|
+            Moment|
+            Number(Picker(Delegate)?)?|
+            OAuthMessage|
+            Object|
+            PedalPowerBalance|
+            PhoneAppMessage|
+            Picker(Delegate|Factory)?|
+            PlaybackProfile|
+            ProductInfo|
+            Profile|
+            ProgressBar|
+            ProviderIconInfo|
+            RadarTarget|
+            ResistanceSettings|
+            Route|
+            RunningDynamics(Data|Listener)?|
+            Selectable(Event)?|
+            Sensor(Data|HistoryIterator|Logger|LoggingStats|Position|Sample)|
+            SerializationException|
+            ServiceDelegate|
+            Session|
+            SimpleDataField|
+            SimulationSettings|
+            Stats|
+            StorageFullException|
+            String|
+            SwipeEvent|
+            Symbol(NotAllowedException)?|
+            SyncDelegate|
+            TargetPowerSettings|
+            Text(Picker(Delegate)?)?|
+            ToggleMenuItem|
+            TorqueEffectivenessPedalSmoothness|
+            Track|
+            UnexpectedTypeException|
+            UserSettings|
+            ValueOutOfBoundsException|
+            VibeProfile|
+            View|
+            WatchFace(Delegate|PowerInfo)?|
+            Waypoint|
+            WeakReference|
+            Workout
+          )\b
+      scope: support.class.mc meta.path.mc
     - match: '\b(Toybox\.)?System\.(print(ln)?|getTimer|getClockTime|getSystemStats|trap|exit|error)\b'
       scope: support.function.mc
     - match: '\b(Toybox\.)?Rez\.(Drawables|Strings|Fonts)\b'
       scope: support.class.mc
     - match: '\bmethod\b'
       scope: support.function.mc
-    - match: '\b(Toybox|Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|Cryptography|FitContributor|Graphics|Lang|Math|Media|Persisted(Content|Locations)|Position|Sensor(History|Logging)?|StringUtil|System|Test|Time(r)?|UserProfile|WatchUi|Rez)\b'
-      scope: support.class.mc meta.path.mc
 
   separators:
     - match: '\.'

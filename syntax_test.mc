@@ -37,8 +37,8 @@ x += 5
 
 using Toybox.System as Sys;
 # ^  keyword.control.import.mc
-#       ^  support.class.mc
-#                ^  support.class.mc
+#       ^  support.module.mc
+#                ^  support.module.mc
 #                   ^  keyword.control.import.mc
 
 50  400.6 4.0d 5.0f  0x500 5l 0xface 0x80000000l

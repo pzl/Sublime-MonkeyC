@@ -7,7 +7,7 @@ This release comes with some big improvements to the monkeyc🐵 syntax package!
 
 The big highlights are:
 * Autocomplete * - the package now includes autocomplete definitions
-* Nearly full API coverage* - almost all Toybox classes, modules, and methods are covered
+* Nearly full API coverage* - almost all Toybox classes and modules are covered
 
 C H A N G E L O G
 ------------------
@@ -20,4 +20,4 @@ Fix:
 
 Enhancement:
 - Autocomplete definitions now included
-- expanded API coverage to include methods
+- expanded API coverage

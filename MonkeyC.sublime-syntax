@@ -123,7 +123,7 @@ contexts:
           
 
     # function call
-    - match: '[\b\.]({{identifier}}*)(\()'
+    - match: '(\b|\.)({{identifier}}*)(\()'
       captures:
         1: variable.function.mc
         2: punctuation.definition.parameters.begin.mc punctuation.section.group.begin.mc
@@ -175,10 +175,10 @@ contexts:
         - include: main
 
   provided:
-    - match: '\b(Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|Cryptography|FitContributor|Graphics|Gregorian|Lang|Math|Media|Persisted(Content|Locations)|Position|Properties|Sensor(History|Logging)?|Storage|StringUtil|System|Test|Time(r)?|Toybox|UserProfile|WatchUi|Rez)\b'
+    - match: '(\b|\.)(Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|Cryptography|FitContributor|Graphics|Gregorian|Lang|Math|Media|Persisted(Content|Locations)|Position|Properties|Sensor(History|Logging)?|Storage|StringUtil|System|Test|Time(r)?|Toybox|UserProfile|WatchUi|Rez)(\b|\.)'
       scope: support.module.mc meta.path.mc
     - match: |-
-          \b(
+          (?x)(\b|\.)(
             AccelerometerData|
             ActiveMinutes|
             AlbumArt|
@@ -291,8 +291,150 @@ contexts:
             Waypoint|
             WeakReference|
             Workout
-          )\b
+          )(\b|\.)
       scope: support.class.mc meta.path.mc
+    - match: |-
+        (?x)(\b|\.)(
+          abs|accel(erometerData)?|accuracy|acos|
+          active(Minutes(Day|Week(Goal)?)?)|
+          activity(Class|TrackingOn)|add(All|Item|Key|Lap|Location)?|
+          alarmCount|album|allowTrialMessage|altitude|ambientPressure|
+          animate|apply|arguments|artist|asin|
+          assert(Not)?(Equal(Message)?)?|atan2?|
+          attemptSkipAfterThumbsDown|
+          average(Cadence|Distance|HeartRate|Power|Speed)|
+          background|backlight|basicResistance(Supported)?|
+          battery(Status|Voltage)?|bearing(FromStart)?|
+          behavior|bikeWeight|birthYear|bitRate|bodyLocation|cadence|
+          calories|canSkip|cancelAllRequests|capacity|ceil|channelType|
+          charArrayToString|charging|clear(Clip|Properties|Values)?|
+          close|compare|compute|connection(Available|Info)|
+          controlEquipment|convertEncodedString|cos|
+          create(Field|Session)|
+          current(Cadence|Heading|HeartRate|Location(Accuracy)?|Power|Speed)|
+          data|day(_of_week)?|debug|decimationRate|decrypt|
+          delete(CachedItem|GoalEvent|Item|OAuthResponseEvent|Property|SleepEvent|StepsEvent|TemporalEvent|Value|WakeEvent)|
+          device(Number|Type)|digest|disableEncryption|discard|
+          distance(To(Destination|NextPoint)|Units)|divide|doNotDisturb|
+          draftFactor|draw(Arc|Bitmap|Circle|Ellipse|Line|Point|Rectangle|RoundedRectangle|Text)?|
+          dst|duration|dutyCycle|elapsed(Distance|Time)|
+          elevation(At(Destination|NextPoint)|Units)|emptyMailbox|
+          enable(Encryption|LocationEvents|SensorEvents)|encode(Base64|URL)|
+          encrypt(ion(Id|Key))?|energyExpenditure|equals|error|
+          executionTime(Average|Limit)|exit(To)?|
+          fe(Distance|HeartRate|Speed)|
+          fill(Circle|Ellipse|Polygon|Rectangle|RoundedRectangle)|
+          find((Drawable|Item)ById)?|firmwareVersion|firstDayOfWeek|
+          floor(s(Climbed(Goal)?|Descended)?)|format|freeMemory|
+          (front|rear)Derailleur(Index|Max|Size)|gearRatio|gender|
+          generate(Secret|SignedOAuthHeader)|genre|
+          get(
+            ActivityInfo|App|Background(Color|Data)|BatteryStatus|BikeLights|
+            Bytes|CacheStatistics|CachedContentObj|CadenceInfo|
+            Calculated(Cadence|Power|Wheel(Distance|Speed))|
+            CapableModes|ClockTime|ComponentIdentifiers|
+            Content(Delegate|Iterator|Ref(Iter)?|Type)|
+            Coordinates|Courses|CurrentSport|Dc|Device(Config|Settings|State)|
+            Dimensions|Direction|Drawable|ElevationHistory|EquipmentData|
+            ErrorMessage|Font(Ascent|Descent|Height)|Goal(EventRegistered|View)|
+            HeartRate(History|Zones)|Height|History|Icon|Id|Info|
+            InitialView|Instance|Item|Key|Label|LastTemporalEventTime|Location|
+            Mailbox|ManufacturerInfo|MapMode|Max(SampleRate)?|Metadata|Min|
+            Name|Network(Mode|State)|NewestSampleTime|
+            OAuthResponseEventRegistered|ObscurityFlags|OldestSampleTime|
+            Palette|Payload|PedalPowerBalance|Playback(ConfigurationView|Profile)|
+            PressureHistory|PreviousState|PrivateKey|ProductInfo|Profile|Property|
+            ProviderIconInfo|PublicKey|RadarInfo|ResistanceSettings|Routes|
+            RunningDynamics|SensorPosition|ServiceDelegate|SimulationSettings|
+            Size|SleepEventRegistered|Speed(Cadence)?Info|State|Stats|
+            StepsEventRegistered|SubLabel|Sync(ConfigurationView|Delegate)|
+            SystemStats|TarPowerSettings|TemperatureHistory|
+            TemporalEventRegisteredTime|Text(Dimensions|WidthInPixels)|Timer|
+            TorqueEffectivenessPedalSmoothness|Tracks|TrainerMode|
+            TrialDaysRemaining|Type|UserSettings|Value|WakeEventRegistered|
+            Waypoints|Width|Workouts
+          )|
+          greaterThan|groundContact(Balance|Time)|hasKey|hashCode|heading|
+          heart(BeatIntervals|Rate(Data)?)|height(Units)?|hour|hwRevision|
+          identifier|image_(format|offset)|indexOf|info|initialize|inputButtons|invoke|
+          is(24Hour|BackgroundScanEnabled|Checked|Empty|Enabled|Recording|
+            SleepMode|SyncNeeded|TouchScreen|Trial)|
+          keys|label|left(OrCombinedPedalSmoothness|TorqueEffectiveness)|length|
+          lessThan|ln|load(Properties|Resource)|loc(X|Y)|log|mag|
+          make(Image|Json|OAuth|Web)Request|manufacturerId|
+          max(Cadence|HeartRate|Power|Speed)|meanSeaLevelPressure|
+          message(Id|Period)|meters(Climbed|Descended)|method|min|mode|
+          modelNumber|moderate|moment|monkeyVersion|month|moveBarLevel|multiply|
+          nameOf(Destination|NextPoint)|network(Key(128|64)Bit)?|next|
+          notificationCount|notifySync(Complete|Progress)|now|
+          num(Channels|Components|Locations)|offCourseDistance|
+          on(
+            Accept|AdAction|Back(groundData)?|BatteryStatusUpdate|
+            Bike(Cadence|Light|Radar|Speed(Cadence)?)Update|
+            Calculated(Cadence|Power|Wheel(Distance|Speed)Update)|
+            Cancel|Complete|DeviceStateUpdate|Done|(Enter|Exit)Sleep|Error|
+            FitnessEquipmentUpdate|GoalReached|Hide|Hold|Key(Pressed|Released)?|
+            Layout|LightNetworkStateUpdate|ManufacturerInfoUpdate|Menu(Item)?|
+            Next(Mode|MultisportLeg|Page)|NumberPicked|OAuthResponse|
+            PartialUpdate|PedalPowerBalanceUpdate|PowerBudgetExceeded|
+            Previous(Mode|Page)|ProductInfoUpdate|Receive(Complete|Fail)|Release|
+            Response|RunningDynamicsUpdate|Select(able)?|SensorPositionUpdate|
+            SettingsChanged|Show|Shuffle|SleepTime|Song|(Start|Stop)(Sync)?|Steps|
+            Swipe|Tap|TemporalEvent|TextEntered|Thumbs(Down|Up)|
+            Timer(Lap|Pause|Reset|Resume|Start|Stop)|
+            TorqueEffectivenessPedalSmoothnessUpdate|
+            Transmit(Complete|Fail)|Update|WakeTime|WorkoutStepComplete
+          )|
+          open(WebPage)?|operatingTime|orientation|paceUnits|parse|partNumber|
+          pedalPowerPercent|peek(Next|Previous)|persistLocation|phoneConnected|
+          pitch|play(SpeedMultipliers|Tone|back(Controls|NotificationThreshold))|
+          popView|position|pow(er(SensorType)?)?|pressure|previous|
+          print(StackTrace|ln)?|pushView|put|radioFrequency|rand(omBytes)?|
+          range|rawAmbientPressure|
+          registerFor(
+            (Goal|Sleep|Steps|Temporal|Wake)Event|
+            OAuth(Messages|ResponseEvent)|PhoneAppMessages
+          )|
+          registerSensorDataListener|release|remove(All)?|
+          request(ApplicationWake|Update)|requirePlaybackNotification|
+          resetContent(Cache|Iterator)|responseCode|restingHeartRate|
+          restore(Head|Tail)lightsNetworkModeControll|reverse|
+          right(Pedal(Indicator|Smoothness)|TorqueEffectiveness)|roll|round|
+          rssi|runningStepLength|
+          sample(Count|Period|Rate)|save(Properties|Waypoint)?|
+          screen(Height|Shape|Width)|
+          search(Threshold|Timeout(High|Low)Priority)|sec|
+          send(Acknowledge|Broadcast|Burst)|separatePedalSmoothnessSupport|
+          serial|
+          set(
+              Background(Color|Scan)|Bitmap|BurstListener|Checked|Clip|Color|
+              Data|DeviceConfig|DisplayString|Enabled(Sensors)?|Focus|Font|
+              (Head|Tail)lightsMode|Icon|Justification|KeyToSelectableInteraction|
+              Label|Layout|Location|MailboxListener|Map(Marker|Mode|VisibleArea)|
+              Metadata|Mode|Options|Palette|Payload|PenWidth|Polyline|Progress|
+              Property|ScreenVisibleArea|Size|State|SubLabel|Text|Title|
+              TrainerMode|Value|Width
+          )|
+          shuffling|simulationSupported|sin|size|skipPreviousThreshold|sleepTime|
+          slice|slope|speed|sqrt|srand|stanceTime|start(Location|OfDay|Playback|Time)?|
+          state(Default|Disabled|Highlighted|Selected)?|step(Count|Goal|Length|s)?|
+          stillAlive|stop|sub(string|tract)|supportsPlaylistPreview|
+          surfaceResistance|swRevision(Main|Supplemental)|swim(StrokeType|Swolf)|
+          switchToView|tan|targetPower(Supported)?|temperature(Units)?|
+          threat(Side)?|time(ZoneOffset|rState|rTime|stamp)|title|
+          to(
+             Char(Array)?|Degrees|Double|Float|Intent|Long|Lower|Number(WithBase)?|
+             Radians|(Geo)?String|Upper|Utf8Array
+          )|
+          today|toggleSignalLight|tonesOn|total(Ascent|Descent|Memory)?|
+          track(Number)?|trainingEffect|transmissionType|transmit|type|
+          uniqueIdentifier|unregisterSensorDataListener|update(Item)?|uri|
+          usedMemory|user(InfoString|Weight)|utcInfo|utf8ArrayToString|
+          validateProperty|values?|vertical(Oscillation|Ratio)|vibrate(On)?|
+          vigorous|wakeTime|walking(Flag|StepLength)|warning|weak|
+          weight(Units)?|wheelDiameter|when|width|windResistance|windSpeed|x|y|year|z
+        )(?=\()
+      scope: support.function.mc meta.path.mc
     - match: '\b(Toybox\.)?System\.(print(ln)?|getTimer|getClockTime|getSystemStats|trap|exit|error)\b'
       scope: support.function.mc
     - match: '\b(Toybox\.)?Rez\.(Drawables|Strings|Fonts)\b'
@@ -352,6 +494,7 @@ contexts:
 
 
   main:
+    - include: provided
     - include: keywords
     - include: functions
     - include: oop
@@ -361,7 +504,6 @@ contexts:
     - include: numbers
     - include: operators
     - include: string_symbols
-    - include: provided
     - include: separators
     - include: block-types
     - include: modules

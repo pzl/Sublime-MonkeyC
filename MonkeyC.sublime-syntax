@@ -25,6 +25,25 @@ contexts:
         - match: \*/
           pop: true
 
+  expressions:
+    - include: operators
+    - include: literals
+    - include: function-call
+    - include: separators
+    - include: provided
+    - include: identifiers
+
+
+  statements:
+    - include: function-definition
+    - include: oop
+    - include: keywords
+    - include: expressions
+
+
+  identifiers:
+    - match: '\b{{identifier}}\b'
+      scope: variable.other.mc
 
   strings:
     - match: '"'
@@ -50,21 +69,25 @@ contexts:
           scope: punctuation.definition.string.end.mc
           pop: true
 
+
+  literals:
+    - include: numbers
+    - include: string_symbols
+    - include: strings
+    - include: chars
+    - include: block-types
+    - match: '\b(true|false|null|NaN)\b'
+      scope: constant.language.mc
+
   keywords:
     - match: '\b(if|else|for|while|switch|case|break|continue|default|do|try|catch|finally|return|throw)\b'
       scope: keyword.control.flow.mc
     - match: '\b(using|as)\b'
       scope: keyword.control.import.mc
-    - match: '\b(instanceof|has|extends)\b'
-      scope: keyword.operator.mc
     - match: '\b(var|const|enum)\b'
       scope: storage.type.mc
     - match: '\b(hidden|public|private|hidden|static)\b'
       scope: storage.modifier.mc
-    - match: '\b(true|false|null|NaN)\b'
-      scope: constant.language.mc
-    - match: '\bnew\b'
-      scope: meta.instance.constructor.mc keyword.control.new.mc
 
 
   operators:
@@ -86,6 +109,10 @@ contexts:
       scope: keyword.operator.assignment.mc
     - match: '\?'
       scope: keyword.operator.other.mc
+    - match: '\b(instanceof|has|extends)\b'
+      scope: keyword.operator.mc
+    - match: '\bnew\b'
+      scope: meta.instance.constructor.mc keyword.control.new.mc
 
   string_symbols:
     - match: '(\b|\s*):{{identifier}}+\b'
@@ -104,8 +131,21 @@ contexts:
     - match: '\b(-)?(0x[0-9a-fA-F]+l?)\b'
       scope: constant.numeric.hex.mc
 
-  functions:
-    # function definition
+  function-call:
+    - match: '(\b|\.)({{identifier}}*)(\()'
+      captures:
+        1: variable.function.mc
+        2: punctuation.definition.parameters.begin.mc punctuation.section.group.begin.mc
+      push:
+        - meta_scope: meta.function-call.mc
+        - meta_content_scope: meta.function-call.parameters.mc
+        - match: \)
+          scope: punctuation.definition.parameters.end.mc punctuation.definition.group.end.mc
+          pop: true
+        - include: main
+    - include: provided
+
+  function-definition:
     - match: '\b((?:public|private|protected|static)\s+)*(function)\s+({{identifier}})'
       captures:
         1: storage.modifier.mc
@@ -120,20 +160,7 @@ contexts:
             - match: \(
               scope: meta.function.parameters.mc meta.group.mc punctuation.section.group.begin.mc
               set: function-parameters
-          
-
-    # function call
-    - match: '(\b|\.)({{identifier}}*)(\()'
-      captures:
-        1: variable.function.mc
-        2: punctuation.definition.parameters.begin.mc punctuation.section.group.begin.mc
-      push:
-        - meta_scope: meta.function-call.mc
-        - meta_content_scope: meta.function-call.parameters.mc
-        - match: \)
-          scope: punctuation.definition.parameters.end.mc punctuation.definition.group.end.mc
-          pop: true
-        - include: main
+   
 
   function-parameters:
       - meta_content_scope: meta.function.parameters.mc meta.group.mc
@@ -161,6 +188,7 @@ contexts:
 
 
   oop:
+    - include: modules
     - match: '(class)\s+([a-zA-Z_]\w*)(\s*(extends)\s*([a-zA-Z_.]+))?\s*(\{)?'
       captures:
         1: storage.type.class.mc
@@ -294,7 +322,7 @@ contexts:
           )(\b|\.)
       scope: support.class.mc meta.path.mc
     - match: |-
-        (?x)(\b|\.)(
+        (?x)(
           abs|accel(erometerData)?|accuracy|acos|
           active(Minutes(Day|Week(Goal)?)?)|
           activity(Class|TrackingOn)|add(All|Item|Key|Lap|Location)?|
@@ -455,14 +483,13 @@ contexts:
         1: label
         2: entity.name.namespace.mc storage.type.module.mc
         3: entity.type.namespace.mc
-      push: module-definition
-  module-definition:
-    - meta_scope: meta.namespace.mc
-    - match: '\{'
-      scope: meta.block.mc punctuation.section.block.mc
-    - match: \}
-      pop: true
-    - include: main
+      push:
+        - meta_scope: meta.namespace.mc
+        - match: '\{'
+          scope: meta.block.mc punctuation.section.block.mc
+        - match: \}
+          pop: true
+        - include: main
 
   enums:
     - match: '\benum\s*\{'
@@ -494,19 +521,8 @@ contexts:
 
 
   main:
-    - include: provided
-    - include: keywords
-    - include: functions
-    - include: oop
     - include: comments
-    - include: chars
-    - include: strings
-    - include: numbers
-    - include: operators
-    - include: string_symbols
-    - include: separators
-    - include: block-types
-    - include: modules
+    - include: statements
     - match: \(
       push: brackets
     - match: \)

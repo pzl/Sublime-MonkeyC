@@ -8,12 +8,15 @@ scope: source.mc
 
 variables:
   id_start: '[[:alpha:]_]'
-  identifier: '\b{{id_start}}[[:alnum:]_]*\b'
+  identifier: '{{id_start}}[[:alnum:]_]*'
+  identifier_break: (?!{{identifier}})
 
 contexts:
   expressions:
-    - include: operators
+    - include: comments
     - include: literals
+    - include: ternary
+    - include: operators
     - include: function-call
     - include: separators
     - include: 'scope:support.toybox.mc'
@@ -22,6 +25,7 @@ contexts:
   statements:
     - include: function-definition
     - include: oop
+    - include: conditionals
     - include: keywords
     - include: expressions
 
@@ -42,6 +46,13 @@ contexts:
     - include: enums
     - include: arrays
     - include: dicts
+
+  conditionals:
+    - include: switch
+    - include: for
+    - include: do
+    - include: while
+    - include: ternary
 
   comments:
     - match: \/\/
@@ -83,7 +94,7 @@ contexts:
 
 
   keywords:
-    - match: '\b(if|else|for|while|switch|case|break|continue|default|do|try|catch|finally|return|throw)\b'
+    - match: '\b(if|else|for|switch|case|while|break|continue|default|do|try|catch|finally|return|throw)\b'
       scope: keyword.control.flow.mc
     - match: '\b(using|as)\b'
       scope: keyword.control.import.mc
@@ -115,8 +126,6 @@ contexts:
       scope: keyword.operator.mc
     - match: '\bnew\b'
       scope: meta.instance.constructor.mc keyword.control.new.mc
-    - match: ':'
-      scope: keyword.operator.other.mc
 
   string_symbols:
     - match: '(\b|\s*):{{identifier}}+\b'
@@ -156,11 +165,42 @@ contexts:
           pop: true
         - include: main
 
+
+  block:
+    - match: '\{'
+      scope: punctuation.section.block.begin.mc
+      push:
+        - meta_scope: meta.block.mc
+        - match: '\}'
+          scope: punctuation.section.block.end.mc
+          pop: true
+        - include: statements
+
   separators:
-    - match: '\.'
+    - match: '\.|\,'
       scope: punctuation.separator.mc
     - match: ';'
       scope: punctuation.terminator.mc
+
+  paren-expression:
+    - match: \(
+      scope: punctuation.section.group.begin.mc
+      set:
+        - meta_scope: meta.group.mc
+        - match: \)
+          scope: punctuation.section.group.end.mc
+          pop: true
+        - include: expressions
+
+  paren-for-expression:
+    - match: \(
+      scope: punctuation.section.group.begin.mc
+      set:
+        - meta_scope: meta.group.mc
+        - match: \)
+          scope: punctuation.section.group.end.mc
+          pop: true
+        - include: statements
 
   function-call:
     - match: '(\b|\.)({{identifier}}*)(\()'
@@ -245,6 +285,105 @@ contexts:
         - match: \}
           pop: true
         - include: main
+
+
+
+  do:
+    - match: 'do{{identifier_break}}'
+      scope: keyword.control.loop.mc
+      set:
+        -
+          - meta_scope: meta.do-while.mc
+          - include: popnow
+        -
+          - match: 'while{{identifier_break}}'
+            scope: keyword.control.loop.mc
+            set: paren-expression
+          - include: else-pop
+        - 
+          - include: block
+          - include: else-pop
+
+  while:
+    - match: 'while{{identifier_break}}'
+      scope: keyword.control.loop.mc
+      set:
+        -
+          - meta_scope: meta.while.mc
+          - include: popnow
+        -
+          - include: block
+          - include: else-pop
+        - paren-expression
+
+  for:
+    - match: 'for{{identifier_break}}'
+      scope: keyword.control.loop.mc
+      set:
+        -
+          - meta_scope: meta.for.mc
+          - include: popnow
+        -
+          - include: block
+          - include: else-pop
+        - paren-for-expression
+
+
+  switch:
+    - match: 'switch{{identifier_break}}'
+      scope: keyword.control.switch.mc
+      set:
+        -
+          - meta_scope: meta.switch.mc
+          - include: popnow
+        - switch-block
+        - paren-expression
+  switch-block:
+    - match: '\{'
+      scope: punctuation.section.block.begin.mc
+      set:
+        - meta_scope: meta.block.mc
+        - match: '\}'
+          scope: punctuation.section.block.end.mc
+          pop: true
+        - match: 'case{{identifier_break}}'
+          scope: keyword.control.switch.mc
+          push:
+            - match: ':'
+              scope: punctuation.separator.mc
+              pop: true
+            - include: statements
+            - include: else-pop
+        - match: 'default{{identifier_break}}'
+          scope: keyword.control.switch.mc
+          push:
+            - match: ':'
+              scope: punctuation.separator.mc
+              pop: true
+            - include: statements
+            - include: else-pop
+        - include: statements
+    - include: else-pop
+
+  ternary:
+    - match: '\?'
+      scope: keyword.operator.ternary.mc
+      set:
+        -
+          - meta_scope: meta.ternary.mc
+          - match: ':'
+            scope: keyword.operator.ternary.mc
+            pop: true
+          - include: expressions
+          - include: else-pop
+
+
+  popnow:
+    - match: ''
+      pop: true
+  else-pop:
+    - match: '(?=\S)'
+      pop: true
 
   brackets:
     - match: \)

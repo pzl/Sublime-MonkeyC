@@ -52,6 +52,7 @@ contexts:
     - include: for
     - include: do
     - include: while
+    - include: ifs
     - include: ternary
 
   comments:
@@ -300,9 +301,7 @@ contexts:
             scope: keyword.control.loop.mc
             set: paren-expression
           - include: else-pop
-        - 
-          - include: block
-          - include: else-pop
+        - block-scope
 
   while:
     - match: 'while{{identifier_break}}'
@@ -311,9 +310,7 @@ contexts:
         -
           - meta_scope: meta.while.mc
           - include: popnow
-        -
-          - include: block
-          - include: else-pop
+        - block-scope
         - paren-expression
 
   for:
@@ -323,9 +320,7 @@ contexts:
         -
           - meta_scope: meta.for.mc
           - include: popnow
-        -
-          - include: block
-          - include: else-pop
+        - block-scope
         - paren-for-expression
 
 
@@ -365,6 +360,24 @@ contexts:
         - include: statements
     - include: else-pop
 
+
+  ifs:
+    - match: (?:else\s+if|if){{identifier_break}}
+      scope: keyword.control.conditional.mc
+      set:
+        -
+          - meta_scope: meta.conditional.mc
+          - include: popnow
+        - block-scope
+        - paren-expression
+    - match: else{{identifier_break}}
+      scope: keyword.control.conditional.mc
+      set:
+        -
+          - meta_scope: meta.conditional.mc
+          - include: popnow
+        - block-scope
+
   ternary:
     - match: '\?'
       scope: keyword.operator.ternary.mc
@@ -377,6 +390,10 @@ contexts:
           - include: expressions
           - include: else-pop
 
+
+  block-scope:
+    - include: block
+    - include: else-pop
 
   popnow:
     - match: ''

@@ -22,3 +22,4 @@ Enhancement:
 - Autocomplete definitions now included
 - expanded API coverage
 - Jungle syntax definition
+- block scopes are better detected (if, for, while, switch) for other plugins

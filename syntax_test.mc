@@ -13,6 +13,11 @@
 #   ^ punctuation.definition.comment.mc
 #       ^ comment.line.mc
 
+if (thing > 5) { return 6; } else if (foo==bar) { return 0; } else { return 1; }
+#^ keyword.control.conditional.mc
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.conditional.mc
+#                             ^^^^^^ keyword.control.conditional.mc
+#                                                              ^^ keyword.control.conditional.mc
 
 for (var i=0; i<4; i++){ System.println(i); }
 #<- keyword.control.loop.mc
@@ -49,14 +54,12 @@ switch (c) { case 5: System.println(5); default: x++; break; }
 #                                         ^ keyword.control.switch.mc ()
 #                                              ^ punctuation.separator.mc
 
-if else try catch finally return throw
-# <-  keyword.control.flow.mc
-#   ^  keyword.control.flow.mc
-#         ^  keyword.control.flow.mc
-#             ^  keyword.control.flow.mc
+try catch finally return throw
+# ^  keyword.control.flow.mc
+#    ^  keyword.control.flow.mc
+#           ^  keyword.control.flow.mc
 #                   ^  keyword.control.flow.mc
-#                            ^  keyword.control.flow.mc
-#                                   ^  keyword.control.flow.mc    
+#                           ^  keyword.control.flow.mc
 
 x += 5
 # ^^ keyword.operator.assignment.mc
@@ -116,7 +119,7 @@ if ( a < 5 ) { }
 #      ^  keyword.operator.comparison.mc
 
 if(!failed)
-#^ keyword.control.flow.mc
+#^ keyword.control.conditional.mc
 
 
 Test.assert( ((result > 436) && (result < 437)));

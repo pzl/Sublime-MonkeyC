@@ -1,190 +1,196 @@
-# SYNTAX TEST "Packages/Sublime-MonkeyC/MonkeyC.sublime-syntax"
+// SYNTAX TEST "Packages/Sublime-MonkeyC/MonkeyC.sublime-syntax"
+
+if (thing){
+ while (thing) {
+
+    }    
+  }
 
 "foobar"
-#<- punctuation.definition.string.begin.mc
-# ^  string.quoted.double.mc
-#      ^  punctuation.definition.string.end.mc
+//<- punctuation.definition.string.begin.mc
+// ^  string.quoted.double.mc
+//     ^  punctuation.definition.string.end.mc
 
 //foo
-#<-  punctuation.definition.comment.mc
-# ^  comment.line.mc
+//<-  punctuation.definition.comment.mc
+// ^  comment.line.mc
 
    // spaced comment
-#   ^ punctuation.definition.comment.mc
-#       ^ comment.line.mc
+//  ^ punctuation.definition.comment.mc
+//       ^ comment.line.mc
 
 if (thing > 5) { return 6; } else if (foo==bar) { return 0; } else { return 1; }
-#^ keyword.control.conditional.mc
-# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.conditional.mc
-#                             ^^^^^^ keyword.control.conditional.mc
-#                                                              ^^ keyword.control.conditional.mc
+//<- keyword.control.conditional.mc
+//  ^^^^^^^^^^^^^^^^ meta.conditional.mc
+//                            ^^^^^^^^^ meta.conditional.mc
+//                            ^^^^^^ keyword.control.conditional.mc
+//                                                              ^^ keyword.control.conditional.mc
 
 for (var i=0; i<4; i++){ System.println(i); }
-#<- keyword.control.loop.mc
-#   ^ punctuation.section.group.begin.mc
-#     ^ storage.type.mc
-#        ^ meta.for.mc (){}
+//<- keyword.control.loop.mc
+//  ^ punctuation.section.group.begin.mc
+//    ^ storage.type.mc
+//       ^ meta.for.mc
 
 do { System.println(true); } while (x>5);
-#<- keyword.control.loop.mc
-# ^ meta.do-while.mc ()
-#  ^ punctuation.section.block.begin.mc
-#    ^ meta.block.mc
-#      ^ meta.do-while.mc ()
-#       ^ support.module.mc
-#                     ^ constant.language.mc
-#                          ^ punctuation.section.block.end.mc
-#                            ^ meta.do-while.mc ()
-#                               ^ keyword.control.loop.mc
-#                                  ^ punctuation.section.group.begin.mc
-#                                    ^ meta.group.mc
-# 
+//<- keyword.control.loop.mc
+//<- meta.do-while.mc
+// ^ punctuation.section.block.begin.mc
+//   ^ meta.block.mc
+//     ^ meta.do-while.mc
+//      ^ support.module.mc
+//                    ^ constant.language.mc
+//                         ^ punctuation.section.block.end.mc
+//                           ^ meta.do-while.mc
+//                              ^ keyword.control.loop.mc
+//                                 ^ punctuation.section.group.begin.mc
+//                                   ^ meta.group.mc
 
 switch (c) { case 5: System.println(5); default: x++; break; }
-#^ keyword.control.switch.mc ()
-#  ^ meta.switch.mc ()
-#      ^ punctuation.section.group.begin.mc
-#       ^ variable.other.mc
-#         ^ meta.switch.mc ()
-#          ^ punctuation.section.block.begin.mc
-#            ^ meta.switch.mc ()
-#            ^ meta.block.mc
-#              ^ keyword.control.switch.mc ()
-#                  ^ punctuation.separator.mc
-#                                         ^ keyword.control.switch.mc ()
-#                                              ^ punctuation.separator.mc
+//^ keyword.control.switch.mc
+// ^ meta.switch.mc
+//     ^ punctuation.section.group.begin.mc
+//      ^ variable.other.mc
+//        ^ meta.switch.mc
+//         ^ punctuation.section.block.begin.mc
+//           ^ meta.switch.mc
+//           ^ meta.block.mc
+//             ^ keyword.control.switch.mc
+//                 ^ punctuation.separator.mc
+//                                        ^ keyword.control.switch.mc
+//                                             ^ punctuation.separator.mc
 
 try catch finally return throw
-# ^  keyword.control.flow.mc
-#    ^  keyword.control.flow.mc
-#           ^  keyword.control.flow.mc
-#                   ^  keyword.control.flow.mc
-#                           ^  keyword.control.flow.mc
+//^  keyword.control.flow.mc
+//   ^  keyword.control.flow.mc
+//          ^  keyword.control.flow.mc
+//                  ^  keyword.control.flow.mc
+//                          ^  keyword.control.flow.mc
 
 x += 5
-# ^^ keyword.operator.assignment.mc
+//^^ keyword.operator.assignment.mc
 
- -=
-#^^ keyword.operator.assignment.mc
+  -=
+//^^ keyword.operator.assignment.mc
 
 using Toybox.System as Sys;
-# ^  keyword.control.import.mc
-#       ^  support.module.mc
-#                ^  support.module.mc
-#                   ^  keyword.control.import.mc
+// ^  keyword.control.import.mc
+//       ^  support.module.mc
+//                ^  support.module.mc
+//                   ^  keyword.control.import.mc
 
 50 5l 400.6 4.0d 5.0f  0x500  0xface 0x80000000l
-#^ 
-#  ^^  constant.numeric.integer.mc
-#      ^ constant.numeric.float.mc
-#           ^^^^ constant.numeric.float.mc
-#                 ^^  constant.numeric.float.mc
-#                      ^^^ constant.numeric.hex.mc
-#                             ^^^^ constant.numeric.hex.mc
-#                                     ^^^^  constant.numeric.hex.mc
+//<- constant.numeric.integer.mc 
+// ^^  constant.numeric.integer.mc
+//     ^ constant.numeric.float.mc
+//          ^^^^ constant.numeric.float.mc
+//                ^^  constant.numeric.float.mc
+//                     ^^^ constant.numeric.hex.mc
+//                            ^^^^ constant.numeric.hex.mc
+//                                    ^^^^  constant.numeric.hex.mc
 
- -4 0d 1f
-#^^ constant.numeric.integer.mc
-#   ^^ constant.numeric.integer.mc
-#      ^^ constant.numeric.integer.mc
+  -4 0d 1f
+//^^ constant.numeric.integer.mc
+//   ^^ constant.numeric.integer.mc
+//      ^^ constant.numeric.integer.mc
 
 instanceof has extends
-#^  keyword.operator.mc
-#           ^  keyword.operator.mc
-#               ^  keyword.operator.mc
+//^  keyword.operator.mc
+//           ^  keyword.operator.mc
+//               ^  keyword.operator.mc
 
 const hidden public private
-#^  storage.type.mc
-#      ^  storage.modifier.mc
-#              ^  storage.modifier.mc
-#                    ^ storage.modifier.mc
+//^  storage.type.mc
+//      ^  storage.modifier.mc
+//              ^  storage.modifier.mc
+//                    ^ storage.modifier.mc
 
 true false null NaN
-#^  constant.language.mc
-#       ^  constant.language.mc
-#           ^  constant.language.mc
-#                ^ constant.language.mc
+//^  constant.language.mc
+//       ^  constant.language.mc
+//           ^  constant.language.mc
+//                ^ constant.language.mc
 
 
 var function f(){} const
-#<- storage.type.mc
-#     ^  storage.type.function.mc
-#                   ^ storage.type.mc
+//<- storage.type.mc
+//     ^  storage.type.function.mc
+//                   ^ storage.type.mc
 
 :symbol :my_symbol
-#^  constant.other.symbol.mc
-#         ^  constant.other.symbol.mc
+//^  constant.other.symbol.mc
+//         ^  constant.other.symbol.mc
 
 if ( a < 5 ) { }
-#      ^  keyword.operator.comparison.mc
+//     ^  keyword.operator.comparison.mc
 
 if(!failed)
-#^ keyword.control.conditional.mc
+//<- keyword.control.conditional.mc
 
 
 Test.assert( ((result > 436) && (result < 437)));
 
 
-?
-#<- keyword.operator.other.mc
+?:
+//<- keyword.operator.ternary.mc
 
 ! && ||
-#<- keyword.operator.logic.mc
-# ^ keyword.operator.logic.mc
-#    ^ keyword.operator.logic.mc
+//<- keyword.operator.logic.mc
+// ^ keyword.operator.logic.mc
+//    ^ keyword.operator.logic.mc
 
 + - * / % 
-#<- keyword.operator.arithmetic.mc
-# ^ keyword.operator.arithmetic.mc
-#   ^ keyword.operator.arithmetic.mc
-#     ^ keyword.operator.arithmetic.mc
-#       ^ keyword.operator.arithmetic.mc
+//<- keyword.operator.arithmetic.mc
+//^ keyword.operator.arithmetic.mc
+//  ^ keyword.operator.arithmetic.mc
+//    ^ keyword.operator.arithmetic.mc
+//      ^ keyword.operator.arithmetic.mc
 
 ~ & << >> | ^ 
-#<- keyword.operator.bitwise.mc
-# ^ keyword.operator.bitwise.mc
-#   ^ keyword.operator.bitwise.mc
-#      ^ keyword.operator.bitwise.mc
-#         ^ keyword.operator.bitwise.mc
-#           ^ keyword.operator.bitwise.mc
+//<- keyword.operator.bitwise.mc
+//^ keyword.operator.bitwise.mc
+//  ^ keyword.operator.bitwise.mc
+//     ^ keyword.operator.bitwise.mc
+//        ^ keyword.operator.bitwise.mc
+//          ^ keyword.operator.bitwise.mc
 
 < <= > >= == !=
-#<- keyword.operator.comparison.mc
-# ^ keyword.operator.comparison.mc
-#    ^ keyword.operator.comparison.mc
-#      ^ keyword.operator.comparison.mc
-#         ^ keyword.operator.comparison.mc
-#            ^ keyword.operator.comparison.mc
-#             ^ keyword.operator.comparison.mc
+//<- keyword.operator.comparison.mc
+//^^ keyword.operator.comparison.mc
+//   ^ keyword.operator.comparison.mc
+//     ^^ keyword.operator.comparison.mc
+//        ^^ keyword.operator.comparison.mc
+//           ^^ keyword.operator.comparison.mc
 
-=>
-#<- keyword.operator.assignment.mc
-#^  keyword.operator.assignment.mc
+  =>
+//^^ keyword.operator.assignment.mc
 
 and or
-#^ keyword.operator.word.mc
-#   ^ keyword.operator.word.mc
+//^ keyword.operator.word.mc
+//   ^ keyword.operator.word.mc
+
 
 function myFunc(arg1, arg2) {}
-# ^  meta.function.method.with-parameters.mc storage.type.function.mc
-#         ^  meta.function.method.with-parameters.mc entity.name.function.mc
-#              ^  meta.function.parameters.mc punctuation.section.group.begin.mc
-#                ^  meta.function.parameters.mc variable.parameter.function.mc
+// ^  meta.function.method.with-parameters.mc storage.type.function.mc
+//         ^  meta.function.method.with-parameters.mc entity.name.function.mc
+//             ^  meta.function.parameters.mc punctuation.section.group.begin.mc
+//                ^  meta.function.parameters.mc variable.parameter.function.mc
 
 
 class MyProjectApp extends App.AppBase {}
-# ^  storage.type.class.mc
-#       ^ entity.name.type.class.mc
-#                    ^ keyword.operator.mc
-#                             ^ entity.other.inherited-class.mc
-#                                      ^ punctuation.definition.class.mc
-}
+// ^  storage.type.class.mc
+//       ^ entity.name.type.class.mc
+//                    ^ keyword.operator.mc
+//                             ^ entity.other.inherited-class.mc
+//                                     ^ punctuation.definition.class.mc
 
 
 Toybox.thing(sdsd,asdasda);
 
+var array = [ [1,2], [3,4] ];
+
 var n = null;
-#^ storage.type.mc
-#     ^ keyword.operator.assignment.mc
-#        ^ constant.language.mc
-#           ^ punctuation.terminator.mc
+//^ storage.type.mc
+//    ^ keyword.operator.assignment.mc
+//       ^ constant.language.mc
+//          ^ punctuation.terminator.mc

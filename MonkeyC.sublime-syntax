@@ -21,8 +21,12 @@ contexts:
     - include: separators
     - include: 'scope:support.toybox.mc'
     - include: identifiers
+    - include: paren-grouping
 
   statements:
+    - match: '\)|\}|\]'
+      scope: invalid.illegal.stray-bracket-end.mc
+      pop: true
     - include: function-definition
     - include: oop
     - include: conditionals
@@ -183,6 +187,15 @@ contexts:
     - match: ';'
       scope: punctuation.terminator.mc
 
+  paren-grouping:
+    - match: \(
+      scope: punctuation.section.group.begin.mc
+      push:
+        - meta_scope: meta.group.mc
+        - match: \)
+          scope: punctuation.section.group.end.mc
+          pop: true
+        - include: expressions
   paren-expression:
     - match: \(
       scope: punctuation.section.group.begin.mc
@@ -204,7 +217,7 @@ contexts:
         - include: statements
 
   function-call:
-    - match: '(\b|\.)({{identifier}}*)(\()'
+    - match: '(?:\b|\.)({{identifier}}*)(\()'
       captures:
         1: variable.function.mc
         2: punctuation.definition.parameters.begin.mc punctuation.section.group.begin.mc
@@ -402,18 +415,9 @@ contexts:
     - match: '(?=\S)'
       pop: true
 
-  brackets:
-    - match: \)
-      pop: true
-    - include: main
-
   main:
     - include: comments
     - include: statements
-    - match: \(
-      push: brackets
-    - match: \)
-      scope: invalid.illegal.stray-bracket-end
 
 
 

@@ -13,27 +13,56 @@
 #   ^ punctuation.definition.comment.mc
 #       ^ comment.line.mc
 
-if for else do while switch case try catch finally return throw
+
+for (var i=0; i<4; i++){ System.println(i); }
+#<- keyword.control.loop.mc
+#   ^ punctuation.section.group.begin.mc
+#     ^ storage.type.mc
+#        ^ meta.for.mc (){}
+
+do { System.println(true); } while (x>5);
+#<- keyword.control.loop.mc
+# ^ meta.do-while.mc ()
+#  ^ punctuation.section.block.begin.mc
+#    ^ meta.block.mc
+#      ^ meta.do-while.mc ()
+#       ^ support.module.mc
+#                     ^ constant.language.mc
+#                          ^ punctuation.section.block.end.mc
+#                            ^ meta.do-while.mc ()
+#                               ^ keyword.control.loop.mc
+#                                  ^ punctuation.section.group.begin.mc
+#                                    ^ meta.group.mc
+# 
+
+switch (c) { case 5: System.println(5); default: x++; break; }
+#^ keyword.control.switch.mc ()
+#  ^ meta.switch.mc ()
+#      ^ punctuation.section.group.begin.mc
+#       ^ variable.other.mc
+#         ^ meta.switch.mc ()
+#          ^ punctuation.section.block.begin.mc
+#            ^ meta.switch.mc ()
+#            ^ meta.block.mc
+#              ^ keyword.control.switch.mc ()
+#                  ^ punctuation.separator.mc
+#                                         ^ keyword.control.switch.mc ()
+#                                              ^ punctuation.separator.mc
+
+if else try catch finally return throw
 # <-  keyword.control.flow.mc
 #   ^  keyword.control.flow.mc
-#       ^  keyword.control.flow.mc
-#            ^  keyword.control.flow.mc
-#                ^  keyword.control.flow.mc
-#                      ^  keyword.control.flow.mc
-#                             ^  keyword.control.flow.mc
-#                                  ^  keyword.control.flow.mc    
-#                                     ^  keyword.control.flow.mc    
-#                                             ^  keyword.control.flow.mc    
-#                                                     ^  keyword.control.flow.mc    
-#                                                           ^  keyword.control.flow.mc    
+#         ^  keyword.control.flow.mc
+#             ^  keyword.control.flow.mc
+#                   ^  keyword.control.flow.mc
+#                            ^  keyword.control.flow.mc
+#                                   ^  keyword.control.flow.mc    
 
 x += 5
-# ^ keyword.operator.assignment.mc
-#  ^ keyword.operator.assignment.mc
+# ^^ keyword.operator.assignment.mc
 
--=
-#<- keyword.operator.assignment.mc
-#^ keyword.operator.assignment.mc
+ -=
+#^^ keyword.operator.assignment.mc
 
 using Toybox.System as Sys;
 # ^  keyword.control.import.mc
@@ -41,16 +70,20 @@ using Toybox.System as Sys;
 #                ^  support.module.mc
 #                   ^  keyword.control.import.mc
 
-50  400.6 4.0d 5.0f  0x500 5l 0xface 0x80000000l
-# <-  constant.numeric.integer.mc
-#    ^  constant.numeric.float.mc
-#           ^  constant.numeric.float.mc
-#              ^  constant.numeric.float.mc
-#                     ^  constant.numeric.hex.mc
-#                          ^  constant.numeric.integer.mc
-#                                ^  constant.numeric.hex.mc
-#                                     ^  constant.numeric.hex.mc
+50 5l 400.6 4.0d 5.0f  0x500  0xface 0x80000000l
+#^ 
+#  ^^  constant.numeric.integer.mc
+#      ^ constant.numeric.float.mc
+#           ^^^^ constant.numeric.float.mc
+#                 ^^  constant.numeric.float.mc
+#                      ^^^ constant.numeric.hex.mc
+#                             ^^^^ constant.numeric.hex.mc
+#                                     ^^^^  constant.numeric.hex.mc
 
+ -4 0d 1f
+#^^ constant.numeric.integer.mc
+#   ^^ constant.numeric.integer.mc
+#      ^^ constant.numeric.integer.mc
 
 instanceof has extends
 #^  keyword.operator.mc
@@ -84,6 +117,9 @@ if ( a < 5 ) { }
 
 if(!failed)
 #^ keyword.control.flow.mc
+
+
+Test.assert( ((result > 436) && (result < 437)));
 
 
 ?

@@ -1,0 +1,473 @@
+# SYNTAX TEST "Packages/Sublime-MonkeyC/Jungle.sublime-syntax"
+
+
+###### Unit tests:
+
+round.semiround.rectangle = foo
+#^ support.constant.shape.jungle
+#        ^ support.constant.shape.jungle
+#                 ^ support.constant.shape.jungle
+round-218x218.semiround-215x180.rectangle-200x265 = foo
+#    ^^^^^^ support.constant.shape.jungle
+#                    ^^^^^^ support.constant.shape.jungle
+#                                     ^^^^^^^^^ support.constant.shape.jungle
+base=foo
+#^^ support.constant.base.jungle
+fenix5.fenix5s.fenix5x.fenix3.fenix3_hr.fenixchronos=foo
+#   ^^ support.constant.device.jungle
+#          ^^^ support.constant.device.jungle
+#                  ^^^ support.constant.device.jungle
+#                         ^ support.constant.device.jungle
+#                                   ^ support.constant.device.jungle
+#                                             ^ support.constant.device.jungle
+vivoactive.vivoactive3.vivoactive_hr=foo
+#      ^^ support.constant.device.jungle
+#                   ^^ support.constant.device.jungle
+#                                 ^^ support.constant.device.jungle
+d2bravo.d2bravo_titanium.d2charlie=foo
+#   ^^ support.constant.device.jungle
+#            ^^^^ support.constant.device.jungle
+#                         ^^ support.constant.device.jungle
+oregon7xx.rino7xx=foo
+#    ^^^^ support.constant.device.jungle
+#            ^^^^ support.constant.device.jungle
+edge130.edge1030.edge820.edge_520.edge520plus.edge_1000=foo
+#  ^^^ support.constant.device.jungle
+#          ^^^ support.constant.device.jungle
+#                  ^^^ support.constant.device.jungle
+#                           ^^^ support.constant.device.jungle
+#                                      ^ support.constant.device.jungle
+#                                                ^^^^ support.constant.device.jungle
+approachs60.descentmk1.epix=foo
+#  ^^^ support.constant.device.jungle
+#             ^^^ support.constant.device.jungle
+#                       ^^^ support.constant.device.jungle
+fr230.fr235.fr630.fr645.fr645m.fr735xt.fr920xt.fr935=foo
+#^^^ support.constant.device.jungle
+#      ^^^ support.constant.device.jungle
+#             ^^^ support.constant.device.jungle
+#                  ^^^ support.constant.device.jungle
+#                         ^^^^ support.constant.device.jungle
+#                                ^^^^ support.constant.device.jungle
+#                                        ^^^^ support.constant.device.jungle
+#                                              ^^^^ support.constant.device.jungle
+zhs.zht.hrv.ces.dan.dut.eng.fin.fre.deu  = o
+# ^ support.constant.language.jungle
+#    ^ support.constant.language.jungle
+#        ^ support.constant.language.jungle
+#            ^ support.constant.language.jungle
+#                ^ support.constant.language.jungle
+#                    ^ support.constant.language.jungle
+#                        ^ support.constant.language.jungle
+#                             ^ support.constant.language.jungle
+#                                 ^ support.constant.language.jungle
+#                                     ^ support.constant.language.jungle
+gre.hun.ind.ita.jpn.nob.pol.por.rus.slo = o
+# ^ support.constant.language.jungle
+#    ^ support.constant.language.jungle
+#        ^ support.constant.language.jungle
+#            ^ support.constant.language.jungle
+#                ^ support.constant.language.jungle
+#                    ^ support.constant.language.jungle
+#                        ^ support.constant.language.jungle
+#                             ^ support.constant.language.jungle
+#                                 ^ support.constant.language.jungle
+#                                     ^ support.constant.language.jungle
+slv.spa.zsm.swe.tha = o
+# ^ support.constant.language.jungle
+#    ^ support.constant.language.jungle
+#        ^ support.constant.language.jungle
+#            ^ support.constant.language.jungle
+#                ^ support.constant.language.jungle
+sourcePath.resourcePath.excludeAnnotations.barrelPath.annotations.lang=foo
+# ^ keyword.other.jungle
+#              ^ keyword.other.jungle
+#                           ^ keyword.other.jungle
+#                                              ^ keyword.other.jungle
+#                                                         ^ keyword.other.jungle
+#                                                                   ^ keyword.other.jungle
+
+
+###### Typical jungle file lines:
+
+# samples grabbed from a quick github search of any .jungle files in existence
+# and the SDK default.jungle
+
+
+project.manifest = manifest.xml
+# ^ variable.other.readwrite.jungle
+#      ^ punctuation.accessor.jungle
+#         ^ variable.other.readwrite.jungle
+#                ^ keyword.operator.assignment.jungle
+#                    ^ value.jungle
+
+
+# foo bar
+#<- punctuation.definition.comment.jungle
+#  ^^ comment.line.jungle
+
+   # foo bar
+#  ^ punctuation.definition.comment.jungle
+#    ^^^^^ comment.line.jungle
+
+
+base.barrelPath = barrels
+#^^ support.constant.base.jungle
+#   ^ punctuation.accessor.jungle
+#      ^ keyword.other.jungle
+#               ^ keyword.operator.assignment.jungle
+#                    ^ value.jungle
+
+
+base.barrelPath = barrels# FOO BAR
+#^^ support.constant.base.jungle
+#   ^ punctuation.accessor.jungle
+#      ^ keyword.other.jungle
+#               ^ keyword.operator.assignment.jungle
+#                    ^ value.jungle
+#                        ^ punctuation.definition.comment.jungle
+#                           ^^^^^ comment.line.jungle
+round.barrelPath = barrels/IconLibrary.barrel
+#^^ support.constant.shape.jungle
+#    ^ punctuation.accessor.jungle
+#         ^ keyword.other.jungle
+#                ^ keyword.operator.assignment.jungle
+#                    ^^^^^^^^^^^^^^^^^^^^^ value.jungle
+
+
+vivoactive.sourcePath=source;source-vivoactive
+#^^ support.constant.device.jungle
+#         ^ punctuation.accessor.jungle
+#             ^ keyword.other.jungle
+#                    ^ keyword.operator.assignment.jungle
+#                      ^ value.jungle
+#                           ^ punctuation.separator.jungle
+#                                ^^^^^ value.jungle
+
+fr235.barrelPath = barrels/IconLibrary.barrel;barrels/GraphLibrary.barrel
+#^^ support.constant.device.jungle
+#    ^ punctuation.accessor.jungle
+#         ^ keyword.other.jungle
+#                ^ keyword.operator.assignment.jungle
+#                      ^^^^^^^^^ value.jungle
+#                                            ^ punctuation.separator.jungle
+#                                             ^^^^^^^^^^^ value.jungle
+
+fr645m.barrelPath = barrels/M.barrel;[A/A.jungle;A/B.jungle]
+#^^ support.constant.device.jungle
+#     ^ punctuation.accessor.jungle
+#         ^ keyword.other.jungle
+#                 ^ keyword.operator.assignment.jungle
+#                      ^^^^^^^^^ value.jungle
+#                                   ^ punctuation.separator.jungle
+#                                    ^ punctuation.section.group.begin.jungle
+#                                    ^^^^^^^^^^^^^^^^^^^^^ meta.group.jungle
+#                                        ^^^^^ value.jungle
+#                                               ^ punctuation.separator.jungle
+#                                                ^^^^^ value.jungle
+#                                                          ^ punctuation.section.group.end.jungle
+
+
+round-215x215.GraphLibrary.annotations = bar
+#^^^^^^^^^^^ support.constant.shape.jungle
+#            ^ punctuation.accessor.jungle
+#                ^^ variable.other.readwrite.jungle
+#                         ^ punctuation.accessor.jungle
+#                              ^ keyword.other.jungle
+#                                      ^ keyword.operator.assignment.jungle
+#                                         ^ value.jungle
+
+fenix5.excludeAnnotations = older
+#^support.constant.device.jungle
+#     ^ punctuation.accessor.jungle
+#         ^ keyword.other.jungle
+#                         ^ keyword.operator.assignment.jungle
+#                             ^ value.jungle
+
+base.sourcePath=$(fr735xt.sourcePath)
+#^^ support.constant.base.jungle
+#   ^ punctuation.accessor.jungle
+#      ^ keyword.other.jungle
+#              ^ keyword.operator.assignment.jungle
+#               ^^  punctuation.definition.variable.expansion.begin.jungle
+#                      ^^^^^ meta.variable.expansion.jungle
+#                                   ^ punctuation.definition.variable.expansion.end.jungle
+
+round.resourcePath = $(base.resourcePath);resource-round
+#^^ support.constant.shape.jungle
+#    ^ punctuation.accessor.jungle
+#                  ^ keyword.operator.assignment.jungle
+#                    ^^  punctuation.definition.variable.expansion.begin.jungle
+#                        ^^^^^ meta.variable.expansion.jungle
+#                                       ^ punctuation.definition.variable.expansion.end.jungle
+#                                        ^ punctuation.separator.jungle
+#                                             ^ value.jungle
+
+
+
+fenix5.lang.eng = $(fenix5.lang.eng);fenix-resources-eng
+#^^ support.constant.device.jungle
+#     ^ punctuation.accessor.jungle
+#      ^^^^ keyword.other.jungle
+#          ^ punctuation.accessor.jungle
+#            ^ support.constant.language.jungle
+#                    ^^ support.constant.device.jungle
+#                         ^ punctuation.accessor.jungle
+#                          ^^^^ keyword.other.jungle
+#                              ^ punctuation.accessor.jungle
+#                                ^ support.constant.language.jungle
+
+
+
+DigitsPicker = [..\ScreenPickers\monkey.jungle]
+# ^^^ variable.other.readwrite.jungle
+#            ^ keyword.operator.assignment.jungle
+#              ^ punctuation.section.group.begin.jungle
+#               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ value.jungle
+#               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.group.jungle
+#                                             ^ punctuation.section.group.end.jungle
+
+base.barrelPath = $(base.barrelPath);$(DigitsPicker)
+#^ support.constant.base.jungle
+#   ^ punctuation.accessor.jungle
+#       ^ keyword.other.jungle
+#                 ^^  punctuation.definition.variable.expansion.begin.jungle
+#                      ^^^^^ meta.variable.expansion.jungle
+#                                  ^ punctuation.definition.variable.expansion.end.jungle
+#                                   ^ punctuation.separator.jungle
+#                                    ^^  punctuation.definition.variable.expansion.begin.jungle
+#                                             ^ variable.other.readwrite.jungle  
+#                                                  ^ punctuation.definition.variable.expansion.end.jungle
+
+
+
+#### below is for visual inspection
+
+d2bravo.resourcePath = $(d2bravo.resourcePath);resources-round-218x218-ciq_1.x;resources-ciq_1.x-no_hr
+d2bravo.excludeAnnotations = buffered
+
+d2bravo_titanium.resourcePath = $(d2bravo_titanium.resourcePath);resources-round-218x218-ciq_1.x;resources-ciq_1.x
+d2bravo_titanium.excludeAnnotations = buffered
+
+fenix3.resourcePath = $(fenix3.resourcePath);resources-round-218x218-ciq_1.x;resources-ciq_1.x-no_hr
+fenix3.excludeAnnotations = buffered
+
+fenix3_hr.resourcePath = $(fenix3_hr.resourcePath);resources-round-218x218-ciq_1.x;resources-ciq_1.x
+fenix3_hr.excludeAnnotations = buffered
+
+fr230.resourcePath = $(fr230.resourcePath);resources-semiround-215x180-ciq_1.x;resources-ciq_1.x-no_hr
+fr230.excludeAnnotations = buffered
+
+fr235.resourcePath = $(fr235.resourcePath);resources-semiround-215x180-ciq_1.x;resources-ciq_1.x
+fr235.excludeAnnotations = buffered
+
+fr630.resourcePath = $(fr630.resourcePath);resources-semiround-215x180-ciq_1.x;resources-ciq_1.x-no_hr
+fr630.excludeAnnotations = buffered
+
+fr920xt.resourcePath = $(fr920xt.resourcePath);resources-ciq_1.x-no_hr
+fr920xt.excludeAnnotations = buffered
+
+# Reverse order of resources so that 64-colour themes are permitted.
+vivoactive.resourcePath = resources-ciq_1.x-no_hr;$(vivoactive.resourcePath)
+vivoactive.excludeAnnotations = buffered
+
+# #21: Treat fr735xt as CIQ 1.x i.e. unbuffered drawing, due to insufficient memory.
+# Continue to use fr735xt-specific properties and settings, however, as does support active minutes.
+fr735xt.resourcePath = $(fr735xt.resourcePath);resources-semiround-215x180-ciq_1.x
+fr735xt.excludeAnnotations = buffered# FOR REFERENCE ONLY
+# Default Jungle file
+
+# Set the base properties, base represents the root of the Monkey C Project
+base.sourcePath = .\**.mc
+base.resourcePath = resources
+
+
+########
+# SDK default.jungle (with a lot of random cut outs for brevity)
+
+# Set the base language-specific string resources
+base.lang.ind = resources-ind
+base.lang.vie = resources-vie
+base.lang.bul = resources-bul
+base.lang.tur = resources-tur
+
+# Set the semiround-215x180 family qualifier
+semiround-215x180 = $(semiround)
+semiround-215x180.resourcePath = $(semiround-215x180.resourcePath);resources-semiround-215x180
+semiround-215x180.lang.ind = $(semiround-215x180.lang.ind);resources-semiround-215x180-ind
+semiround-215x180.lang.tur = $(semiround-215x180.lang.tur);resources-semiround-215x180-tur
+
+# Set the semiround family qualifier
+semiround = $(base)
+semiround.resourcePath = $(semiround.resourcePath);resources-semiround
+semiround.lang.vie = $(semiround.lang.vie);resources-semiround-vie
+semiround.lang.bul = $(semiround.lang.bul);resources-semiround-bul
+semiround.lang.tur = $(semiround.lang.tur);resources-semiround-tur
+
+round = $(base)
+round.resourcePath = $(round.resourcePath);resources-round
+round.lang.bul = $(round.lang.bul);resources-round-bul
+round.lang.tur = $(round.lang.tur);resources-round-tur
+
+rectangle-148x205 = $(rectangle)
+rectangle-148x205.resourcePath = $(rectangle-148x205.resourcePath);resources-rectangle-148x205
+rectangle-148x205.lang.slv = $(rectangle-148x205.lang.slv);resources-rectangle-148x205-slv
+rectangle-148x205.lang.spa = $(rectangle-148x205.lang.spa);resources-rectangle-148x205-spa
+
+rectangle-240x400 = $(rectangle)
+rectangle-240x400.resourcePath = $(rectangle-240x400.resourcePath);resources-rectangle-240x400
+rectangle-240x400.lang.ces = $(rectangle-240x400.lang.ces);resources-rectangle-240x400-ces
+rectangle-240x400.lang.dan = $(rectangle-240x400.lang.dan);resources-rectangle-240x400-dan
+
+round-240x240 = $(round)
+round-240x240.resourcePath = $(round-240x240.resourcePath);resources-round-240x240
+round-240x240.lang.tur = $(round-240x240.lang.tur);resources-round-240x240-tur
+
+rectangle-200x265 = $(rectangle)
+rectangle-200x265.resourcePath = $(rectangle-200x265.resourcePath);resources-rectangle-200x265
+rectangle-200x265.lang.swe = $(rectangle-200x265.lang.swe);resources-rectangle-200x265-swe
+
+rectangle-205x148 = $(rectangle)
+rectangle-205x148.resourcePath = $(rectangle-205x148.resourcePath);resources-rectangle-205x148
+rectangle-205x148.lang.slv = $(rectangle-205x148.lang.slv);resources-rectangle-205x148-slv
+
+rectangle = $(base)
+rectangle.resourcePath = $(rectangle.resourcePath);resources-rectangle
+rectangle.lang.tha = $(rectangle.lang.tha);resources-rectangle-tha
+rectangle.lang.vie = $(rectangle.lang.vie);resources-rectangle-vie
+
+rectangle-230x303 = $(rectangle)
+rectangle-230x303.resourcePath = $(rectangle-230x303.resourcePath);resources-rectangle-230x303
+rectangle-230x303.lang.bul = $(rectangle-230x303.lang.bul);resources-rectangle-230x303-bul
+
+rectangle-282x470 = $(rectangle)
+rectangle-282x470.resourcePath = $(rectangle-282x470.resourcePath);resources-rectangle-282x470
+rectangle-282x470.lang.eng = $(rectangle-282x470.lang.eng);resources-rectangle-282x470-eng
+
+round-218x218 = $(round)
+round-218x218.resourcePath = $(round-218x218.resourcePath);resources-round-218x218
+round-218x218.lang.zht = $(round-218x218.lang.zht);resources-round-218x218-zht
+
+vivoactive_hr = $(rectangle-148x205)
+vivoactive_hr.resourcePath = $(vivoactive_hr.resourcePath);resources-vivoactive_hr
+vivoactive_hr.lang.slo = $(vivoactive_hr.lang.slo);resources-vivoactive_hr-slo
+
+fenix5s = $(round-218x218)
+fenix5s.resourcePath = $(fenix5s.resourcePath);resources-fenix5s
+fenix5s.lang.eng = $(fenix5s.lang.eng);resources-fenix5s-eng
+
+oregon7xx = $(rectangle-240x400)
+oregon7xx.resourcePath = $(oregon7xx.resourcePath);resources-oregon7xx
+oregon7xx.lang.eng = $(oregon7xx.lang.eng);resources-oregon7xx-eng
+
+rino7xx = $(rectangle-240x400)
+rino7xx.resourcePath = $(rino7xx.resourcePath);resources-rino7xx
+rino7xx.lang.ara = $(rino7xx.lang.ara);resources-rino7xx-ara
+
+vivoactive = $(rectangle-205x148)
+vivoactive.resourcePath = $(vivoactive.resourcePath);resources-vivoactive
+vivoactive.lang.hrv = $(vivoactive.lang.hrv);resources-vivoactive-hrv
+
+fr645m = $(round-240x240)
+fr645m.resourcePath = $(fr645m.resourcePath);resources-fr645m
+fr645m.lang.jpn = $(fr645m.lang.jpn);resources-fr645m-jpn
+
+edge820 = $(rectangle-200x265)
+edge820.resourcePath = $(edge820.resourcePath);resources-edge820
+edge820.lang.spa = $(edge820.lang.spa);resources-edge820-spa
+
+fr230 = $(semiround-215x180)
+fr230.resourcePath = $(fr230.resourcePath);resources-fr230
+fr230.lang.swe = $(fr230.lang.swe);resources-fr230-swe
+
+fr630 = $(semiround-215x180)
+fr630.resourcePath = $(fr630.resourcePath);resources-fr630
+fr630.lang.swe = $(fr630.lang.swe);resources-fr630-swe
+
+edge1030 = $(rectangle-282x470)
+edge1030.resourcePath = $(edge1030.resourcePath);resources-edge1030
+edge1030.lang.fin = $(edge1030.lang.fin);resources-edge1030-fin
+
+d2bravo_titanium = $(round-218x218)
+d2bravo_titanium.resourcePath = $(d2bravo_titanium.resourcePath);resources-d2bravo_titanium
+d2bravo_titanium.lang.nob = $(d2bravo_titanium.lang.nob);resources-d2bravo_titanium-nob
+
+fenixchronos = $(round-218x218)
+fenixchronos.resourcePath = $(fenixchronos.resourcePath);resources-fenixchronos
+fenixchronos.lang.slo = $(fenixchronos.lang.slo);resources-fenixchronos-slo
+
+fr235 = $(semiround-215x180)
+fr235.resourcePath = $(fr235.resourcePath);resources-fr235
+fr235.lang.kor = $(fr235.lang.kor);resources-fr235-kor
+
+fr920xt = $(rectangle-205x148)
+fr920xt.resourcePath = $(fr920xt.resourcePath);resources-fr920xt
+fr920xt.lang.ita = $(fr920xt.lang.ita);resources-fr920xt-ita
+
+fr935 = $(round-240x240)
+fr935.resourcePath = $(fr935.resourcePath);resources-fr935
+fr935.lang.gre = $(fr935.lang.gre);resources-fr935-gre
+
+edge_1000 = $(rectangle-240x400)
+edge_1000.resourcePath = $(edge_1000.resourcePath);resources-edge_1000
+edge_1000.lang.dan = $(edge_1000.lang.dan);resources-edge_1000-dan
+
+descentmk1 = $(round-240x240)
+descentmk1.resourcePath = $(descentmk1.resourcePath);resources-descentmk1
+descentmk1.lang.eng = $(descentmk1.lang.eng);resources-descentmk1-eng
+
+fenix3 = $(round-218x218)
+fenix3.resourcePath = $(fenix3.resourcePath);resources-fenix3
+fenix3.lang.deu = $(fenix3.lang.deu);resources-fenix3-deu
+
+edge130 = $(rectangle-230x303)
+edge130.resourcePath = $(edge130.resourcePath);resources-edge130
+edge130.lang.rus = $(edge130.lang.rus);resources-edge130-rus
+
+fenix5 = $(round-240x240)
+fenix5.resourcePath = $(fenix5.resourcePath);resources-fenix5
+fenix5.lang.hun = $(fenix5.lang.hun);resources-fenix5-hun
+
+d2bravo = $(round-218x218)
+d2bravo.resourcePath = $(d2bravo.resourcePath);resources-d2bravo
+d2bravo.lang.rus = $(d2bravo.lang.rus);resources-d2bravo-rus
+
+d2charlie = $(round-240x240)
+d2charlie.resourcePath = $(d2charlie.resourcePath);resources-d2charlie
+d2charlie.lang.rus = $(d2charlie.lang.rus);resources-d2charlie-rus
+
+fr735xt = $(semiround-215x180)
+fr735xt.resourcePath = $(fr735xt.resourcePath);resources-fr735xt
+fr735xt.lang.kor = $(fr735xt.lang.kor);resources-fr735xt-kor
+
+edge520plus = $(rectangle-200x265)
+edge520plus.resourcePath = $(edge520plus.resourcePath);resources-edge520plus
+edge520plus.lang.pol = $(edge520plus.lang.pol);resources-edge520plus-pol
+
+edge_520 = $(rectangle-200x265)
+edge_520.resourcePath = $(edge_520.resourcePath);resources-edge_520
+edge_520.lang.ces = $(edge_520.lang.ces);resources-edge_520-ces
+
+epix = $(rectangle-205x148)
+epix.resourcePath = $(epix.resourcePath);resources-epix
+epix.lang.jpn = $(epix.lang.jpn);resources-epix-jpn
+
+fenix5x = $(round-240x240)
+fenix5x.resourcePath = $(fenix5x.resourcePath);resources-fenix5x
+fenix5x.lang.fin = $(fenix5x.lang.fin);resources-fenix5x-fin
+
+vivoactive3 = $(round-240x240)
+vivoactive3.resourcePath = $(vivoactive3.resourcePath);resources-vivoactive3
+vivoactive3.lang.dut = $(vivoactive3.lang.dut);resources-vivoactive3-dut
+
+approachs60 = $(round-240x240)
+approachs60.resourcePath = $(approachs60.resourcePath);resources-approachs60
+approachs60.lang.tha = $(approachs60.lang.tha);resources-approachs60-tha
+
+fr645 = $(round-240x240)
+fr645.resourcePath = $(fr645.resourcePath);resources-fr645
+fr645.lang.gre = $(fr645.lang.gre);resources-fr645-gre
+
+fenix3_hr = $(round-218x218)
+fenix3_hr.resourcePath = $(fenix3_hr.resourcePath);resources-fenix3_hr
+fenix3_hr.lang.ita = $(fenix3_hr.lang.ita);resources-fenix3_hr-ita

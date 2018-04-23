@@ -21,3 +21,4 @@ Fix:
 Enhancement:
 - Autocomplete definitions now included
 - expanded API coverage
+- Jungle syntax definition

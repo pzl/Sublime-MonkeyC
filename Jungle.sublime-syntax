@@ -1,0 +1,122 @@
+%YAML 1.2
+---
+name: Jungle
+file_extensions:
+  - jungle
+first_line_match: ^\s*project\.manifest\s*=\s*manifest\.xml
+scope: source.jungle
+
+variables:
+  id_start: '[[:alpha:]_]'
+  identifier: '{{id_start}}[[:alnum:]_]*'
+  identifier_break: (?!{{identifier}})
+
+contexts:
+
+  instruction:
+    - include: comments
+    - match: '(?=\S)'
+      set:
+        - values
+        - operator
+        - lhs
+
+
+  values:
+    - include: comments
+    - match: '\$\('
+      scope: punctuation.definition.variable.expansion.begin.jungle
+      push:
+        -
+          - meta_scope: meta.variable.expansion.jungle
+          - match: '\)'
+            scope: punctuation.definition.variable.expansion.end.jungle
+            pop: true
+        - lhs
+    - match: '\['
+      scope: punctuation.section.group.begin.jungle
+      push:
+        - meta_scope: meta.group.jungle
+        - match: '\]'
+          scope: punctuation.section.group.end.jungle
+          pop: true
+        - include: values
+    - match: ';'
+      scope: punctuation.separator.jungle
+    - match: '[\w\-\d\.\/\\]+'
+      scope: value.jungle
+    - match: '$'
+      pop: true
+
+  operator:
+    - match: =
+      scope: keyword.operator.assignment.jungle
+      pop: true
+
+  lhs:
+    - match: '\.'
+      scope: punctuation.accessor.jungle
+    - include: known-properties
+    - include: known-qualifiers
+    - include: languages
+    - include: variables
+    - include: popnow
+
+  variables:
+    - match: '{{identifier}}'
+      scope: variable.other.readwrite.jungle
+
+  known-properties:
+    - match: '\b(((re)?source|barrel)Path|excludeAnnotations|annotations|lang)\b'
+      scope: keyword.other.jungle
+
+  known-qualifiers:
+    - meta_scope: qualifier.jungle
+    - match: \bbase\b
+      scope: support.constant.base.jungle
+    - include: device-shapes
+    - include: device-names
+
+  languages:
+    - match: '\b(ind|zsm|hrv|ces|dan|dut|eng|fin|fre|deu|gre|hun|ita|nob|po[lr]|rus|sl[ov]|spa|swe|ara|heb|zh[st]|jpn|kor|tha|vie|bul|tur)'
+      scope: support.constant.language.jungle
+
+  device-shapes:
+    - match: '\b((semi)?round|rectangle)(-\d+x\d+)?\b'
+      scope: support.constant.shape.jungle
+
+  device-names:
+    - match: |-
+        (?x)\b(
+          vivoactive(_hr|3)?|
+          fenix(5(s|x)?|3(_hr)?|chronos)|
+          d2(bravo(_titanium)?|charlie)|
+          (rino|oregon)7xx|
+          edge(10?30|820|_1000|_520|520plus)|
+          descentmk1|epix|approachs60|
+          fr([26]30|[29]35|(735|920)xt|645m?)
+        )\b
+      scope: support.constant.device.jungle
+
+  comments:
+    - match: '#'
+      scope: punctuation.definition.comment.jungle
+      push:
+        - meta_scope: comment.line.jungle
+        - match: '$'
+          pop: true
+
+
+
+
+  popnow:
+    - match: ''
+      pop: true
+  else-pop:
+    - match: '(?=\S)'
+      pop: true
+
+  main:
+    - include: comments
+    - include: instruction
+    - include: properties

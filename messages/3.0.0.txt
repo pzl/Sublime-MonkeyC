@@ -12,8 +12,12 @@ The big highlights are:
 C H A N G E L O G
 ------------------
 
-Internal:
-- better block scope detection (functions, classes, if, for, while..)
+Enhancement:
+- Autocomplete definitions now included
+- expanded API coverage
+- Jungle syntax definition
+- Include classes and modules and labels in symbol list (for Goto: symbols, Ctrl+r)
+- Enable Comment toggling (Ctrl+/ or Ctrl+Shift+/) in monkeyc and jungle files
 
 Fix:
 - += and -= not registering as a single operator
@@ -21,9 +25,5 @@ Fix:
 - make labels (:label) register as labels to sublime (for goto-like referencing)
 - comments highlighted correctly in more complex places
 
-Enhancement:
-- Autocomplete definitions now included
-- expanded API coverage
-- Jungle syntax definition
-- Include classes and modules and labels in symbol list (for Goto: symbols)
-- Enable Comment toggling (Ctrl+/ or Ctrl+Shift+/) in monkeyc and jungle files
+Internal:
+- better block scope detection (functions, classes, if, for, while..)

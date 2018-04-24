@@ -26,3 +26,4 @@ Enhancement:
 - expanded API coverage
 - Jungle syntax definition
 - Include classes and modules and labels in symbol list (for Goto: symbols)
+- Enable Comment toggling (Ctrl+/ or Ctrl+Shift+/) in monkeyc and jungle files

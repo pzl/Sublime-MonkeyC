@@ -6,6 +6,7 @@
 		"else","enum","extends","finally","for","function","has","hidden","if",
 		"instanceof","me","module","new","private","protected","public","return",
 		"self","static","switch","throw","try","using", "var","while",
+		"true","false","null","NaN",
 
 		// common function names
 		"initialize","onStart","onStop","getInitialView","onLayout","onUpdate",

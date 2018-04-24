@@ -112,6 +112,8 @@ contexts:
       scope: storage.type.mc
     - match: '\b(hidden|public|private|hidden|static)\b'
       scope: storage.modifier.mc
+    - match: '\b(me|self|\$){{identifier_break}}'
+      scope: variable.language.self.mc
 
   operators:
     - match: '=>|[+-]='

@@ -24,6 +24,7 @@ Fix:
 - allow floats specified without period, but with explicit cast: 5f
 - make labels (:label) register as labels to sublime (for goto-like referencing)
 - comments highlighted correctly in more complex places
+- add scope resolution definitions to syntax: self, me, $.
 
 Internal:
 - better block scope detection (functions, classes, if, for, while..)

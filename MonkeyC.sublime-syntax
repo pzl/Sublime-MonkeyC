@@ -12,8 +12,11 @@ variables:
   identifier_break: (?!{{identifier}})
 
 contexts:
-  expressions:
+
+  prototype:
     - include: comments
+
+  expressions:
     - include: literals
     - include: ternary
     - include: operators
@@ -77,6 +80,7 @@ contexts:
     - match: '"'
       scope: punctuation.definition.string.begin.mc
       push:
+        - meta_include_prototype: false
         - meta_scope: string.quoted.double.mc
         - match: \\.
           scope: constant.character.escape.mc
@@ -90,6 +94,7 @@ contexts:
     - match: "'"
       scope: punctuation.definition.string.begin.mc
       push:
+        - meta_include_prototype: false
         - meta_scope: string.quoted.single.mc
         - match: \\.
           scope: constant.character.escape.mc
@@ -150,7 +155,6 @@ contexts:
         - meta_scope: meta.block.mc
         - match: '\}'
           pop: true
-        - include: comments
         - include: expressions
   arrays:
     - match: '\['
@@ -160,7 +164,6 @@ contexts:
         - match: '\]'
           scope: punctuation.section.array.end.mc
           pop: true
-        - include: comments
         - include: expressions
   dicts:
     - match: '\{'
@@ -416,7 +419,6 @@ contexts:
       pop: true
 
   main:
-    - include: comments
     - include: statements
 
 

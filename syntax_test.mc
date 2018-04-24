@@ -19,6 +19,10 @@ if (thing){
 //  ^ punctuation.definition.comment.mc
 //       ^ comment.line.mc
 
+
+ "no /* comments */ within //string "
+ // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ string.quoted.double.mc
+
 if (thing > 5) { return 6; } else if (foo==bar) { return 0; } else { return 1; }
 //<- keyword.control.conditional.mc
 //  ^^^^^^^^^^^^^^^^ meta.conditional.mc

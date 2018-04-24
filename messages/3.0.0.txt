@@ -17,7 +17,6 @@ Internal:
 
 Fix:
 - += and -= not registering as a single operator
-- recognize negatives before digits better ( -10 )
 - allow floats specified without period, but with explicit cast: 5f
 
 

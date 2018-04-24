@@ -89,19 +89,15 @@ using Toybox.System as Sys;
 //                            ^^^^ constant.numeric.hex.mc
 //                                    ^^^^  constant.numeric.hex.mc
 
--50 -5l -400.6 -4.0d -5.0f  -0x500  -0xface -0x80000000l
-//<- constant.numeric.integer.mc
-//   ^^  constant.numeric.integer.mc
-//      ^^^ constant.numeric.float.mc
-//             ^^^^ constant.numeric.float.mc
-//                   ^^^^  constant.numeric.float.mc
-//                           ^^^ constant.numeric.hex.mc
-//                                   ^^^^ constant.numeric.hex.mc
-//                                          ^^^^  constant.numeric.hex.mc
-
   0d 1f
 //^^ constant.numeric.float.mc
 //   ^^ constant.numeric.float.mc
+
+
+  10-4
+//^^ constant.numeric.integer.mc
+//  ^ keyword.operator.arithmetic.mc
+//   ^ constant.numeric.integer.mc
 
 instanceof has extends
 //^  keyword.operator.mc

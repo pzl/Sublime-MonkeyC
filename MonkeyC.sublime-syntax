@@ -137,11 +137,11 @@ contexts:
       scope: constant.other.symbol.mc
 
   numbers:
-    - match: '-?([0-9]+(\.[0-9]+[df]?|[df])){{identifier_break}}'
+    - match: '([0-9]+(\.[0-9]+[df]?|[df])){{identifier_break}}'
       scope: constant.numeric.float.mc
-    - match: '-?([0-9]+l?){{identifier_break}}'
+    - match: '([0-9]+l?){{identifier_break}}'
       scope: constant.numeric.integer.mc
-    - match: '-?(0x[0-9a-fA-F]+l?){{identifier_break}}'
+    - match: '(0x[0-9a-fA-F]+l?){{identifier_break}}'
       scope: constant.numeric.hex.mc
 
   enums:

@@ -1,0 +1,8 @@
+<snippet>
+	<scope>source.mc - string</scope>
+	<description>class...</description>
+	<content><![CDATA[class ${1:ClassName} ${2/.+/extends /}${2:BaseClass} {
+	$0
+}]]></content>
+	<tabTrigger>class</tabTrigger>
+</snippet>

@@ -1,0 +1,22 @@
+{
+	"scope": "source.jungle",
+	"completions": [
+		//key words
+		"sourcePath","resourcePath","barrelPath","excludeAnnotations",
+		"annotations","lang","base","project","manifest",
+		//languages
+		"ind","zsm","hrv","ces","dan","dut","eng","fin","fre","deu","gre","hun",
+		"ita","nob","por","pol","rus","slo","slv","spa","swe","ara","heb","zhs",
+		"zht","jpn","kor","tha","vie","bul","tur",
+		//devices
+		"round","semiround","rectangle",
+		"vivoactive","vivoactive_hr","vivoactive3",
+		"fenix5","fenix5x","fenix5s","fenix3","fenix3_hr","fenixchronos",
+		"d2bravo","d2bravo_titanium","d2charlie",
+		"rino7xx","oregon7xx","edge130","edge1030","edge820","edge_1000",
+		"edge_520","edge520plus","descentmk1","epix","approachs60",
+		"fr230","fr235","fr630","fr935","fr735xt","fr920xt",
+		"fr645","fr645m",
+		{"trigger":"project\tmanifest...","contents":"project.manifest = manifest.xml"},
+	]
+}

@@ -1,0 +1,8 @@
+<snippet>
+	<scope>source.mc - string</scope>
+	<description>module...</description>
+	<content><![CDATA[module ${1:MyName} {
+	$0
+}]]></content>
+	<tabTrigger>module</tabTrigger>
+</snippet>

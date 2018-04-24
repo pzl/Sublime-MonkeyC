@@ -1,0 +1,8 @@
+<snippet>
+	<scope>source.mc - string</scope>
+	<description>do...</description>
+	<content><![CDATA[do {
+	${1:// code}
+} while ($2);]]></content>
+	<tabTrigger>do</tabTrigger>
+</snippet>

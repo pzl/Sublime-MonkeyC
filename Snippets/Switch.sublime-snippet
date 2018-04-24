@@ -1,0 +1,12 @@
+<snippet>
+	<scope>source.mc - string</scope>
+	<description>switch...</description>
+	<content><![CDATA[switch ($1) {
+	case ${2:true:}
+		${3:// code}
+		break;
+	${4:default:
+		break;}
+}]]></content>
+	<tabTrigger>switch</tabTrigger>
+</snippet>

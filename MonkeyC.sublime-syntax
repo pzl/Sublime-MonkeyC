@@ -138,8 +138,10 @@ contexts:
       scope: meta.instance.constructor.mc keyword.control.new.mc
 
   string_symbols:
-    - match: '(\b|\s*):{{identifier}}+\b'
-      scope: constant.other.symbol.mc
+    - match: '(?:\b|\s*)((:){{identifier}})\b'
+      captures:
+        1: constant.other.symbol.mc
+        2: punctuation.definition.label.mc
 
   numbers:
     - match: '([0-9]+(\.[0-9]+[df]?|[df])){{identifier_break}}'
@@ -220,7 +222,7 @@ contexts:
         - include: statements
 
   function-call:
-    - match: '(?:\b|\.)({{identifier}}*)(\()'
+    - match: '(?:\b|\.)({{identifier}})(\()'
       captures:
         1: variable.function.mc
         2: punctuation.definition.parameters.begin.mc punctuation.section.group.begin.mc
@@ -234,7 +236,7 @@ contexts:
 
   function-definition:
     - match: '(?=\s*function{{identifier_break}})'
-      set:
+      push:
         -
           - match: (?=\S)
             set:
@@ -288,34 +290,92 @@ contexts:
 
 
   oop:
-    #modules
-    - match: '\b(\([:\w]+\))?\s*(module)\s*(\w+)\s*'
-      captures:
-        1: label
-        2: entity.name.namespace.mc storage.type.module.mc
-        3: entity.type.namespace.mc
+    - include: classes
+    - include: modules
+    - include: labels
+
+  classes:
+    - match: '(?=\s*class{{identifier_break}})'
       push:
-        - meta_scope: meta.namespace.mc
-        - match: '\{'
-          scope: meta.block.mc punctuation.section.block.mc
-        - match: \}
-          pop: true
-        - include: main
-    # classes
-    - match: '(class)\s+([a-zA-Z_]\w*)(\s*(extends)\s*([a-zA-Z_.]+))?\s*(\{)?'
-      captures:
-        1: storage.type.class.mc
-        2: entity.name.type.class.mc
-        4: keyword.operator.mc
-        5: entity.other.inherited-class.mc
-        6: punctuation.definition.class.mc
-      push:
-        - meta_scope: meta.class
-        - match: \}
-          pop: true
-        - include: main
+        -
+          - meta_scope: meta.class.mc
+          - include: popnow
+        -
+          - match: (?=\S)
+            set:
+              -
+                - meta_scope: meta.block.class.mc
+                - match: '\}'
+                  scope: punctuation.section.block.end.mc
+                  pop: true
+                - match: '\{'
+                  scope: punctuation.section.block.begin.mc
+                  push:
+                    -
+                      - match: '(?=\})'
+                        pop: true
+                      - include: statements
+                - include: else-pop
+        -
+          - match: '(extends)\s*([{{identifier}}\.]+)'
+            captures:
+              1: keyword.operator.inheritance.mc
+              2: entity.other.inherited-class.mc
+            pop: true
+          - include: else-pop
+        -
+          - match: '{{identifier}}'
+            scope: entity.name.class.mc
+            pop: true
+          - include: else-pop
+        -
+          - match: 'class{{identifier_break}}'
+            scope: storage.type.class.mc
+            pop: true
+          - include: else-pop
 
 
+  modules:
+    - match: '(?=\s*module{{identifier_break}})'
+      push:
+        -
+          - meta_scope: meta.namespace.mc
+          - include: popnow
+        -
+          - match: (?=\S)
+            set:
+              -
+                - meta_scope: meta.block.namespace.mc
+                - match: '\}'
+                  scope: punctuation.section.block.end.mc
+                  pop: true
+                - match: '\{'
+                  scope: punctuation.section.block.begin.mc
+                  push:
+                    -
+                      - match: '(?=\})'
+                        pop: true
+                      - include: statements
+                - include: else-pop
+        -
+          - match: '{{identifier}}'
+            scope: entity.name.namespace.mc
+            pop: true
+          - include: else-pop
+        -
+          - match: 'module{{identifier_break}}'
+            scope: storage.type.namespace.mc
+            pop: true
+          - include: else-pop
+
+
+  labels:
+    - match: '(\()(\s*(:){{identifier}})(\))'
+      captures:
+        1: punctuation.section.label.begin.mc
+        2: constant.other.symbol.mc entity.name.label.mc meta.label.mc
+        3: punctuation.definition.symbol.mc
+        4: punctuation.section.label.end.mc
 
   do:
     - match: 'do{{identifier_break}}'
@@ -409,7 +469,7 @@ contexts:
   ternary:
     - match: '\?'
       scope: keyword.operator.ternary.mc
-      set:
+      push:
         -
           - meta_scope: meta.ternary.mc
           - match: ':'

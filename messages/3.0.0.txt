@@ -13,12 +13,13 @@ C H A N G E L O G
 ------------------
 
 Internal:
-
+- better block scope detection (functions, classes, if, for, while..)
 
 Fix:
 - += and -= not registering as a single operator
 - allow floats specified without period, but with explicit cast: 5f
-
+- make labels (:label) register as labels to sublime (for goto-like referencing)
+- comments highlighted correctly in more complex places
 
 Enhancement:
 - Autocomplete definitions now included

@@ -1,11 +1,5 @@
 // SYNTAX TEST "Packages/Sublime-MonkeyC/MonkeyC.sublime-syntax"
 
-if (thing){
- while (thing) {
-
-    }    
-  }
-
 "foobar"
 //<- punctuation.definition.string.begin.mc
 // ^  string.quoted.double.mc
@@ -193,12 +187,13 @@ public function myFunc(arg1, arg2) { return 6; }
 //                                  ^^^^^^^^^^^ meta.block.function.mc
 //                                             ^ punctuation.section.block.end.mc
 
-class MyProjectApp extends App.AppBase {}
+class MyProjectApp extends App.AppBase {  }
 // ^  storage.type.class.mc
-//       ^ entity.name.type.class.mc
-//                    ^ keyword.operator.mc
+//       ^ entity.name.class.mc
+//                    ^ keyword.operator.inheritance.mc
 //                             ^ entity.other.inherited-class.mc
-//                                     ^ punctuation.definition.class.mc
+//                                     ^ punctuation.section.block.begin.mc
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.mc
 
 
 Toybox.thing(sdsd,asdasda);

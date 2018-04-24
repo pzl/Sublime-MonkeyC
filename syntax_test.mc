@@ -100,8 +100,8 @@ using Toybox.System as Sys;
 //                                          ^^^^  constant.numeric.hex.mc
 
   0d 1f
-//^^ constant.numeric.integer.mc
-//   ^^ constant.numeric.integer.mc
+//^^ constant.numeric.float.mc
+//   ^^ constant.numeric.float.mc
 
 instanceof has extends
 //^  keyword.operator.mc

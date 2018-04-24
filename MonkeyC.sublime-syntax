@@ -174,7 +174,7 @@ contexts:
   block:
     - match: '\{'
       scope: punctuation.section.block.begin.mc
-      push:
+      set:
         - meta_scope: meta.block.mc
         - match: '\}'
           scope: punctuation.section.block.end.mc
@@ -305,7 +305,7 @@ contexts:
   do:
     - match: 'do{{identifier_break}}'
       scope: keyword.control.loop.mc
-      set:
+      push:
         -
           - meta_scope: meta.do-while.mc
           - include: popnow
@@ -319,7 +319,7 @@ contexts:
   while:
     - match: 'while{{identifier_break}}'
       scope: keyword.control.loop.mc
-      set:
+      push:
         -
           - meta_scope: meta.while.mc
           - include: popnow
@@ -329,7 +329,7 @@ contexts:
   for:
     - match: 'for{{identifier_break}}'
       scope: keyword.control.loop.mc
-      set:
+      push:
         -
           - meta_scope: meta.for.mc
           - include: popnow
@@ -340,7 +340,7 @@ contexts:
   switch:
     - match: 'switch{{identifier_break}}'
       scope: keyword.control.switch.mc
-      set:
+      push:
         -
           - meta_scope: meta.switch.mc
           - include: popnow
@@ -377,7 +377,7 @@ contexts:
   ifs:
     - match: (?:else\s+if|if){{identifier_break}}
       scope: keyword.control.conditional.mc
-      set:
+      push:
         -
           - meta_scope: meta.conditional.mc
           - include: popnow
@@ -385,7 +385,7 @@ contexts:
         - paren-expression
     - match: else{{identifier_break}}
       scope: keyword.control.conditional.mc
-      set:
+      push:
         -
           - meta_scope: meta.conditional.mc
           - include: popnow

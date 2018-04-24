@@ -179,12 +179,19 @@ and or
 //   ^ keyword.operator.word.mc
 
 
-function myFunc(arg1, arg2) {}
-// ^  meta.function.method.with-parameters.mc storage.type.function.mc
-//         ^  meta.function.method.with-parameters.mc entity.name.function.mc
-//             ^  meta.function.parameters.mc punctuation.section.group.begin.mc
-//                ^  meta.function.parameters.mc variable.parameter.function.mc
-
+public function myFunc(arg1, arg2) { return 6; }
+// ^ storage.modifier.mc
+//        ^ storage.type.function.mc
+//      ^^^^^^^^^^^^^^  meta.function.definition.mc 
+//               ^^^ entity.name.function.mc
+//                    ^ punctuation.section.group.begin.mc
+//                      ^^^^^^^^ meta.function.parameters.mc
+//                      ^ variable.parameter.function.mc
+//                         ^ punctuation.separator.parameter.function.mc
+//                             ^ variable.parameter.function.mc
+//                                 ^ punctuation.section.block.begin.mc
+//                                  ^^^^^^^^^^^ meta.block.function.mc
+//                                             ^ punctuation.section.block.end.mc
 
 class MyProjectApp extends App.AppBase {}
 // ^  storage.type.class.mc

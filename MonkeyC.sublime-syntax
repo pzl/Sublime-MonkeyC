@@ -230,49 +230,61 @@ contexts:
         - match: \)
           scope: punctuation.definition.parameters.end.mc punctuation.definition.group.end.mc
           pop: true
-        - include: comments
         - include: expressions
 
   function-definition:
-    - match: '\b((?:public|private|protected|static)\s+)*(function)\s+({{identifier}})'
-      captures:
-        1: storage.modifier.mc
-        2: storage.type.function.mc
-        3: entity.name.function.mc
-      push:
-        - meta_scope: meta.function.method.with-parameters.mc
-        - include: comments
-        - meta_content_scope: variable.parameter.function.mc
-        - match: (?=\()
-          set:
-            - match: \(
-              scope: meta.function.parameters.mc meta.group.mc punctuation.section.group.begin.mc
-              set: function-parameters
-   
-
-  function-parameters:
-      - meta_content_scope: meta.function.parameters.mc meta.group.mc
-      - match: '\)'
-        scope: punctuation.definition.parameters.mc punctuation.section.group.end.mc
-        set:
-          - meta_content_scope: meta.function.mc
-          - match: \{
-            scope: meta.block.mc punctuation.section.block.begin.mc
-            set: function-body
-          # Exit on unexpected content
+    - match: '(?=\s*function{{identifier_break}})'
+      set:
+        -
           - match: (?=\S)
+            set:
+              -
+                - meta_scope: meta.block.function.mc
+                - match: '\}'
+                  scope: punctuation.section.block.end.mc
+                  pop: true
+                - match: '\{'
+                  scope: punctuation.section.block.begin.mc
+                  push:
+                    - match: '(?=\})'
+                      pop: true
+                    - include: statements
+                - include: else-pop
+        -
+          - match: \(
+            scope: punctuation.section.group.begin.mc
+            set:
+              - meta_scope: meta.function.parameters.mc
+              - match: \)
+                scope: punctuation.section.group.end.mc
+                pop: true
+              - match: ','
+                scope: punctuation.separator.parameter.function.mc
+              - match: '(?={{identifier}}|\{|\[)'
+                push:
+                  -
+                    - match: '='
+                      scope: keyword.operator.assignment.mc
+                    - include: else-pop
+                  -
+                    - match: '{{identifier}}'
+                      scope: meta.binding.name.mc variable.parameter.function.mc
+                    - include: else-pop
+                  - else-pop
+          - include: else-pop
+        -
+          - meta_scope: meta.function.definition.mc
+          - include: popnow
+        -
+          - match: '{{identifier}}'
+            scope: entity.name.function.mc
             pop: true
-      - include: comments
-      - match: '{{identifier}}'
-        scope: variable.parameter.function.mc
-      - match: ','
-        scope: punctuation.separator.mc
-  function-body:
-    - meta_content_scope: meta.function.mc meta.block.mc
-    - match: \}
-      scope: meta.function.mc meta.block.mc punctuation.section.block.end.mc
-      pop: true
-    - include: main
+          - include: else-pop
+        -
+          - match: function{{identifier_break}}
+            scope: storage.type.function.mc
+            pop: true
+          - include: else-pop
 
 
   oop:

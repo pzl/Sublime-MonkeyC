@@ -323,11 +323,15 @@ contexts:
                       - include: statements
                 - include: else-pop
         -
-          - match: '(extends)\s*([{{identifier}}\.]+)'
-            captures:
-              1: keyword.operator.inheritance.mc
-              2: entity.other.inherited-class.mc
-            pop: true
+          - match: 'extends\s*'
+            scope: keyword.operator.inheritance.mc
+            push:
+              - meta_scope: meta.class.inheritance.mc entity.other.inherited-class
+              - match: \.
+                scope: punctuation.accessor.dot.mc
+              #- include: 'scope:support.toybox.mc' # hold off on scoping support names
+              - match: '(?=\{|\s)'
+                pop: true
           - include: else-pop
         -
           - match: '{{identifier}}'

@@ -281,6 +281,9 @@ contexts:
           - meta_scope: meta.function.definition.mc
           - include: popnow
         -
+          - match: 'initialize{{identifier_break}}'
+            scope: entity.name.function.constructor.mc
+            pop: true
           - match: '{{identifier}}'
             scope: entity.name.function.mc
             pop: true

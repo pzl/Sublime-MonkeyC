@@ -327,7 +327,7 @@ contexts:
           - match: 'extends\s*'
             scope: keyword.operator.inheritance.mc
             push:
-              - meta_scope: meta.class.inheritance.mc entity.other.inherited-class
+              - meta_scope: meta.class.inheritance.mc entity.other.inherited-class.mc
               - match: \.
                 scope: punctuation.accessor.dot.mc
               #- include: 'scope:support.toybox.mc' # hold off on scoping support names

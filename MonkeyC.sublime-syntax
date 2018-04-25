@@ -33,6 +33,7 @@ contexts:
     - include: function-definition
     - include: oop
     - include: conditionals
+    - include: imports
     - include: keywords
     - include: expressions
 
@@ -378,6 +379,32 @@ contexts:
         2: constant.other.symbol.mc entity.name.label.mc meta.label.mc
         3: punctuation.definition.symbol.mc
         4: punctuation.section.label.end.mc
+
+
+  imports:
+    - match: 'using{{identifier_break}}'
+      scope: keyword.control.import.using.mc
+      push:
+        -
+          - meta_scope: meta.statement.import.mc
+          - include: popnow
+        -
+          - match: '(as)\s*([{{identifier}}\.]+)'
+            captures:
+              1: keyword.control.import.as.mc
+              2: variable.other.import.alias.mc meta.qualified-name.mc meta.generic-name.mc
+            pop: true
+          - include: else-pop
+        -
+          - match: (?=Toybox)
+            set: 'scope:support.toybox.mc'
+            with_prototype:
+              - match: (?=\s)
+                pop: true
+          - match: '[{{identifier}}\.]+'
+            scope: variable.other.mc meta.qualified-name.mc meta.generic-name.mc
+            pop: true
+          - include: else-pop
 
   do:
     - match: 'do{{identifier_break}}'

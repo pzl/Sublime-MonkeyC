@@ -72,10 +72,12 @@ x += 5
 //^^ keyword.operator.assignment.mc
 
 using Toybox.System as Sys;
-// ^  keyword.control.import.mc
+// ^  keyword.control.import.using.mc
 //       ^  support.module.mc
 //                ^  support.module.mc
-//                   ^  keyword.control.import.mc
+//                   ^  keyword.control.import.as.mc
+//                      ^ variable.other.import.alias.mc
+// ^^^^^^^^^^^^^^^^^^^^^^^ meta.statement.import.mc
 
 50 5l 400.6 4.0d 5.0f  0x500  0xface 0x80000000l
 //<- constant.numeric.integer.mc 

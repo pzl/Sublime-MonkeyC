@@ -6,8 +6,9 @@
 This release comes with some big improvements to the monkeyc🐵 syntax package!
 
 The big highlights are:
-* Autocomplete * - the package now includes autocomplete definitions
-* Nearly full API coverage* - almost all Toybox classes and modules are covered
+* Full Toybox coverage * - just about every module and class have highlight definitions (up to CIQ 3.0)
+* Autocomplete and Snippets * - Autocomplete all Toybox namespace, and helpers for common code blocks
+* Added support for Jungle files
 
 
 In a future release, look forward to SDK integration with:
@@ -21,9 +22,9 @@ C H A N G E L O G
 ------------------
 
 Enhancement:
-- Autocomplete definitions now included
-- Snippets for common blocks (module, class, do, if) and System.println
-- expanded API coverage
+- Autocomplete definitions for simple words now included
+- Snippets for common blocks (module, class, do, if) and common things like Sytstem.println, Lang.Method
+- expanded highlight API coverage
 - Jungle syntax definition
 - Include classes and modules and labels in symbol list (for Goto: symbols, Ctrl+r)
 - Enable Comment toggling (Ctrl+/ or Ctrl+Shift+/) in monkeyc and jungle files

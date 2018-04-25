@@ -16,6 +16,8 @@
 				<string># </string>
 			</dict>
 		</array>
+		<key>cancelCompletion</key>
+		<string>^.*\#.*$</string>
 	</dict>
 </dict>
 </plist>

@@ -9,6 +9,14 @@ The big highlights are:
 * Autocomplete * - the package now includes autocomplete definitions
 * Nearly full API coverage* - almost all Toybox classes and modules are covered
 
+
+In a future release, look forward to SDK integration with:
+- Integrate monkeyc compiler call into Sublime Build system
+- Add simulator running to Sublime Build System
+- Run No Evil and unit test running
+- Developer key generation
+
+
 C H A N G E L O G
 ------------------
 

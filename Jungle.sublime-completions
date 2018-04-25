@@ -1,5 +1,5 @@
 {
-	"scope": "source.jungle",
+	"scope": "source.jungle - comment",
 	"completions": [
 		//key words
 		"sourcePath","resourcePath","barrelPath","excludeAnnotations",

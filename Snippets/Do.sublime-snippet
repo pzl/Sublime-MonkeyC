@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>do...</description>
 	<content><![CDATA[do {
 	${1:// code}

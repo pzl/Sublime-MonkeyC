@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>class...</description>
 	<content><![CDATA[class ${1:ClassName} ${2/.+/extends /}${2:BaseClass} {
 	$0

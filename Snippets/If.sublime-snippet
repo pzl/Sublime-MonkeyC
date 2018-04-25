@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>if...</description>
 	<content><![CDATA[if ($1) {
 	$0

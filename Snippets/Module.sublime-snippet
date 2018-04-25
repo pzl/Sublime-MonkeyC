@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>module...</description>
 	<content><![CDATA[module ${1:MyName} {
 	$0

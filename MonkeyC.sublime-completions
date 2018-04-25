@@ -1,5 +1,5 @@
 {
-	"scope": "source.mc - string",
+	"scope": "source.mc - string - comment",
 	"completions": [
 		// helpers
 		{ "trigger": "System.println\t()", "contents": "System.println($1);" },

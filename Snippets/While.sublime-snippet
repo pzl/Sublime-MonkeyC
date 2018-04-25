@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>while...</description>
 	<content><![CDATA[while ($1) {
 	${2:// code}

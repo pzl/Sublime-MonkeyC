@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>switch...</description>
 	<content><![CDATA[switch ($1) {
 	case ${2:true:}

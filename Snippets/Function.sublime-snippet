@@ -1,5 +1,5 @@
 <snippet>
-	<scope>source.mc - string</scope>
+	<scope>source.mc - string - comment</scope>
 	<description>function...</description>
 	<content><![CDATA[function ${1:myfunc} ($2) {
 	$3

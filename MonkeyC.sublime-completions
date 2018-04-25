@@ -1,6 +1,13 @@
 {
 	"scope": "source.mc - string",
 	"completions": [
+		// helpers
+		{ "trigger": "System.println\t()", "contents": "System.println($1);" },
+		{ "trigger": "method\t()", "contents": "method($1);" },
+
+		//short snippets
+		{ "trigger": "enum\t{}", "contents": "enum {\n\t$1\n}"},
+
 		//key words
 		"as","break","case","catch","class","const","continue","default","do",
 		"else","enum","extends","finally","for","function","has","hidden","if",
@@ -10,10 +17,7 @@
 
 		// common function names
 		"initialize","onStart","onStop","getInitialView","onLayout","onUpdate",
-		"method","getProperty",
-
-		// helpers
-		{ "trigger": "System.println\t()", "contents": "System.println($1);" },
+		"getProperty",
 
 		//Stdlib
 		"Activity", "ActivityMonitor", "ActivityRecording", "Ant", "AntPlus", "Application", "Attention", "Background", "Communications", "Cryptography", "FitContributor", "Graphics", "Gregorian", "Lang", "Math", "Media", "PersistedContent", "PersistedLocations", "Position", "Properties", "Sensor", "SensorHistory", "SensorLogging", "Storage", "StringUtil", "System", "Test", "Time", "Timer", "Toybox", "UserProfile", "WatchUi",

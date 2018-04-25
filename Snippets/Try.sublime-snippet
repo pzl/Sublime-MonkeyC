@@ -1,0 +1,10 @@
+<snippet>
+	<scope>source.mc - string - comment</scope>
+	<description>try/catch</description>
+	<content><![CDATA[try {
+	$1
+} catch (${2:ex}) {
+	$3
+}]]></content>
+	<tabTrigger>try</tabTrigger>
+</snippet>

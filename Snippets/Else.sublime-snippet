@@ -1,0 +1,10 @@
+<snippet>
+	<scope>source.mc - string - comment</scope>
+	<description>if/else</description>
+	<content><![CDATA[if ($1) {
+	$2
+} else {
+	$3
+}]]></content>
+	<tabTrigger>if</tabTrigger>
+</snippet>

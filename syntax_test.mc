@@ -58,12 +58,18 @@ switch (c) { case 5: System.println(5); default: x++; break; }
 //                                        ^ keyword.control.switch.mc
 //                                             ^ punctuation.separator.mc
 
-try catch finally return throw
+try catch () finally return throw
 //^  keyword.control.flow.mc
 //   ^  keyword.control.flow.mc
-//          ^  keyword.control.flow.mc
-//                  ^  keyword.control.flow.mc
+//             ^  keyword.control.flow.mc
+//                    ^  keyword.control.flow.mc
 //                          ^  keyword.control.flow.mc
+
+
+try { foo(thing); } catch (ex instanceof AnException) { throw ex; } finally { foo(0); }
+//^^^^^^^^^^^^^^^ meta.try.mc
+//                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.catch.mc
+//                                                                    ^^^^^^^^^^^^ meta.finally.mc
 
 x += 5
 //^^ keyword.operator.assignment.mc

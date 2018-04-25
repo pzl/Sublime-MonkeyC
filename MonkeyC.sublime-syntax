@@ -32,7 +32,7 @@ contexts:
       pop: true
     - include: function-definition
     - include: oop
-    - include: conditionals
+    - include: block-contexts
     - include: imports
     - include: keywords
     - include: expressions
@@ -55,13 +55,14 @@ contexts:
     - include: arrays
     - include: dicts
 
-  conditionals:
+  block-contexts:
     - include: switch
     - include: for
     - include: do
     - include: while
     - include: ifs
     - include: ternary
+    - include: try
 
   comments:
     - match: \/\/
@@ -484,7 +485,29 @@ contexts:
         - include: statements
     - include: else-pop
 
-
+  try:
+    - match: 'try{{identifier_break}}'
+      scope: keyword.control.flow.mc
+      push:
+        -
+          - meta_scope: meta.try.mc
+          - include: popnow
+        - block-scope
+    - match: 'catch{{identifier_break}}'
+      scope: keyword.control.flow.mc
+      push:
+        -
+          - meta_scope: meta.catch.mc
+          - include: popnow
+        - block-scope
+        - paren-expression
+    - match: 'finally{{identifier_break}}'
+      scope: keyword.control.flow.mc
+      push:
+        -
+          - meta_scope: meta.finally.mc
+          - include: popnow
+        - block-scope
   ifs:
     - match: (?:else\s+if|if){{identifier_break}}
       scope: keyword.control.conditional.mc

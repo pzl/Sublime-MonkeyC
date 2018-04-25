@@ -3,7 +3,8 @@
 	"completions": [
 		// helpers
 		{ "trigger": "System.println\t()", "contents": "System.println($1);" },
-		{ "trigger": "method\t()", "contents": "method($1);" },
+		{ "trigger": "method\t()", "contents": "method(${1::fn});" },
+		{ "trigger": "Lang.Method\t()", "contents": "Lang.Method(${1:Module}, ${2::thing});"},
 
 		//short snippets
 		{ "trigger": "enum\t{}", "contents": "enum {\n\t$1\n}"},

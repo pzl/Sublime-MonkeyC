@@ -18,5 +18,6 @@
 		"fr230","fr235","fr630","fr935","fr735xt","fr920xt",
 		"fr645","fr645m",
 		{"trigger":"project\tmanifest...","contents":"project.manifest = manifest.xml"},
+		{ "trigger": "resourcePath\t...", "contents": "${1:fenix5}.resourcePath = \\$($1.resourcePath);${2:$1-resources}" },
 	]
 }

@@ -38,6 +38,10 @@ contexts:
     - include: expressions
 
   identifiers:
+    - match: '\b{{identifier}}(?=\.)'
+      scope: variable.other.object.mc
+    - match: '(?<=\.){{identifier}}\b'
+      scope: variable.other.property.mc meta.property.object.mc
     - match: '\b{{identifier}}\b'
       scope: variable.other.mc
 
@@ -191,7 +195,9 @@ contexts:
         - include: statements
 
   separators:
-    - match: '\.|\,'
+    - match: '\.'
+      scope: punctuation.accessor.mc
+    - match: '\,'
       scope: punctuation.separator.mc
     - match: ';'
       scope: punctuation.terminator.mc

@@ -227,7 +227,13 @@ class MyProjectApp extends App.AppBase {  }
 //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ meta.class.mc
 
 
-Toybox.thing(sdsd,asdasda);
+
+
+thing.property
+// ^ variable.other.object.mc
+//   ^ punctuation.accessor.mc
+//     ^ meta.property.object.mc
+//     ^ variable.other.property.mc
 
 var array = [ [1,2], [3,4] ];
 

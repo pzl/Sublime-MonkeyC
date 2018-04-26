@@ -28,6 +28,7 @@ Enhancement:
 - Jungle syntax definition
 - Include classes and modules and labels in symbol list (for Goto: symbols, Ctrl+r)
 - Enable Comment toggling (Ctrl+/ or Ctrl+Shift+/) in monkeyc and jungle files
+- add syntax def for objects and properties (e.g. foo.bar )
 
 Fix:
 - += and -= not registering as a single operator

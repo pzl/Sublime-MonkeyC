@@ -1,0 +1,26 @@
+3.1.0:
+-------
+🐵🍌
+
+This release comes with better SDK integration, and connects with the Sublime Build system
+
+
+
+C H A N G E L O G
+------------------
+
+Enhancement:
+
+
+Fix:
+
+
+Internal:
+
+
+
+Todo:
+- Integrate monkeyc compiler call into Sublime Build system
+- Add simulator running to Sublime Build System
+- Run No Evil and unit test running
+- Developer key generation

@@ -22,6 +22,16 @@ Or.
 This package is currently not supported on ST2, as it uses `.sublime-syntax` files, a new feature in ST3. 
 
 
+Features
+---------
+
+- **Syntax Highlighting**: including special coloring for CIQ modules in the Toybox namespace. Includes advanced syntax highlighting for `.jungle` files
+- **Autocomplete**: for language keywords like `instanceof`, `break` and full snippets for things like `module`s and `class`es. Autocompletes device names, qualifiers, and languages in jungle files.
+- **Comment-Toggle**: Select some lines and hit `Ctrl-/` to toggle comments on or off. Works in `.mc` and `.jungle`. (use `Ctrl-Shift-/` for block comments)
+- **Go-To Symbols**: Adds module, class, and function names to the Sublime symbol list, as well as `(:annotations)`. Hit `Ctrl-r` to search symbols in current file, or `Ctrl-Shift-r` to search symbols in the whole project.
+
+
+
 Versions
 --------
 

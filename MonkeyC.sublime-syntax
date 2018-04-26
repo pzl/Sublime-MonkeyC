@@ -232,17 +232,40 @@ contexts:
         - include: statements
 
   function-call:
-    - match: '(?:\b|\.)({{identifier}})(\()'
-      captures:
-        1: variable.function.mc
-        2: punctuation.definition.parameters.begin.mc punctuation.section.group.begin.mc
+    - match: '(?<=\.)(?={{identifier}}\()'
       push:
-        - meta_scope: meta.function-call.mc
-        - meta_content_scope: meta.function-call.parameters.mc
-        - match: \)
-          scope: punctuation.definition.parameters.end.mc punctuation.definition.group.end.mc
+        - fn-arguments
+        - fn-call-method
+        - fn-name
+    - match: '(?={{identifier}}\()'
+      push:
+        - fn-arguments
+        - fn-call-scope
+        - fn-name
+
+  fn-arguments:
+    - match: '\('
+      scope: punctuation.section.group.begin.mc
+      set:
+        - meta_scope: meta.function-call.arguments.mc
+        - match: ','
+          scope: punctuation.separator.comma.mc
+        - match: '\)'
+          scope: punctuation.section.group.end.mc
           pop: true
         - include: expressions
+  fn-call-method:
+    - meta_scope: meta.function-call.method.mc
+    - include: popnow
+  fn-call-scope:
+    - meta_scope: meta.function-call.mc
+    - include: popnow
+  fn-name:
+    - include: 'scope:support.toybox.mc'
+    - match: '{{identifier}}'
+      scope: variable.function.mc
+      pop: true
+    - include: else-pop
 
   function-definition:
     - match: '(?=\s*function{{identifier_break}})'

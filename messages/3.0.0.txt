@@ -36,8 +36,10 @@ Fix:
 - make annotations (:label) register as labels to sublime (for goto-like referencing)
 - comments highlighted correctly in more complex places
 - add scope resolution definitions to syntax: self, me, $.
+- builtin methods now highlight correctly (e.g. myvar.toString())
 
 Internal:
 - better block scope detection (functions, classes, if, for, while..)
 - better full-statement syntax scopes ("using X as..")
 - much better annotation (:test) (:minSdk("2.3.0")) support
+- better function-call syntax

@@ -161,7 +161,7 @@ if ( a < 5 ) { }
 if(!failed)
 //<- keyword.control.conditional.mc
 
-
+// quick stray-bracket nesting visual test
 Test.assert( ((result > 436) && (result < 437)));
 
 
@@ -234,6 +234,34 @@ thing.property
 //   ^ punctuation.accessor.mc
 //     ^ meta.property.object.mc
 //     ^ variable.other.property.mc
+
+foo();
+//^ meta.function-call.mc
+//^ variable.function.mc
+
+thing.foo();
+//^^ variable.other.object.mc
+//   ^ punctuation.accessor.mc
+//    ^^^ variable.function.mc
+//    ^^^ meta.function-call.method.mc - meta.function-call.arguments.mc
+//       ^^ meta.function-call.arguments.mc
+//       ^ punctuation.section.group.begin.mc
+//        ^ punctuation.section.group.end.mc
+
+
+thing.getProperty();
+//    ^^^^^^^^^ support.function.mc
+
+thing.foo(0, 1, x);
+//^^ variable.other.object.mc
+//   ^ punctuation.accessor.mc
+//    ^^^ variable.function.mc
+//    ^^^ meta.function-call.method.mc
+//        ^^^^^^^ meta.function-call.arguments.mc
+//       ^ punctuation.section.group.begin.mc
+//         ^ punctuation.separator.comma.mc
+//               ^ punctuation.section.group.end.mc
+
 
 var array = [ [1,2], [3,4] ];
 

@@ -532,17 +532,13 @@ contexts:
     - match: (?:else\s+if|if){{identifier_break}}
       scope: keyword.control.conditional.mc
       push:
-        -
-          - meta_scope: meta.conditional.mc
-          - include: popnow
+        - conditional-scope
         - block-scope
         - paren-expression
     - match: else{{identifier_break}}
       scope: keyword.control.conditional.mc
       push:
-        -
-          - meta_scope: meta.conditional.mc
-          - include: popnow
+        - conditional-scope
         - block-scope
 
   ternary:
@@ -557,6 +553,9 @@ contexts:
           - include: expressions
           - include: else-pop
 
+  conditional-scope:
+    - include: meta.conditional.mc
+    - include: popnow
 
   block-scope:
     - include: block

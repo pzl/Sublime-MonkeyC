@@ -25,6 +25,10 @@ This package is currently not supported on ST2, as it uses `.sublime-syntax` fil
 Versions
 --------
 
+### 3.0.0
+
+Major syntax rules overhaul. Includes autocomplete, snippets, jungle file syntax, go-to symbols (module, class, function names as well as annotations), comment-toggling (Ctl-/), and much much better coloring and other-plugin support. See the [Release Notes](messages/3.0.0.txt) for full details.
+
 ### 2.1.0
 
 Updates to include new packages in Connect IQ 3.0.0 (beta)

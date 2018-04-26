@@ -560,7 +560,7 @@ contexts:
           - include: else-pop
 
   conditional-scope:
-    - include: meta.conditional.mc
+    - meta_scope: meta.conditional.mc
     - include: popnow
 
   block-scope:

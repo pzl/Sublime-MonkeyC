@@ -145,7 +145,7 @@ contexts:
     - match: '(?:\b|\s*)((:){{identifier}})\b'
       captures:
         1: constant.other.symbol.mc
-        2: punctuation.definition.label.mc
+        2: punctuation.definition.symbol.mc
 
   numbers:
     - match: '([0-9]+(\.[0-9]+[df]?|[df])){{identifier_break}}'
@@ -299,7 +299,7 @@ contexts:
   oop:
     - include: classes
     - include: modules
-    - include: labels
+    - include: annotations
 
   classes:
     - match: '(?=\s*class{{identifier_break}})'
@@ -380,13 +380,33 @@ contexts:
           - include: else-pop
 
 
-  labels:
-    - match: '(\()(\s*(:){{identifier}})(\))'
-      captures:
-        1: punctuation.section.label.begin.mc
-        2: constant.other.symbol.mc entity.name.label.mc meta.label.mc
-        3: punctuation.definition.symbol.mc
-        4: punctuation.section.label.end.mc
+  annotations:
+    - match: '(?=\(\s*:)'
+      push:
+        -
+          - meta_scope: meta.annotation.mc
+          - include: popnow
+        -
+          - match: '\)'
+            scope: punctuation.section.annotation.end.mc
+            pop: true
+          - include: else-pop
+        -
+          - match: ':'
+            scope: punctuation.definition.symbol.mc constant.other.symbol.mc
+            push:
+              - meta_scope: entity.name.label.mc
+              - match: '{{identifier}}'
+                scope: constant.other.symbol.mc
+              - include: strings
+              - include: paren-grouping
+              - match: '(?=(\s|\)))'
+                pop: true
+          - include: else-pop
+        -
+          - match: '\('
+            scope: punctuation.section.annotation.begin.mc
+            pop: true
 
 
   imports:

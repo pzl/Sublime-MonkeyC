@@ -129,8 +129,31 @@ var function f(){} const
 //                   ^ storage.type.mc
 
 :symbol :my_symbol
+//<- punctuation.definition.symbol.mc
 //^  constant.other.symbol.mc
 //         ^  constant.other.symbol.mc
+
+
+  (:symbol)
+//^ punctuation.section.annotation.begin.mc
+//^^^^^^^^^ meta.annotation.mc
+// ^^^^^^^ entity.name.label.mc
+//        ^ punctuation.section.annotation.end.mc
+
+ (:symbol1 :symbol2)
+//^^^^^^^^^^^^^^^^^^ meta.annotation.mc
+//^^^^^^^^ entity.name.label.mc
+//        ^ - entity.name.label.mc
+//          ^^^^^^^ entity.name.label.mc
+
+(:minSdk("2.3.0"))
+//^^^^^^^^^^^^^^ meta.annotation.mc entity.name.label.mc
+// I don't even know what's happening here
+
+
+foo(:thing)
+//   ^ - entity.name.label.mc
+//   ^^^ - meta.annotation.mc
 
 if ( a < 5 ) { }
 //     ^  keyword.operator.comparison.mc

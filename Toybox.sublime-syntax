@@ -11,7 +11,7 @@ variables:
 contexts:
   main:
     - match: '(\b|\.)(Activity(Monitor|Recording)?|Ant(Plus)?|Application|Attention|Background|Communications|Cryptography|FitContributor|Graphics|Gregorian|Lang|Math|Media|Persisted(Content|Locations)|Position|Properties|Sensor(History|Logging)?|Storage|StringUtil|System|Test|Time(r)?|Toybox|UserProfile|WatchUi|Rez)(\b|\.)'
-      scope: support.module.mc meta.path.mc
+      scope: support.module.mc support.class.barrel.mc meta.path.mc
     - match: |-
           (?x)(\b|\.)(
             AccelerometerData|

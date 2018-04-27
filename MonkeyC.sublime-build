@@ -1,0 +1,38 @@
+{
+  "selector": "source.mc",
+  "working_dir": "${folder}",
+  "shell_cmd": "monkeyc -w -o $folder/build/${project_base_name:App}.prg -f $folder/monkey.jungle -y ~/tmp/ciq_developer_key",
+  "env": {
+    "PATH": "~/dev/connectiq/connectiq-sdk-lin-3.0.0-beta1/bin/:$PATH"
+  },
+  "keyfiles": ["monkey.jungle","manifest.xml"],
+  "syntax": "MonkeyCBuild.sublime-syntax",
+  "file_regex": "([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$",
+  "variants": [
+    {
+      "name": "Run Simulator",
+      "shell_cmd": "connectiq && monkeydo $folder/build/${project_base_name:App}.prg ${device:fenix5}",
+      "windows": {
+        "cmd": ["ls", "-l", "*"]
+      }
+    },
+    {
+      "name": "Build Barrel",
+      "shell_cmd": "barrelbuild -o $folder/build/${project_base_name:App}.barrel $folder/monkey.jungle"
+    },
+    {
+      "name": "Barrel Test",
+      "shell_cmd": "barreltest -o $folder/build/${project_base_name:App}.barrel $folder/monkey.jungle -d ${device:fenix5}"
+    }
+    { "name": "Run No Evil",
+      "cmd": ["wc", "$file"]
+    },
+    { "name": "Unit Test",
+      "shell_cmd": "monkeyc -w -o $folder/build/${project_base_name:App}.prg -f $folder/monkey.jungle -y ~/tmp/ciq_developer_key --unit-test && connectiq && monkeydo $folder/build/${project_base_name:App}.prg ${device:fenix5} -t"
+    },
+    {
+      "name": "Generate Developer Key",
+      "shell_cmd": "openssl genrsa 4096 | openssl pkcs8 -topk8 -inform PEM -outform DER -out ~/tmp/ciq_developer_key -nocrypt"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: MonkeyC Compiler Output
+hidden: true
+scope: source.monkeyc_output
+contexts:
+  main:
+    - match: '([^:\n]*):([0-9]+): '
+      scope: entity.name.filename
+    - match: '\b(WARNING|ERROR): '
+      scope: message.error keyword.other.error
+    - match: '^\[.+\]$'
+      scope: comment
+    - match: \W\'
+      scope: punctuation.definition.string.begin.mc
+      push:
+        - meta_scope: string.quoted.single.mc
+        - match: \\.
+          scope: constant.character.escape.mc
+        - match: "'"
+          scope: punctuation.definition.string.end.mc
+          pop: true

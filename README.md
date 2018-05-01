@@ -20,7 +20,7 @@ Or.
 
 ### Configuration
 
-Once installed, you should go to `Preferences > Package Settings > MonkeyC > Settings` and put in the path to your Connect IQ SDK ([download](https://developer.garmin.com/connect-iq/sdk/) if you haven't already). And put in the path to your developer key. If you don't have a key and just want to generate one, you can use `Tools > MonkeyC > Generate Developer Key` to have this plugin make one, and update your key path for you.
+Once installed, you should go to `Preferences > Package Settings > MonkeyC > Settings` and put in the path to your Connect IQ SDK ([download](https://developer.garmin.com/connect-iq/sdk/) if you haven't already). And put in the path to your developer key. If you don't have a key and just want to generate one, you can use `Tools > MonkeyC > Generate Developer Key` (or "MonkeyC: Generate Developer Key" from the Command Palette) to have this plugin make one, and update your key path for you.
 
 
 
@@ -43,12 +43,12 @@ Features
 
 ### Building (when connected with the SDK)
 
-- **Compile**: You can compile connect iq apps (Applications, watch faces, data fields) and Barrels (modules).
-- **Simulate**: The plugin can launch and connect to the simulator for you
+- **Compile**: You can compile connect iq apps (Applications, watch faces, data fields) and Barrels (modules). You can use the Sublime Build system (`ctrl-b` or `ctrl-shift-b` or the Command Palette: "MonkeyC: Build ...")
+- **Simulate**: The plugin can launch and connect to the simulator for you.
 - **Test**: Run assertions (through the simulator) and unit tests, similar to **Run No Evil** from the official Eclipse Plug-in.
 - **Package**: Compile a `.iq` app ready for uploading and publishing to the Connect IQ Store
 - **Side-load**: Build for a device, to side-load it onto a device locally
-- **Key Generation**: Don't have a developer key? Go to `Tools > MonkeyC > Generate Developer Key` and now you do! (uses `openssl` to make an RSA key, formatted properly)
+- **Key Generation**: Don't have a developer key? Go to `Tools > MonkeyC > Generate Developer Key` (or the Command Palette) and now you do! (uses `openssl` to make an RSA key, formatted properly)
 - **App ID Generation**: Each Connect IQ App needs a special ID (UUID). The plugin can generate random UUIDs for you, and update your `manifest.xml` automatically
 
 

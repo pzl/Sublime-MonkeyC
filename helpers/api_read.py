@@ -3,6 +3,13 @@ from bs4 import BeautifulSoup
 import sys
 import re
 
+"""
+	This is not part of the runnable plugin.
+	Rather, this file parses an SDK's doc/ folder to pull out all the classes,
+	methods, constants, etc. Makes it easier for diff-ing newly added methods
+	between SDKs, and adding things to the syntax files.
+"""
+
 file_ignore_list = [
 	"class_list.html",
 	"frames.html",

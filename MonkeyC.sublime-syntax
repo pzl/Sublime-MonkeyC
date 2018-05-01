@@ -49,7 +49,7 @@ contexts:
     - include: numbers
     - include: string_symbols
     - include: strings
-    - include: chars
+    #- include: chars #@todo: missing
     - include: block-types
     - match: '\b(true|false|null|NaN)\b'
       scope: constant.language.mc

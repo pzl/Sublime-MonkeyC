@@ -1,0 +1,44 @@
+[
+	{
+		"caption": "MonkeyC: Build Project",
+		"command": "monkey_build"
+	},
+	{
+		"caption": "MonkeyC: Simulate",
+		"command": "monkey_build"
+	},
+	{
+		"caption": "MonkeyC: Unit Test",
+		"command": "monkey_build"
+	},
+	{
+		"caption": "MonkeyC: Build for Device",
+		"command": "monkey_build"
+	},
+	{
+		"caption": "MonkeyC: Package for Release",
+		"command": "monkey_build"
+	},
+	{
+		"caption": "MonkeyC: Generate Developer Key",
+		"command": "monkey_generate",
+		"args": {
+			"gen": "key"
+		}
+	},
+	{
+		"caption": "MonkeyC: Generate App ID",
+		"command": "monkey_generate",
+		"args": {
+			"gen": "uuid"
+		}
+	},
+	{
+		"caption": "MonkeyC: Create App",
+		"command": "monkey_build"
+	},
+	{
+		"caption": "MonkeyC: Create Barrel",
+		"command": "monkey_build"
+	}
+]

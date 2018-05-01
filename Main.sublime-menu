@@ -1,0 +1,61 @@
+[
+	{
+		"id":"tools",
+		"children": [
+			/*{
+				"caption": "Packages",
+				"id": "packages",
+				"children": [*/
+					{
+						"caption": "MonkeyC",
+						"children": [
+							{
+								"id": "mc-gen-key",
+								"caption": "Generate Developer Key",
+								"command": "monkey_generate",
+								"args": {
+									"gen": "key"
+								}
+							},
+							{
+								"id": "gen-UUID",
+								"caption": "Generate App ID",
+								"command": "monkey_generate",
+								"args": {
+									"gen": "uuid"
+								}
+							}
+						]
+					}
+				]
+			/*}
+		]*/
+	},
+	{
+		"caption": "Preferences",
+		"mnemonic": "n",
+		"id":"preferences",
+		"children": [
+			{
+				"caption": "Package Settings",
+				"mnemonic": "P",
+				"id": "package-settings",
+				"children": [
+					{
+						"caption": "MonkeyC",
+						"children": [
+							{
+								"caption": "Settings",
+								"args": {
+									"base_file": "${packages}/MonkeyC/Building/MonkeyCBuild.sublime-settings",
+									"default": "{\n\t\"sdk\":\"\",\n\t\"key\":\"\"\n}"
+								},
+								"command": "edit_settings"
+							},
+						]
+					}
+				]
+			}
+		]
+	}
+]

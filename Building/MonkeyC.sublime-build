@@ -1,0 +1,30 @@
+{
+  "target": "monkey_build",
+  "selector": "source.mc",
+  "keyfiles": ["monkey.jungle","manifest.xml"],
+  "do": "build", // works for both
+  "cancel": {"kill":true},
+  "variants": [
+    {
+      "name": "Simulate", // apps can simulate, barrels cannot
+      "do": "simulate",
+      "device": "prompt"
+    },
+    {
+      "name": "Unit Test", // works for both
+      "do": "test",
+      "tests": true,
+      "device": "prompt"
+    },
+    {
+      "name": "Build for device...", // app only, used for sideloading
+      "device": "prompt", // choose an SDK target and device
+      "sdk": "prompt"
+    },
+
+    {
+      "name": "Package for Release", // app only, creates IQ
+      "do": "package"
+    }
+  ]
+}

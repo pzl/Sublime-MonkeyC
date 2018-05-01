@@ -1,0 +1,53 @@
+%YAML 1.2
+---
+name: MonkeyDo Unit Test Output
+hidden: true
+scope: source.monkeydo_tests
+
+variables:
+  id_start: '[[:alpha:]_]'
+  identifier: '{{id_start}}[[:alnum:]_]*'
+
+contexts:
+  main:
+    - match: (?=WARNING|DEBUG|ERROR\s+\(\d+:\d+\):)
+      push:
+        - meta_scope: comment
+        - match: 'WARNING|DEBUG|ERROR'
+          scope: entity.loglevel
+        - match: .*$
+          scope: ''
+          pop: true
+      scope: comment
+    - match: PASS
+      scope: message.pass constant.language.pass keyword.other.pass
+    - match: ERROR
+      scope: message.pass constant.language.pass keyword.other.pass
+    - match: '^[\-\=]+$'
+      scope: comment.line
+    - match: 'ASSERTION FAILED'
+      scope: message.fail constant.language.fail keyword.other.fail
+    - match: FAIL(ED)?
+      scope: message.fail constant.language.fail keyword.other.fail
+    - match: '/([^:\n]*):([0-9]+)'
+      scope: entity.name.filename
+    - match: '\d+(\.\d+)?'
+      scope: constant.numeric
+    - match: '{{identifier}}(?=\sin)'
+      scope: entity.name.function
+    - match: \W\'
+      scope: punctuation.definition.string.begin.mc
+      push:
+        - meta_scope: string.quoted.single.mc
+        - match: \\.
+          scope: constant.character.escape.mc
+        - match: "'"
+          scope: punctuation.definition.string.end.mc
+          pop: true
+
+  popnow:
+    - match: ''
+      pop: true
+  else-pop:
+    - match: '(?=\S)'
+      pop: true

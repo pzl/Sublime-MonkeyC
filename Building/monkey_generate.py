@@ -10,6 +10,7 @@ class MonkeyGenerateCommand(sublime_plugin.WindowCommand):
 
 	def get_settings(self):
 		self.vars = self.window.extract_variables()
+		self.settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
 
 	def run(self, *args, **kwargs):
 		self.get_settings()

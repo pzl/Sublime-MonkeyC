@@ -1,4 +1,4 @@
-// SYNTAX TEST "Packages/MonkeyC/MonkeyC.sublime-syntax"
+// SYNTAX TEST "Packages/MonkeyC/Syntax/MonkeyC.sublime-syntax"
 
 "foobar"
 //<- punctuation.definition.string.begin.mc

@@ -3,7 +3,7 @@ import sublime_plugin
 
 import os
 import uuid
-from .helpers.manifest import Manifest
+from MonkeyC.helpers.manifest import Manifest
 
 class MonkeyGenerateCommand(sublime_plugin.WindowCommand):
 	"""Automating creating some simple things, uuids and private keys"""

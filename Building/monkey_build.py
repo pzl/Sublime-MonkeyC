@@ -6,8 +6,8 @@ import threading
 import os
 
 import socket # for checking simulator tcp port
-from .helpers.manifest import Manifest
-from .helpers.sdk import SDK
+from MonkeyC.helpers.manifest import Manifest
+from MonkeyC.helpers.sdk import SDK
 
 noop = lambda *x, **y: None
 
@@ -68,6 +68,8 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		return "something something"
 
 	def input(self, *args, **kwargs):
+		# @todo: skip inputs if there is only one choice
+		# e.g. only one supported device
 		self.get_settings()
 		self.device_select.set_sdk(self.sdk_path)
 		self.device_select.set_work_dir(self.vars["folder"])
@@ -76,6 +78,7 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 	def get_settings(self):
 		self.settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
+		# @todo: override with project settings
 
 		self.sdk_path = self.settings.get("sdk","")
 		self.bin = os.path.expanduser(os.path.join(self.sdk_path,"bin"))
@@ -378,3 +381,6 @@ class DeviceInput(sublime_plugin.ListInputHandler):
 
 	def next_input(self, args):
 		return SDKInput(self.sdk_path, self.device)
+
+
+# Random idea: sniff the TCP traffic between simulator and monkeydo.. ?

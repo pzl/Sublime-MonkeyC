@@ -17,7 +17,7 @@
       "device": "prompt"
     },
     {
-      "name": "Build for device...", // app only, used for sideloading
+      "name": "For device...", // app only, used for sideloading
       "device": "prompt", // choose an SDK target and device
       "sdk": "prompt"
     },

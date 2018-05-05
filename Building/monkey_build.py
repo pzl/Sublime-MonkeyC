@@ -132,9 +132,11 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		self.compiler = Compiler(self.bin,self.vars["folder"],self.key)
 
 
-		compiler_args = { "flags": [], "name": "App.prg" }
-		if "device" in kwargs:
-			compiler_args["flags"].append("-d {}".format(kwargs["device"],))
+		compiler_args = {
+			"flags": kwargs["flags"] if "flags" in kwargs else [],
+			"name": kwargs["name"] if "name" in kwargs else "App.prg",
+			"device": kwargs["device"] if "device" in kwargs and kwargs["device"] != "prompt" else False
+		}
 		if "sdk" in kwargs:
 			compiler_args["flags"].append("-s {}".format(kwargs["sdk"].replace(".x",".0"),))
 			#todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*

@@ -83,10 +83,10 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		self.simulator = Simulator(self.bin)
 
 		self.panel.print("recompiling for device")
-		self.window.run_command("monkey_build",{"device":"fenix5_sim"})
+		self.window.run_command("monkey_build",{"device":"{}_sim".format(kwargs["device"],)})
 
 		self.panel.print("[running simulator]")
-		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), "fenix5")
+		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), kwargs["device"])
 		if "tests" in kwargs and kwargs["tests"] == True:
 			pass # run in test mode
 		self.panel.print(cmd)

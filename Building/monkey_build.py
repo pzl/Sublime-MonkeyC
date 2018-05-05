@@ -12,13 +12,9 @@ noop = lambda *x, **y: None
 
 """
 	TODO:
-		- SDK Path management
 		- change output panel syntax based on used command
 		- ability to include extra jungle files (for apps and barrels)
 		- build using non-jungle style (-w -z resources, etc)
-		- build for device
-			- device
-			- release ver y/n
 		- "IDE management"
 			- project scaffolding/setup
 				- see: SDK/bin/projectInfo.xml and templates/

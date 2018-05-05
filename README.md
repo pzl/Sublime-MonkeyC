@@ -3,7 +3,7 @@ MonkeyC
 
 This is a [Sublime Text](http://www.sublimetext.com/) language definition and plugin for the [MonkeyC](http://developer.garmin.com/connect-iq/monkey-c/) language. MonkeyC is a [Garmin](http://www.garmin.com/)-developed language for the [ConnectIQ](http://developer.garmin.com/connect-iq/overview) platform, that runs on many of their devices, like smart watches.
 
-When you download and set up the [Connect IQ SDK](https://developer.garmin.com/connect-iq/sdk/) this plugin will also allow you to build Connect IQ projects, Simulate and test them, and package for releasing and uploading.
+When you download and set up the [Connect IQ SDK](https://developer.garmin.com/connect-iq/sdk/) this plugin will also allow you to build Connect IQ projects, Simulate and test them, and package for releasing and uploading to the Connect IQ Store.
 
 **File Extension**: `.mc`
 
@@ -43,14 +43,43 @@ Features
 
 ### Building (when connected with the SDK)
 
-- **Compile**: You can compile connect iq apps (Applications, watch faces, data fields) and Barrels (modules). You can use the Sublime Build system (`ctrl-b` or `ctrl-shift-b` or the Command Palette: "MonkeyC: Build ...")
-- **Simulate**: The plugin can launch and connect to the simulator for you.
-- **Test**: Run assertions (through the simulator) and unit tests, similar to **Run No Evil** from the official Eclipse Plug-in.
-- **Package**: Compile a `.iq` app ready for uploading and publishing to the Connect IQ Store
-- **Side-load**: Build for a device, to side-load it onto a device locally
+- **Compile**: You can compile connect iq apps (Applications, watch faces, data fields) and Barrels (modules). You can use the Sublime Build system (`ctrl-b` or the Command Palette: "MonkeyC: Build ...")
+- **Simulate**: The plugin can launch and connect to the simulator for you. ("MonkeyC: Simulate")
+- **Test**: Run assertions (through the simulator) and unit tests, similar to **Run No Evil** from the official Eclipse Plug-in. ("MonkeyC: Test" -- this will re-compile your project with the `-t` test flag, and run the simulator with the `-t` test flag)
+- **Package**: Compile a `.iq` app ready for uploading and publishing to the Connect IQ Store ("MonkeyC: Package for Release". This strips debug and test information, includes any `:release` labels)
+- **Side-load**: Build for a device, to side-load it onto a device locally ("MonkeyC: Build for Device" in command palette)
 - **Key Generation**: Don't have a developer key? Go to `Tools > MonkeyC > Generate Developer Key` (or the Command Palette) and now you do! (uses `openssl` to make an RSA key, formatted properly)
 - **App ID Generation**: Each Connect IQ App needs a special ID (UUID). The plugin can generate random UUIDs for you, and update your `manifest.xml` automatically
 
+
+If you wanted to customize any of these actions, or make them key-bindings, they are available as sublime commands:
+
+#### monkey_build
+
+*compiles* your project. Accepts the following arguments:
+
+- **do** _string_ (optional): `"release"` or `"test"`. 
+    - `release` applies the `-r -e` flags to the compiler, and makes the default file extension `.iq`
+    - `test` applies the `-t` flag for applications. For barrels, it runs the `barreltest` command to run unit tests
+- **name** _string_ (optional): the file name of the generated app. Defaults to `App.prg` (or `App.iq` for release)
+- **device** _string_ (optional): adds `-d <device>` as a compiler option. Use the string `"prompt"` to have the plugin ask for device selection each time (based on the supported devices in your `manifest.xml` file)
+- **sdk** _string_ (optional): adds `-s <sdk>` as a compiler option to target an SDK. Use the string `"prompt"` to have the plugin determine the supported SDK targets for the given device (a device is required).
+- **tests** _boolean_ (optional): if true, runs the simulator
+- **flags** _list_ (optional): Any additional flags or command-line arguments you wish to specify. E.g. `run_command("monkey_build",{"flags":["-r"]})` to run a simple compile with the release flag (disables asserts, debug things).
+
+#### monkey_simulate
+
+runs the Connect IQ simulator. (Implicitly triggers a `monkey_build` for simulation device) Accepts the following arguments:
+
+- **device** _string_ REQUIRED: the device to simulate on. Use the string "prompt" to have the plugin ask you for a device each time, based on your list in `manifest.xml`.
+- **tests** _boolean_ (optional): If true, runs the unit tests in the project. Assertions are run regardless, unless it is a release build.
+
+
+#### monkey_generate
+
+Small helper creators. Like developer keys, or app IDs. Accepts the following arguments:
+
+- **gen** _string_ REQUIRED: `key` to make a developer key, and update your settings with it. `uuid` to make a new App ID and update your `manifest.xml` with it
 
 
 Versions

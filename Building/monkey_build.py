@@ -121,9 +121,9 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		self.get_settings()
 
-		self.panel = Panel(self.window)
-		self.panel.print("[{}]",*args)
-		self.panel.print("[{}]",str(kwargs))
+		#self.panel = Panel(self.window)
+		#self.panel.print("[{}]",*args)
+		#self.panel.print("[{}]",str(kwargs))
 
 
 		# apps compile with monkeyc, barrels(modules) with barrelbuild
@@ -147,13 +147,19 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 			else:
 				cmd = self.compiler.compile("barrelbuild")
 
-		self.panel.print(cmd)
+		#self.panel.print(cmd)
+		self.window.run_command("exec",{
+			"shell_cmd": cmd,
+			"file_regex":r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$",
+			"syntax": "MonkeyCBuild.sublime-syntax"
+		})
+
 
 		if "tests" in kwargs and kwargs["tests"] == True:
 			self.window.run_command("monkey_simulate",{ "tests":True })
 
 
-		self.panel.cleanup()
+		#self.panel.cleanup()
 
 		sublime.status_message("Build Finished") # puts text at the bottom
 

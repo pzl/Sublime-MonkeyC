@@ -1,2 +1,3 @@
 from MonkeyC.Building.monkey_build import MonkeyBuildCommand
 from MonkeyC.Building.monkey_generate import MonkeyGenerateCommand
+from MonkeyC.Building.monkey_simulate import MonkeySimulateCommand

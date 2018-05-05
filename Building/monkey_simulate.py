@@ -50,10 +50,6 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		self.device_select.set_sdk(self.sdk_path)
 		self.device_select.set_work_dir(self.vars["folder"])
 		return self.device_select
-		#if "device" in kwargs and kwargs["device"] == "prompt":
-		#	self.window.show_quick_panel(["fenix5","fr935"],noop)
-		#if "sdk" in kwargs and kwargs["sdk"] == "prompt":
-		#	self.window.show_quick_panel(["2.4.4","3.0.0-b1"],noop)
 
 	def get_settings(self):
 		self.settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
@@ -86,12 +82,19 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		self.build_for = self.detect_app_vs_barrel()
 		self.simulator = Simulator(self.bin)
 
+		self.panel.print("recompiling for device")
+		self.window.run_command("monkey_build",{"device":"fenix5_sim"})
+
 		self.panel.print("[running simulator]")
-		cmd = self.simulator.simulate(os.path.join("build","App.prg"), "fenix5")
+		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), "fenix5")
 		if "tests" in kwargs and kwargs["tests"] == True:
 			pass # run in test mode
 		self.panel.print(cmd)
 		
+		self.window.run_command("exec",{
+			"shell_cmd":cmd
+		})
+
 		self.panel.cleanup()
 
 		sublime.status_message("Build Finished") # puts text at the bottom

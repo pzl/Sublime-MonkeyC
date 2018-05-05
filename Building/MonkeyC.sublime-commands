@@ -5,19 +5,29 @@
 	},
 	{
 		"caption": "MonkeyC: Simulate",
-		"command": "monkey_build"
+		"command": "monkey_simulate",
+		"device": "prompt"
 	},
 	{
 		"caption": "MonkeyC: Unit Test",
-		"command": "monkey_build"
+		"command": "monkey_build",
+		"args": {
+			"do": "test",
+			"tests": true
+		}
 	},
 	{
 		"caption": "MonkeyC: Build for Device",
-		"command": "monkey_build"
+		"command": "monkey_build",
+		"device": "prompt",
+		"sdk": "prompt"
 	},
 	{
 		"caption": "MonkeyC: Package for Release",
-		"command": "monkey_build"
+		"command": "monkey_build",
+		"args": {
+			"do": "release"
+		}
 	},
 	{
 		"caption": "MonkeyC: Generate Developer Key",
@@ -33,6 +43,7 @@
 			"gen": "uuid"
 		}
 	},
+	/*
 	{
 		"caption": "MonkeyC: Create App",
 		"command": "monkey_build"
@@ -41,4 +52,5 @@
 		"caption": "MonkeyC: Create Barrel",
 		"command": "monkey_build"
 	}
+	*/
 ]

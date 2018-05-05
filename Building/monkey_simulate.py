@@ -1,3 +1,4 @@
+
 import sublime
 import sublime_plugin
 
@@ -5,47 +6,23 @@ import subprocess
 import threading
 import os
 
+import socket # for checking simulator tcp port
+
 from MonkeyC.helpers.manifest import Manifest
 from MonkeyC.helpers.inputs import DeviceInput, SDKInput
 
+
 noop = lambda *x, **y: None
 
-"""
-	TODO:
-		- SDK Path management
-		- change output panel syntax based on used command
-		- ability to include extra jungle files (for apps and barrels)
-		- build using non-jungle style (-w -z resources, etc)
-		- build for device
-			- device
-			- release ver y/n
-		- "IDE management"
-			- project scaffolding/setup
-				- see: SDK/bin/projectInfo.xml and templates/
-			- manifest.xml management?
-				- permissions
-				- supported devices
-				- min SDK ver
-				- see: SDK/bin/projectInfo.xml
-			- monkey.jungle setup?
-"""
 
 
-class MonkeyBuildCommand(sublime_plugin.WindowCommand):
-	"""Builds ConnectIQ-based projects in sublime text"""
+class MonkeySimulateCommand(sublime_plugin.WindowCommand):
+	"""Runs ConnectIQ Simulator"""
 
 	def __init__(self, window):
 		# for some reason this did NOT like the normal way
 		sublime_plugin.WindowCommand.__init__(self,window)
 		self.device_select = DeviceInput()
-
-	"""
-	encoding="utf-8"
-	killed=False
-	proc=None
-	panel=None
-	panel_lock=threading.Lock()
-	"""
 
 	def is_enabled(self, *args, **kwargs):
 		"""Return true if the command can be CANCELLED or RUN at a given time"""
@@ -73,12 +50,10 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		self.device_select.set_sdk(self.sdk_path)
 		self.device_select.set_work_dir(self.vars["folder"])
 		return self.device_select
-
 		#if "device" in kwargs and kwargs["device"] == "prompt":
 		#	self.window.show_quick_panel(["fenix5","fr935"],noop)
 		#if "sdk" in kwargs and kwargs["sdk"] == "prompt":
 		#	self.window.show_quick_panel(["2.4.4","3.0.0-b1"],noop)
-
 
 	def get_settings(self):
 		self.settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
@@ -93,29 +68,11 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		view_settings = self.window.active_view().settings()
 		self.vars = self.window.extract_variables()
-		"""
-		{
-			'project': '/home/dan/dev/sub-projects/monkeyc.sublime-project',
-			'project_extension': 'sublime-project',
-			'file': '/home/dan/dev/Sublime-MonkeyC/monkey_build.py',
-			'file_path': '/home/dan/dev/Sublime-MonkeyC',
-			'platform': 'Linux',
-			'folder': '/home/dan/dev/Sublime-MonkeyC',
-			'packages': '/home/dan/.config/sublime-text-3/Packages',
-			'file_name': 'monkey_build.py',
-			'file_base_name': 'monkey_build',
-			'project_name': 'monkeyc.sublime-project',
-			'file_extension': 'py',
-			'project_base_name': 'monkeyc',
-			'project_path': '/home/dan/dev/sub-projects'
-		}
-		"""
-
 
 
 	def run(self, *args, **kwargs):
 
-		sublime.status_message("Building...")
+		sublime.status_message("Running Simulator")
 
 		self.get_settings()
 
@@ -127,33 +84,18 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		# apps compile with monkeyc, barrels(modules) with barrelbuild
 		# so we need to know which we are dealing with
 		self.build_for = self.detect_app_vs_barrel()
-		self.compiler = Compiler(self.bin,self.vars["folder"],self.key)
+		self.simulator = Simulator(self.bin)
 
-		#todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*
-
-
-		if self.build_for == "application":
-			compiler_args = {}
-			if "do" in kwargs and kwargs["do"] == "release":
-				compiler_args = { "flags": "-r -e", "name": "App.iq" }
-			elif "do" in kwargs and kwargs["do"] == "test":
-				compiler_args = { "flags": "-t" }
-			cmd = self.compiler.compile("monkeyc",**compiler_args)
-		else:
-			if "do" in kwargs and kwargs["do"] == "test":
-				cmd = self.compiler.compile("barreltest", device="fenix5")
-			else:
-				cmd = self.compiler.compile("barrelbuild")
-
-		self.panel.print(cmd)
-
+		self.panel.print("[running simulator]")
+		cmd = self.simulator.simulate(os.path.join("build","App.prg"), "fenix5")
 		if "tests" in kwargs and kwargs["tests"] == True:
-			self.window.run_command("monkey_simulate",{ "tests":True })
-
-
+			pass # run in test mode
+		self.panel.print(cmd)
+		
 		self.panel.cleanup()
 
 		sublime.status_message("Build Finished") # puts text at the bottom
+
 
 		#self.window.show_input_panel("caption","initial text",noop,noop,noop)
 		#sublime.message_dialog("thing")
@@ -210,34 +152,49 @@ class Panel(object):
 			self.view.run_command("append",{"characters": string})			
 		self.view.run_command("append",{"characters":"\n"})
 
-class Compiler(object):
-	"""Generic wrapper class for compiling a monkeyc project"""
 
+class Simulator(object):
+	"""Proxy for running CIQ apps in the simulator"""
 
-	""" @TODO: exit code message parsing with SDK/bin/compilerInfo.xml -> exitCodes """
-	def __init__(self, sdk_path, project_path, key):
-		super(Compiler, self).__init__()
+	port=1234 # known connectiq simulator port
+
+	def __init__(self, sdk_path):
+		super(Simulator, self).__init__()
 		self.sdk_path = sdk_path
-		self.project_path = project_path
-		self.key=key
-		
-	def compile(self, compiler, name="App.prg", device=None, flags=None):
-		cmd = "{compiler} -w -o {output} -f {jungle} {key} {device} {flags}"
+
+	@classmethod
+	def is_running(cls):
+		""" Checks port 1234 to see if the simulator is running """
+		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+			try:
+				sock.bind(("0.0.0.0",cls.port))
+			except OSError:
+				return True
+			else:
+				return False
+
+	def start(self):
+		pass
+		# run `connectiq` from the sdk_path
+		# in another thread
+
+	def simulate(self, app, device):
+		if not self.is_running():
+			self.start()
+
+		attempts=0
+		while not self.is_running():
+			attempts+=1
+			if attempts > 40:
+				sublime.message_dialog("could not connect to simulator")
+				return
+
+		cmd = "{monkeydo} {app} {device}"
 		cmd = cmd.format(
-			compiler=os.path.join(self.sdk_path,compiler),
-			output=os.path.join(self.project_path,"build",name),
-			jungle=os.path.join(self.project_path,"monkey.jungle"),
-			key="-y {}".format(self.key,) if compiler in ["monkeyc","barreltest"] else "",
-			device="-d {}".format(device,) if device else "",
-			flags=flags if flags else ""
+			monkeydo=os.path.join(self.sdk_path,"monkeydo"),
+			app=app,
+			device=device
 		)
 		return cmd
 
-"""
-	Building:
-		MC app:
-			- select device (-d )
-			- -s SDK target
-			- -t unit tests
-			- -r release (removes asserts)
-"""
+# Random idea: sniff the TCP traffic between simulator and monkeydo.. ?

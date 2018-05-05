@@ -7,7 +7,7 @@
   "variants": [
     {
       "name": "Simulate", // apps can simulate, barrels cannot
-      "do": "simulate",
+      "target": "monkey_simulate",
       "device": "prompt"
     },
     {

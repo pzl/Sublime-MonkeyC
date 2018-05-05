@@ -131,19 +131,26 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		self.build_for = self.detect_app_vs_barrel()
 		self.compiler = Compiler(self.bin,self.vars["folder"],self.key)
 
-		#todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*
 
+		compiler_args = { "flags": [], "name": "App.prg" }
+		if "device" in kwargs:
+			compiler_args["flags"].append("-d {}".format(kwargs["device"],))
+		if "sdk" in kwargs:
+			compiler_args["flags"].append("-s {}".format(kwargs["sdk"].replace(".x",".0"),))
+			#todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*
 
 		if self.build_for == "application":
-			compiler_args = {}
 			if "do" in kwargs and kwargs["do"] == "release":
-				compiler_args = { "flags": "-r -e", "name": "App.iq" }
+				compiler_args["flags"].extend(["-r","-e"])
+				if not "name" in kwargs:
+					compiler_args["name"] = "App.iq"
 			elif "do" in kwargs and kwargs["do"] == "test":
-				compiler_args = { "flags": "-t" }
+				compiler_args["flags"].append("-t")
 			cmd = self.compiler.compile("monkeyc",**compiler_args)
 		else:
 			if "do" in kwargs and kwargs["do"] == "test":
-				cmd = self.compiler.compile("barreltest", device="fenix5")
+				device = kwargs["device"] if "device" in kwargs else "fenix5"
+				cmd = self.compiler.compile("barreltest", device=device)
 			else:
 				cmd = self.compiler.compile("barrelbuild")
 
@@ -237,15 +244,6 @@ class Compiler(object):
 			jungle=os.path.join(self.project_path,"monkey.jungle"),
 			key="-y {}".format(self.key,) if compiler in ["monkeyc","barreltest"] else "",
 			device="-d {}".format(device,) if device else "",
-			flags=flags if flags else ""
+			flags=" ".join(flags) if flags else ""
 		)
 		return cmd
-
-"""
-	Building:
-		MC app:
-			- select device (-d )
-			- -s SDK target
-			- -t unit tests
-			- -r release (removes asserts)
-"""

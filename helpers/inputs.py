@@ -40,6 +40,7 @@ class DeviceInput(sublime_plugin.ListInputHandler):
 	def __init__(self, sdk_path=None, path=None):
 		super(sublime_plugin.ListInputHandler, self).__init__()
 		self.device = ""
+		self.next = None
 		if sdk_path:
 			self.sdk_path = sdk_path
 		if path:
@@ -49,6 +50,8 @@ class DeviceInput(sublime_plugin.ListInputHandler):
 		self.sdk_path = path
 	def set_work_dir(self, path):
 		self.path = path
+	def set_next(self, cls):
+		self.next = cls
 
 	def description(self, value, text):
 		""" when stacking inputs, this is shown as the "selected" text"""
@@ -79,4 +82,6 @@ class DeviceInput(sublime_plugin.ListInputHandler):
 		return Manifest(self.path).devices()
 
 	def next_input(self, args):
-		return SDKInput(self.sdk_path, self.device)
+		if self.next:
+			return self.next(self.sdk_path, self.device)
+		return None

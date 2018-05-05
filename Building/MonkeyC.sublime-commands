@@ -6,7 +6,7 @@
 	{
 		"caption": "MonkeyC: Simulate",
 		"command": "monkey_simulate",
-		"device": "prompt"
+		"args": { "device": "prompt" }
 	},
 	{
 		"caption": "MonkeyC: Unit Test",
@@ -19,8 +19,10 @@
 	{
 		"caption": "MonkeyC: Build for Device",
 		"command": "monkey_build",
-		"device": "prompt",
-		"sdk": "prompt"
+		"args": {
+			"device": "prompt",
+			"sdk": "prompt"
+		}
 	},
 	{
 		"caption": "MonkeyC: Package for Release",

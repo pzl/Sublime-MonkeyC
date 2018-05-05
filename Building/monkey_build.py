@@ -66,18 +66,20 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		"""Shown as caption in menu items when caption isn't present"""
 		return "something something"
 
-	def input(self, *args, **kwargs):
-		# @todo: skip inputs if there is only one choice
-		# e.g. only one supported device
-		self.get_settings()
-		self.device_select.set_sdk(self.sdk_path)
-		self.device_select.set_work_dir(self.vars["folder"])
-		return self.device_select
+	def input(self, kwargs):
+		if "device" in kwargs and kwargs["device"] == "prompt":
+			# @todo: skip inputs if there is only one choice
+			# e.g. only one supported device
+			self.get_settings()
+			self.device_select.set_sdk(self.sdk_path)
+			self.device_select.set_work_dir(self.vars["folder"])
 
-		#if "device" in kwargs and kwargs["device"] == "prompt":
-		#	self.window.show_quick_panel(["fenix5","fr935"],noop)
-		#if "sdk" in kwargs and kwargs["sdk"] == "prompt":
-		#	self.window.show_quick_panel(["2.4.4","3.0.0-b1"],noop)
+			if "sdk" in kwargs and kwargs["sdk"] == "prompt":
+				self.device_select.set_next(SDKInput)
+
+			return self.device_select
+
+		return None
 
 
 	def get_settings(self):

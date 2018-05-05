@@ -4,6 +4,7 @@
   "keyfiles": ["monkey.jungle","manifest.xml"],
   "do": "build", // works for both
   "cancel": {"kill":true},
+  /*
   "variants": [
     {
       "name": "Simulate", // apps can simulate, barrels cannot
@@ -27,4 +28,9 @@
       "do": "package"
     }
   ]
+
+  Disabling the variants via the Build system for now
+  because it doesn't seem to call the Command.input() method, to get the
+  prompts. They are available via the command palette instead.
+  */
 }

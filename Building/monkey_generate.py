@@ -27,3 +27,4 @@ class MonkeyGenerateCommand(sublime_plugin.WindowCommand):
 		app_id = uuid.uuid4().hex
 		manifest = Manifest(self.vars["folder"])
 		manifest.set_id(app_id)
+		sublime.status_message("App ID updated")

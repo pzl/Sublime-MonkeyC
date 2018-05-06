@@ -4,16 +4,13 @@ import sublime_plugin
 import os
 import uuid
 from MonkeyC.helpers.manifest import Manifest
+from MonkeyC.helpers.settings import get_settings
 
 class MonkeyGenerateCommand(sublime_plugin.WindowCommand):
 	"""Automating creating some simple things, uuids and private keys"""
 
-	def get_settings(self):
-		self.vars = self.window.extract_variables()
-		self.settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
-
 	def run(self, *args, **kwargs):
-		self.get_settings()
+		self.settings,self.vars = get_settings(self.window)
 		getattr(self, kwargs["gen"])(**kwargs)
 
 	def key(self, *args, **kwargs):

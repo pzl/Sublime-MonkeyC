@@ -7,6 +7,7 @@ import os
 
 from MonkeyC.helpers.manifest import Manifest
 from MonkeyC.helpers.inputs import DeviceInput, SDKInput
+from MonkeyC.helpers.settings import get_settings
 
 noop = lambda *x, **y: None
 
@@ -77,38 +78,11 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		return None
 
-
 	def get_settings(self):
-		self.settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
-		# @todo: override with project settings
-
+		self.settings,self.vars = get_settings(self.window)
 		self.sdk_path = self.settings.get("sdk","")
 		self.bin = os.path.expanduser(os.path.join(self.sdk_path,"bin"))
 		self.key = os.path.expanduser(self.settings.get("key",""))
-
-		project_data = self.window.project_data() # JSON from sublime project
-		project_settings = (project_data or {}).get("monkeyc",{}) # {} should override setting with these
-
-		view_settings = self.window.active_view().settings()
-		self.vars = self.window.extract_variables()
-		"""
-		{
-			'project': '/home/dan/dev/sub-projects/monkeyc.sublime-project',
-			'project_extension': 'sublime-project',
-			'file': '/home/dan/dev/Sublime-MonkeyC/monkey_build.py',
-			'file_path': '/home/dan/dev/Sublime-MonkeyC',
-			'platform': 'Linux',
-			'folder': '/home/dan/dev/Sublime-MonkeyC',
-			'packages': '/home/dan/.config/sublime-text-3/Packages',
-			'file_name': 'monkey_build.py',
-			'file_base_name': 'monkey_build',
-			'project_name': 'monkeyc.sublime-project',
-			'file_extension': 'py',
-			'project_base_name': 'monkeyc',
-			'project_path': '/home/dan/dev/sub-projects'
-		}
-		"""
-
 
 
 	def run(self, *args, **kwargs):

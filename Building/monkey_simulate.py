@@ -73,13 +73,19 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		self.build_for = self.detect_app_vs_barrel()
 		self.simulator = Simulator(self.bin)
 
+		run_tests = "tests" in kwargs and kwargs["tests"] == True
+
+		args = {
+			"device":"{}_sim".format(kwargs["device"],),
+		}
+		if run_tests:
+			args["do"] = "test"
 		self.panel.print("recompiling for device")
-		self.window.run_command("monkey_build",{"device":"{}_sim".format(kwargs["device"],)})
+		self.window.run_command("monkey_build",args)
 
 		self.panel.print("[running simulator]")
-		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), kwargs["device"])
-		if "tests" in kwargs and kwargs["tests"] == True:
-			pass # run in test mode
+		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), kwargs["device"], test=run_tests)
+
 		self.panel.print(cmd)
 		
 		self.window.run_command("exec",{
@@ -172,7 +178,7 @@ class Simulator(object):
 		# run `connectiq` from the sdk_path
 		# in another thread
 
-	def simulate(self, app, device):
+	def simulate(self, app, device, test=False):
 		if not self.is_running():
 			self.start()
 
@@ -183,11 +189,12 @@ class Simulator(object):
 				sublime.message_dialog("could not connect to simulator")
 				return
 
-		cmd = "{monkeydo} {app} {device}"
+		cmd = "{monkeydo} {app} {device} {test}"
 		cmd = cmd.format(
 			monkeydo=os.path.join(self.sdk_path,"monkeydo"),
 			app=app,
-			device=device
+			device=device,
+			test="-t" if test else ""
 		)
 		return cmd
 

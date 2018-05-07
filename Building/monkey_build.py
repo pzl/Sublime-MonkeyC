@@ -135,7 +135,7 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 
 		if "tests" in kwargs and kwargs["tests"] == True:
-			self.window.run_command("monkey_simulate",{ "tests":True })
+			self.window.run_command("monkey_simulate",{ "tests":True, "device":"fenix5" })
 
 
 		#self.panel.cleanup()

@@ -71,7 +71,6 @@ contexts:
       scope: keyword.other.jungle
 
   known-qualifiers:
-    - meta_scope: qualifier.jungle
     - match: \bbase\b
       scope: support.constant.base.jungle
     - include: device-shapes

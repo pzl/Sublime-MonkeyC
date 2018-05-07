@@ -22,7 +22,17 @@ Or.
 
 Once installed, you should go to `Preferences > Package Settings > MonkeyC > Settings` and put in the path to your Connect IQ SDK ([download](https://developer.garmin.com/connect-iq/sdk/) if you haven't already). And put in the path to your developer key. If you don't have a key and just want to generate one, you can use `Tools > MonkeyC > Generate Developer Key` (or "MonkeyC: Generate Developer Key" from the Command Palette) to have this plugin make one, and update your key path for you.
 
+You can override these settings on a per-project basis, by having a top-level key (monkeyc) in your `.sublime-project` file (Project > Edit Project) that looks like this:
 
+```
+{
+    "folders": [ ... ],
+    "monkeyc": {
+        "sdk": "/path/to/other/SDK",
+        "key": "~/specific/key/for/project"
+    }
+}
+```
 
 Features
 ---------

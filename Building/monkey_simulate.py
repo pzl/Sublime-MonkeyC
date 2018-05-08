@@ -62,9 +62,6 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 
 		self.get_settings()
 
-		# apps compile with monkeyc, barrels(modules) with barrelbuild
-		# so we need to know which we are dealing with
-		self.build_for = self.detect_app_vs_barrel()
 		self.simulator = Simulator(self.bin)
 
 		run_tests = "tests" in kwargs and kwargs["tests"] == True
@@ -92,11 +89,6 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		#self.panel.show_popup("hey boss", sublime.COOPERATE_WITH_AUTO_COMPLETE, -1, 800, 800, noop, noop)
 		#self.window.show_quick_panel(["a","b","c"],noop)
 
-
-	def detect_app_vs_barrel(self):
-		""" Reads manifest.xml and detects if it is an application or barrel """
-		return Manifest(self.vars['folder']).get_type()
-		# could also check the .project file, or .settings/IQ_IDE.prefs
 
 class Simulator(object):
 	"""Proxy for running CIQ apps in the simulator"""

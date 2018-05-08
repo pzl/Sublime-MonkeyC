@@ -10,9 +10,9 @@
 	},
 	{
 		"caption": "MonkeyC: Unit Test",
-		"command": "monkey_build",
+		"command": "monkey_simulate",
 		"args": {
-			"do": "test",
+			"device": "prompt",
 			"tests": true
 		}
 	},

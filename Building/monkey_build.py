@@ -115,10 +115,9 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 			cmd = self.compiler.compile("monkeyc",**compiler_args)
 		else:
 			if "do" in kwargs and kwargs["do"] == "test":
-				device = kwargs["device"] if "device" in kwargs else "fenix5"
-				cmd = self.compiler.compile("barreltest", device=device)
+				cmd = self.compiler.compile("barreltest", **compiler_args)
 			else:
-				cmd = self.compiler.compile("barrelbuild")
+				cmd = self.compiler.compile("barrelbuild", **compiler_args)
 
 		self.window.run_command("exec",{
 			"shell_cmd": cmd,

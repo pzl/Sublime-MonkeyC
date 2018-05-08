@@ -98,7 +98,7 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		compiler_args = {
 			"flags": kwargs["flags"] if "flags" in kwargs else [],
-			"name": kwargs["name"] if "name" in kwargs else "App.prg",
+			"name": self.output_name(kwargs),
 			"device": kwargs["device"] if "device" in kwargs and kwargs["device"] != "prompt" else False
 		}
 		if "sdk" in kwargs:
@@ -135,6 +135,16 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		#self.panel.show_popup_menu(["foo","bar","baz"],noop)	
 		#self.panel.show_popup("hey boss", sublime.COOPERATE_WITH_AUTO_COMPLETE, -1, 800, 800, noop, noop)
 		#self.window.show_quick_panel(["a","b","c"],noop)
+
+	def output_name(self, kwargs):
+		app_type = self.detect_app_vs_barrel()
+
+		if "name" in kwargs:
+			return kwargs["name"]
+		elif app_type == "application" or "do" in kwargs and kwargs["do"] == "test":
+			return "App.prg"
+		else:
+			return "App.barrel"
 
 
 	def detect_app_vs_barrel(self):

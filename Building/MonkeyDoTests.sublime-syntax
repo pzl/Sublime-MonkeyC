@@ -19,11 +19,11 @@ contexts:
           scope: ''
           pop: true
       scope: comment
-    - match: PASS
+    - match: PASS(ED)?
       scope: message.pass constant.language.pass keyword.other.pass
     - match: ERROR
       scope: message.pass constant.language.pass keyword.other.pass
-    - match: '^[\-\=]+$'
+    - match: '^(\[.*\])|([\-\=]+)$'
       scope: comment.line
     - match: 'ASSERTION FAILED'
       scope: message.fail constant.language.fail keyword.other.fail

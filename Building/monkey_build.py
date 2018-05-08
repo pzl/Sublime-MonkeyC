@@ -91,11 +91,6 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		self.get_settings()
 
-		#self.panel = Panel(self.window)
-		#self.panel.print("[{}]",*args)
-		#self.panel.print("[{}]",str(kwargs))
-
-
 		# apps compile with monkeyc, barrels(modules) with barrelbuild
 		# so we need to know which we are dealing with
 		self.build_for = self.detect_app_vs_barrel()
@@ -126,7 +121,6 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 			else:
 				cmd = self.compiler.compile("barrelbuild")
 
-		#self.panel.print(cmd)
 		self.window.run_command("exec",{
 			"shell_cmd": cmd,
 			"file_regex":r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$",
@@ -137,8 +131,6 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		if "tests" in kwargs and kwargs["tests"] == True:
 			self.window.run_command("monkey_simulate",{ "tests":True, "device":"fenix5" })
 
-
-		#self.panel.cleanup()
 
 		sublime.status_message("Build Finished") # puts text at the bottom
 
@@ -154,48 +146,6 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		return Manifest(self.vars['folder']).get_type()
 		# could also check the .project file, or .settings/IQ_IDE.prefs
 
-
-class Panel(object):
-	"""wrapper for build output panel"""
-
-	"""Alternatively, call "exec" with args like file_regex, syntax, etc"""
-
-	def __init__(self, window):
-		super(Panel, self).__init__()
-		self.window = window
-		self.view = self.window.create_output_panel('exec')
-
-		panel_settings = self.view.settings()
-		panel_settings.set("file_regex",r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$")
-		panel_settings.set("line_numbers", False)
-		panel_settings.set("gutter",False)
-		panel_settings.set("scroll_past_end",False)
-		#panel_settings.set("syntax","MonkeyCBuild.sublime-syntax") # alternate way
-		self.view.set_syntax_file("MonkeyCBuild.sublime-syntax")
-
-		show = sublime.load_settings("Preferences.sublime-settings").get("show_panel_on_build",True)
-		#show=True # while still debugging
-		if show:
-			self.window.run_command("show_panel",{"panel":"output.exec"})
-		self.view.set_read_only(False)
-
-		# Default/exec.py calls create_output_panel a second time
-		# after settings changes, to get picked up as result buffer?
-		self.view = self.window.create_output_panel('exec')
-
-
-		# panel debugging
-		#self.print("Panel syntax: {}",self.view.settings().get('syntax'))
-		
-	def cleanup(self):
-		self.view.set_read_only(True)
-
-	def print(self, string, *args):
-		if len(args):
-			self.view.run_command("append",{"characters": string.format(*args)})
-		else:
-			self.view.run_command("append",{"characters": string})			
-		self.view.run_command("append",{"characters":"\n"})
 
 class Compiler(object):
 	"""Generic wrapper class for compiling a monkeyc project"""

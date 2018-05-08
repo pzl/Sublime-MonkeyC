@@ -158,7 +158,7 @@ class Compiler(object):
 		cmd = "{compiler} -w -o {output} -f {jungle} {key} {device} {flags}"
 		cmd = cmd.format(
 			compiler=os.path.join(self.sdk_path,compiler),
-			output=os.path.join(self.project_path,"build",name),
+			output=os.path.join(self.project_path,"bin",name),
 			jungle=os.path.join(self.project_path,"monkey.jungle"),
 			key="-y {}".format(self.key,) if compiler in ["monkeyc","barreltest"] else "",
 			device="-d {}".format(device,) if device else "",

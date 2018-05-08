@@ -73,7 +73,7 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 			args["do"] = "test"
 		self.window.run_command("monkey_build",args)
 
-		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), kwargs["device"], test=run_tests)
+		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"bin","App.prg"), kwargs["device"], test=run_tests)
 		
 		self.window.run_command("exec",{
 			"shell_cmd":cmd,

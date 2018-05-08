@@ -66,12 +66,11 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 
 		run_tests = "tests" in kwargs and kwargs["tests"] == True
 
-		args = {
-			"device":"{}_sim".format(kwargs["device"],),
+		build_args = {
+			"device": "{name}{sim}".format(name=kwargs["device"],sim="_sim" if run_tests else ""),
+			"do": "test" if run_tests else "build"
 		}
-		if run_tests:
-			args["do"] = "test"
-		self.window.run_command("monkey_build",args)
+		self.window.run_command("monkey_build",build_args)
 
 		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"bin","App.prg"), kwargs["device"], test=run_tests)
 		

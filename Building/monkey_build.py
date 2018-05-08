@@ -13,7 +13,6 @@ noop = lambda *x, **y: None
 
 """
 	TODO:
-		- change output panel syntax based on used command
 		- ability to include extra jungle files (for apps and barrels)
 		- build using non-jungle style (-w -z resources, etc)
 		- "IDE management"

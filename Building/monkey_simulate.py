@@ -79,7 +79,8 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"build","App.prg"), kwargs["device"], test=run_tests)
 		
 		self.window.run_command("exec",{
-			"shell_cmd":cmd
+			"shell_cmd":cmd,
+			"syntax":"MonkeyDoTests.sublime-syntax"
 		})
 
 		sublime.status_message("Simulation Finished")

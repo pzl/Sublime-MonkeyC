@@ -28,10 +28,16 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		"""Return true if the command can be CANCELLED or RUN at a given time"""
 		if 'kill' in kwargs: # build system cancel check
 			return False
+
 		# being checked otherwise, e.g. through command palette
-		if 'enabled' in kwargs:
-			return kwargs['enabled']
-		return True
+		self.get_settings()
+		try:
+			is_app = Manifest(self.vars['folder']).get_type() == "application"
+		except FileNotFoundError:
+			return False
+		else:
+			# barrels cannot be directly simulated. Only applications
+			return is_app
 
 	def is_visible(self, *args, **kwargs):
 		if 'kill' in kwargs: # build system cancel check

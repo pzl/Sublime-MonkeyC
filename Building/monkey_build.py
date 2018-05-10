@@ -85,48 +85,11 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 
 	def run(self, *args, **kwargs):
-
-		sublime.status_message("Building...")
-
 		self.get_settings()
 
-		# apps compile with monkeyc, barrels(modules) with barrelbuild
-		# so we need to know which we are dealing with
-		self.build_for = self.detect_app_vs_barrel()
-		self.compiler = Compiler(self.bin,self.vars["folder"],self.key)
-
-
-		compiler_args = {
-			"flags": kwargs["flags"] if "flags" in kwargs else [],
-			"name": self.output_name(kwargs),
-			"device": kwargs["device"] if "device" in kwargs and kwargs["device"] != "prompt" else False
-		}
-		if "sdk" in kwargs:
-			compiler_args["flags"].append("-s {}".format(kwargs["sdk"].replace(".x",".0"),))
-			#todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*
-
-		if self.build_for == "application":
-			if "do" in kwargs and kwargs["do"] == "release":
-				compiler_args["flags"].extend(["-r","-e"])
-				if not "name" in kwargs:
-					compiler_args["name"] = "App.iq"
-			elif "do" in kwargs and kwargs["do"] == "test":
-				compiler_args["flags"].append("-t")
-			cmd = self.compiler.compile("monkeyc",**compiler_args)
-		else:
-			if "do" in kwargs and kwargs["do"] == "test":
-				cmd = self.compiler.compile("barreltest", **compiler_args)
-			else:
-				cmd = self.compiler.compile("barrelbuild", **compiler_args)
-
-		self.window.run_command("exec",{
-			"shell_cmd": cmd,
-			"file_regex":r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$", # official: ([a-zA-Z]:)?((\\\\|/)[a-zA-Z0-9._-]+)+(\\\\|/)?:[0-9]+
-			"syntax": "MonkeyCBuild.sublime-syntax"
-		})
-
-
-
+		sublime.status_message("Building...")
+		cmd = CommandBuilder(kwargs, self.vars["folder"], self.bin, self.key).build()
+		self.compiler = Compiler(self.vars["folder"], self.window).compile(cmd)
 		sublime.status_message("Build Finished") # puts text at the bottom
 
 		#self.window.show_input_panel("caption","initial text",noop,noop,noop)
@@ -135,12 +98,71 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		#self.panel.show_popup("hey boss", sublime.COOPERATE_WITH_AUTO_COMPLETE, -1, 800, 800, noop, noop)
 		#self.window.show_quick_panel(["a","b","c"],noop)
 
-	def output_name(self, kwargs):
-		app_type = self.detect_app_vs_barrel()
 
-		if "name" in kwargs:
-			return kwargs["name"]
-		elif app_type == "application" or "do" in kwargs and kwargs["do"] == "test":
+
+
+
+class CommandBuilder(object):
+	"""Constructs the compiler command"""
+	def __init__(self, subl_args, curdir, sdk_path, private_key):
+		super(CommandBuilder, self).__init__()
+		self.curdir = curdir
+		self.sdk_path = sdk_path
+		self.private_key = private_key
+		self.args = subl_args
+
+		self.flags = subl_args["flags"] if "flags" in subl_args else []
+		self.device = subl_args["device"] if "device" in subl_args and subl_args["device"] != "prompt" else False
+		self.sdk = subl_args["sdk"].replace(".x",".0") if "sdk" in subl_args else False #todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*
+		self.do = subl_args["do"] if "do" in subl_args else "build"
+
+
+
+	def build(self):
+		# apps compile with monkeyc, barrels(modules) with barrelbuild
+		# so we need to know which we are dealing with
+		self.build_for = self.detect_app_vs_barrel()
+		
+		compiler_args = {
+			"flags": self.flags,
+			"name": self.output_name(self.args),
+			"device": self.device
+		}
+		if self.sdk:
+			compiler_args["flags"].append("-s {}".format(self.sdk,))
+
+		if self.build_for == "application":
+			if self.do == "release":
+				compiler_args["flags"].extend(["-r","-e"])
+				if not "name" in self.args:
+					compiler_args["name"] = "App.iq"
+			elif self.do == "test":
+				compiler_args["flags"].append("-t")
+			cmd = self.combine("monkeyc",**compiler_args)
+		else:
+			if self.do == "test":
+				cmd = self.combine("barreltest", **compiler_args)
+			else:
+				cmd = self.combine("barrelbuild", **compiler_args)
+
+		return cmd
+
+	def combine(self, program, name="App.prg", device=None, flags=None):
+		cmd = "{program} -w -o {output} -f {jungle} {key} {device} {flags}"
+		cmd = cmd.format(
+			program=os.path.join(self.sdk_path,program),
+			output=os.path.join(self.curdir,"bin",name),
+			jungle=os.path.join(self.curdir,"monkey.jungle"),
+			key="-y {}".format(self.private_key,) if program in ["monkeyc","barreltest"] else "",
+			device="-d {}".format(device,) if device else "",
+			flags=" ".join(flags) if flags else ""
+		)
+		return cmd
+
+	def output_name(self, subl_args):
+		if "name" in subl_args:
+			return subl_args["name"]
+		elif self.build_for == "application" or "do" in subl_args and subl_args["do"] == "test":
 			return "App.prg"
 		else:
 			return "App.barrel"
@@ -148,29 +170,29 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 	def detect_app_vs_barrel(self):
 		""" Reads manifest.xml and detects if it is an application or barrel """
-		return Manifest(self.vars['folder']).get_type()
+		return Manifest(self.curdir).get_type()
 		# could also check the .project file, or .settings/IQ_IDE.prefs
 
 
 class Compiler(object):
 	"""Generic wrapper class for compiling a monkeyc project"""
 
-
-	""" @TODO: exit code message parsing with SDK/bin/compilerInfo.xml -> exitCodes """
-	def __init__(self, sdk_path, project_path, key):
+	def __init__(self, cwd, window=False):
 		super(Compiler, self).__init__()
-		self.sdk_path = sdk_path
-		self.project_path = project_path
-		self.key=key
-		
-	def compile(self, compiler, name="App.prg", device=None, flags=None):
-		cmd = "{compiler} -w -o {output} -f {jungle} {key} {device} {flags}"
-		cmd = cmd.format(
-			compiler=os.path.join(self.sdk_path,compiler),
-			output=os.path.join(self.project_path,"bin",name),
-			jungle=os.path.join(self.project_path,"monkey.jungle"),
-			key="-y {}".format(self.key,) if compiler in ["monkeyc","barreltest"] else "",
-			device="-d {}".format(device,) if device else "",
-			flags=" ".join(flags) if flags else ""
-		)
-		return cmd
+		self.cwd = cwd
+		self.window = window
+	
+	# basically just run `cmd`.
+	# if window was provided to constructor
+	# run this through sublime's exec command (e.g. normal build)
+	def compile(self, cmd):
+		if self.window:
+			self.window.run_command("exec", {
+				"shell_cmd": cmd,
+				"file_regex":r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$",
+				# official: ([a-zA-Z]:)?((\\\\|/)[a-zA-Z0-9._-]+)+(\\\\|/)?:[0-9]+
+				"syntax": "MonkeyCBuild.sublime-syntax"
+			})
+		else:
+			return subprocess.Popen(cmd,shell=True,cwd=self.cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+		""" @TODO: exit code message parsing with SDK/bin/compilerInfo.xml -> exitCodes """

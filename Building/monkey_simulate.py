@@ -11,6 +11,7 @@ import socket # for checking simulator tcp port
 from MonkeyC.helpers.parsers import Manifest
 from MonkeyC.helpers.inputs import DeviceInput, SDKInput
 from MonkeyC.helpers.settings import get_settings
+from MonkeyC.Building.monkey_build import CommandBuilder, Compiler
 
 noop = lambda *x, **y: None
 
@@ -76,7 +77,9 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 			"device": "{name}{sim}".format(name=kwargs["device"],sim="_sim" if run_tests else ""),
 			"do": "test" if run_tests else "build"
 		}
-		self.window.run_command("monkey_build",build_args)
+		compile_cmd = CommandBuilder(build_args, self.vars["folder"], self.bin, self.key).build()
+		
+		proc = Compiler(self.vars["folder"]).compile(compile_cmd)
 
 		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"bin","App.prg"), kwargs["device"], test=run_tests)
 		

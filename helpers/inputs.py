@@ -1,8 +1,7 @@
 import sublime
 import sublime_plugin
 
-from MonkeyC.helpers.manifest import Manifest
-from MonkeyC.helpers.sdk import SDK
+from MonkeyC.helpers.parsers import Manifest, SDK
 
 class SDKInput(sublime_plugin.ListInputHandler):
 

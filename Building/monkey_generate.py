@@ -3,7 +3,7 @@ import sublime_plugin
 
 import os
 import uuid
-from MonkeyC.helpers.manifest import Manifest
+from MonkeyC.helpers.parsers import Manifest
 from MonkeyC.helpers.settings import get_settings
 
 class MonkeyGenerateCommand(sublime_plugin.WindowCommand):

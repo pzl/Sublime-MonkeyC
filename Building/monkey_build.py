@@ -5,7 +5,7 @@ import subprocess
 import threading
 import os
 
-from MonkeyC.helpers.manifest import Manifest
+from MonkeyC.helpers.parsers import Manifest
 from MonkeyC.helpers.inputs import DeviceInput, SDKInput
 from MonkeyC.helpers.settings import get_settings
 

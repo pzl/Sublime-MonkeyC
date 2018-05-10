@@ -3,6 +3,7 @@ import sublime
 import sublime_plugin
 
 import subprocess
+import time
 import threading
 import os
 
@@ -119,17 +120,17 @@ class Simulator(object):
 				return False
 
 	def start(self):
-		pass
-		# run `connectiq` from the sdk_path
-		# in another thread
+		subprocess.Popen(["./connectiq"],shell=True,cwd=self.sdk_path)
 
 	def simulate(self, app, device, test=False):
 		if not self.is_running():
 			self.start()
+			time.sleep(1)
 
 		attempts=0
 		while not self.is_running():
 			attempts+=1
+			time.sleep(0.3)
 			if attempts > 40:
 				sublime.message_dialog("could not connect to simulator")
 				return

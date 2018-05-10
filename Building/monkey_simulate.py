@@ -1,18 +1,12 @@
-
 import sublime
 import sublime_plugin
 
-import subprocess
-import time
-import threading
 import os
 
-import socket # for checking simulator tcp port
-
 from MonkeyC.helpers.parsers import Manifest
-from MonkeyC.helpers.inputs import DeviceInput, SDKInput
+from MonkeyC.helpers.run import Simulator, CommandBuilder, Compiler
+from MonkeyC.helpers.inputs import DeviceInput
 from MonkeyC.helpers.settings import get_settings
-from MonkeyC.Building.monkey_build import CommandBuilder, Compiler
 
 noop = lambda *x, **y: None
 
@@ -80,7 +74,17 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		}
 		compile_cmd = CommandBuilder(build_args, self.vars["folder"], self.bin, self.key).build()
 		
+		print("about to run {}".format(compile_cmd,))
+
 		proc = Compiler(self.vars["folder"]).compile(compile_cmd)
+		ret = proc.wait()
+		if ret != 0:
+			stdout,stderr = proc.communicate()
+			if stdout:
+				print(stdout.decode("utf8"))
+			if stderr:
+				print(stderr.decode("utf8"))
+			return
 
 		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"bin","App.prg"), kwargs["device"], test=run_tests)
 		
@@ -99,49 +103,3 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		#self.window.show_quick_panel(["a","b","c"],noop)
 
 
-class Simulator(object):
-	"""Proxy for running CIQ apps in the simulator"""
-
-	port=1234 # known connectiq simulator port
-
-	def __init__(self, sdk_path):
-		super(Simulator, self).__init__()
-		self.sdk_path = sdk_path
-
-	@classmethod
-	def is_running(cls):
-		""" Checks port 1234 to see if the simulator is running """
-		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-			try:
-				sock.bind(("0.0.0.0",cls.port))
-			except OSError:
-				return True
-			else:
-				return False
-
-	def start(self):
-		subprocess.Popen(["./connectiq"],shell=True,cwd=self.sdk_path)
-
-	def simulate(self, app, device, test=False):
-		if not self.is_running():
-			self.start()
-			time.sleep(1)
-
-		attempts=0
-		while not self.is_running():
-			attempts+=1
-			time.sleep(0.3)
-			if attempts > 40:
-				sublime.message_dialog("could not connect to simulator")
-				return
-
-		cmd = "{monkeydo} {app} {device} {test}"
-		cmd = cmd.format(
-			monkeydo=os.path.join(self.sdk_path,"monkeydo"),
-			app=app,
-			device=device,
-			test="-t" if test else ""
-		)
-		return cmd
-
-# Random idea: sniff the TCP traffic between simulator and monkeydo.. ?

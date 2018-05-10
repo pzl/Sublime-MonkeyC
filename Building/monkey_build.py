@@ -121,7 +121,7 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		self.window.run_command("exec",{
 			"shell_cmd": cmd,
-			"file_regex":r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$",
+			"file_regex":r"([^:\n ]*):([0-9]+):(?:([0-9]+):)? (.*)$", # official: ([a-zA-Z]:)?((\\\\|/)[a-zA-Z0-9._-]+)+(\\\\|/)?:[0-9]+
 			"syntax": "MonkeyCBuild.sublime-syntax"
 		})
 

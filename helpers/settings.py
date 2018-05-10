@@ -1,4 +1,6 @@
 import sublime
+from os.path import expanduser, join, exists
+
 
 def get_settings(window=False):
 
@@ -18,3 +20,9 @@ def get_settings(window=False):
 		settings.update(project_settings) # override plugin settings with project-specific
 
 	return settings,window_vars
+
+
+def has_manifest_and_jungle(project_dir):
+	"""Verify that both files exist at the project root"""
+	curdir = expanduser(project_dir)
+	return exists(join(curdir,"manifest.xml")) and exists(join(curdir,"monkey.jungle"))

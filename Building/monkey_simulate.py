@@ -6,7 +6,7 @@ import os
 from MonkeyC.helpers.parsers import Manifest
 from MonkeyC.helpers.run import Simulator, CommandBuilder, Compiler
 from MonkeyC.helpers.inputs import DeviceInput
-from MonkeyC.helpers.settings import get_settings
+from MonkeyC.helpers.settings import get_settings, has_manifest_and_jungle
 
 noop = lambda *x, **y: None
 
@@ -27,13 +27,13 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 
 		# being checked otherwise, e.g. through command palette
 		self.get_settings()
-		try:
-			is_app = Manifest(self.vars['folder']).get_type() == "application"
-		except FileNotFoundError:
+
+		has_files = has_manifest_and_jungle(self.vars["folder"])
+		if not has_files:
 			return False
-		else:
-			# barrels cannot be directly simulated. Only applications
-			return is_app
+
+		is_app = Manifest(self.vars['folder']).get_type() == "application"
+		return is_app # barrels cannot be directly simulated. Only applications
 
 	def is_visible(self, *args, **kwargs):
 		if 'kill' in kwargs: # build system cancel check

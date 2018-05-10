@@ -6,7 +6,7 @@ import os
 from MonkeyC.helpers.parsers import Manifest
 from MonkeyC.helpers.run import CommandBuilder, Compiler
 from MonkeyC.helpers.inputs import DeviceInput, SDKInput
-from MonkeyC.helpers.settings import get_settings
+from MonkeyC.helpers.settings import get_settings, has_manifest_and_jungle
 
 noop = lambda *x, **y: None
 
@@ -34,22 +34,15 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		sublime_plugin.WindowCommand.__init__(self,window)
 		self.device_select = DeviceInput()
 
-	"""
-	encoding="utf-8"
-	killed=False
-	proc=None
-	panel=None
-	panel_lock=threading.Lock()
-	"""
-
 	def is_enabled(self, *args, **kwargs):
 		"""Return true if the command can be CANCELLED or RUN at a given time"""
 		if 'kill' in kwargs: # build system cancel check
 			return False
 		# being checked otherwise, e.g. through command palette
-		if 'enabled' in kwargs:
-			return kwargs['enabled']
-		return True
+		self.get_settings()
+		return has_manifest_and_jungle(self.vars["folder"])
+
+
 
 	def is_visible(self, *args, **kwargs):
 		if 'kill' in kwargs: # build system cancel check

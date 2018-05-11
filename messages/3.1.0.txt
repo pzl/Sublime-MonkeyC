@@ -1,26 +1,45 @@
 3.1.0:
 -------
-🐵🍌
+🔨🐵🍌 👷‍♀️ 
 
-This release comes with better SDK integration, and connects with the Sublime Build system
+This is the SDK Integration Release. You can now build, simulate, and test all through sublime!
 
+Go to Preferences > Package Settings > MonkeyC > Settings, and set up the path to your downloaded Connect IQ SDK. If you already have a developer key, set the path to that as well. If you don't have a key yet, no worries! Go to Tools > MonkeyC > Generate Developer Key, and it'll create one for you and set the path.
+
+Now you can build away! You can perform simple builds with the Sublime Build system. Simply hit `ctrl-b` or go to Tools > Build. Or Command Palette: MonkeyC: Build Project.
+
+Check out the full command list (Simulate, Unit Test, Package for release, etc) in the Command Palette, by typing "MonkeyC:".
+
+
+In the next release, look out for: Debugger support!
+- breakpoints
+- stepping
+- memory inspection
 
 
 C H A N G E L O G
 ------------------
 
 Enhancement:
-
+🔨 Compile projects with `monkeyc` or `barrelbuild`
+🔨 Simulate apps
+🔨 Run tests, with correct build flags
+🔨 Generate Developer Private keys
+🔨 Generate a random App ID (and updates your manifest.xml)
+🔨 Integrate with Sublime Build System to trigger compilation
+🔨 Add Command Palette commands for all supported commands
+🔨 Add Settings entry to set SDK and private key path
+🔨 Add Tools menu entry for generating keys or App IDs
+🔨 Palette prompts for supported devices and/or SDK target when required
+🔨 Custom output panel syntax highlighting for compiler
+🔨 Custom output panel syntax highlighting for Run No Evil tests
+🔨 Adds phantoms (inline error bubbles) for compilation errors
+🔨 Per-project override of the MonkeyC settings (sdk, key path)
 
 Fix:
-
+🔧 disable 'char' syntax scope until completed
+🔧 remove unused jungle syntax scope
 
 Internal:
-
-
-
-Todo:
-- Integrate monkeyc compiler call into Sublime Build system
-- Add simulator running to Sublime Build System
-- Run No Evil and unit test running
-- Developer key generation
+🔩 reorganized syntax-specific files into Syntax/
+🔩 corrected syntax test paths to package

@@ -51,17 +51,26 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		return True
 
 	def input(self, kwargs):
-		if "device" in kwargs and kwargs["device"] == "prompt":
-			# @todo: skip inputs if there is only one choice
-			# e.g. only one supported device
-			self.get_settings()
+		ask_for_device = "device" in kwargs and kwargs["device"] == "prompt"
+		ask_for_sdk = "sdk" in kwargs and kwargs["sdk"] == "prompt"
+		self.get_settings()
+
+		if ask_for_device:
 			self.device_select.set_sdk(self.sdk_path)
 			self.device_select.set_work_dir(self.vars["folder"])
 
-			if "sdk" in kwargs and kwargs["sdk"] == "prompt":
+			# Only one device, so don't make a picker for it, just use it
+			if len(self.device_select.list_items()) == 1:
+				self.device = self.device_select.list_items()[1]
+				if ask_for_sdk:
+					return SDKInput(self.sdk_path, self.device)
+
+			if ask_for_sdk:
 				self.device_select.set_next(SDKInput)
 
 			return self.device_select
+		elif ask_for_sdk and "device" in kwargs and kwargs["device"]:
+			return SDKInput(self.sdk_path, kwargs["device"])
 
 		return None
 

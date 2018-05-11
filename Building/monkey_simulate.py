@@ -42,11 +42,15 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		return True
 
 	def input(self, *args, **kwargs):
-		# @todo: skip inputs if there is only one choice
-		# e.g. only one supported device
 		self.get_settings()
 		self.device_select.set_sdk(self.sdk_path)
 		self.device_select.set_work_dir(self.vars["folder"])
+
+		if len(self.device_select.list_items()) == 1:
+			# skip selection when there's only one supported device
+			self.device = self.device_select.list_items()[1]
+			return None
+
 		return self.device_select
 
 	def get_settings(self):

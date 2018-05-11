@@ -41,10 +41,6 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		# being checked otherwise, e.g. through command palette
 		return True
 
-	def description(self, *args, **kwargs):
-		"""Shown as caption in menu items when caption isn't present"""
-		return "something something"
-
 	def input(self, *args, **kwargs):
 		# @todo: skip inputs if there is only one choice
 		# e.g. only one supported device

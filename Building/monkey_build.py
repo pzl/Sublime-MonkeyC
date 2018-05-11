@@ -50,10 +50,6 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 		# being checked otherwise, e.g. through command palette
 		return True
 
-	def description(self, *args, **kwargs):
-		"""Shown as caption in menu items when caption isn't present"""
-		return "something something"
-
 	def input(self, kwargs):
 		if "device" in kwargs and kwargs["device"] == "prompt":
 			# @todo: skip inputs if there is only one choice

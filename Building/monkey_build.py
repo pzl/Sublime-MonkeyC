@@ -77,7 +77,8 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 		sublime.status_message("Building...")
 		cmd = CommandBuilder(kwargs, self.vars["folder"], self.bin, self.key).build()
-		self.compiler = Compiler(self.vars["folder"], self.window).compile(cmd)
+		Compiler(self.vars["folder"], self.window).compile(cmd)
+		
 		sublime.status_message("Build Finished") # puts text at the bottom
 
 		#self.window.show_input_panel("caption","initial text",noop,noop,noop)

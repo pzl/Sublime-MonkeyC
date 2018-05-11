@@ -70,7 +70,7 @@ class CommandBuilder(object):
 		self.do = subl_args["do"] if "do" in subl_args else "build"
 
 		if "sdk" in subl_args:
-			target_sdks = SDK(os.path.dirname(sdk_path)).targetSDKs()
+			target_sdks = SDK(sdk_path).targetSDKs()
 			match = [x for x in target_sdks if subl_args["sdk"].replace(".x","") == ".".join(x.split(".")[:2])]
 			if len(match):
 				self.sdk = match[0]
@@ -114,7 +114,7 @@ class CommandBuilder(object):
 	def combine(self, program, name="App.prg", device=None, flags=None):
 		cmd = "{program} -w -o {output} -f {jungle} {key} {device} {flags}"
 		cmd = cmd.format(
-			program=os.path.join(self.sdk_path,program),
+			program=os.path.join(self.sdk_path,"bin",program),
 			output=os.path.join(self.curdir,"bin",name),
 			jungle=os.path.join(self.curdir,"monkey.jungle"),
 			key="-y {}".format(self.private_key,) if program in ["monkeyc","barreltest"] else "",

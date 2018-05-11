@@ -70,7 +70,7 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 			"device": "{name}{sim}".format(name=kwargs["device"],sim="_sim" if run_tests else ""),
 			"do": "test" if run_tests else "build"
 		}
-		compile_cmd = CommandBuilder(build_args, self.vars["folder"], self.bin, self.key).build()
+		compile_cmd = CommandBuilder(build_args, self.vars["folder"], self.sdk_path, self.key).build()
 
 
 		sublime.set_timeout_async(lambda: self.compile_and_sim(compile_cmd, kwargs["device"], run_tests))

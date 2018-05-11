@@ -89,7 +89,7 @@ class CommandBuilder(object):
 		
 		compiler_args = {
 			"flags": self.flags,
-			"name": self.output_name(self.args),
+			"name": self.output_name(),
 			"device": self.device
 		}
 		if self.sdk:
@@ -98,8 +98,6 @@ class CommandBuilder(object):
 		if self.build_for == "application":
 			if self.do == "release":
 				compiler_args["flags"].extend(["-r","-e"])
-				if not "name" in self.args:
-					compiler_args["name"] = "App.iq"
 			elif self.do == "test":
 				compiler_args["flags"].append("-t")
 			cmd = self.combine("monkeyc",**compiler_args)
@@ -123,13 +121,18 @@ class CommandBuilder(object):
 		)
 		return cmd
 
-	def output_name(self, subl_args):
-		if "name" in subl_args:
-			return subl_args["name"]
-		elif self.build_for == "application" or "do" in subl_args and subl_args["do"] == "test":
-			return "App.prg"
+	def output_name(self):
+		""" Craft output build file name based on base project folder,
+			and extension based on what we're building."""
+		basename = self.args["name"].rsplit(".",1)[0] if "name" in self.args else os.path.basename(self.curdir)
+
+		if self.build_for == "application":
+			extension = "prg" if not self.do == "release" else "iq"
 		else:
-			return "App.barrel"
+			extension = "barrel" if not self.do == "test" else "prg" # e.g. barrel doing unit tests
+
+		return "{}.{}".format(basename,extension)
+
 
 
 	def detect_app_vs_barrel(self):

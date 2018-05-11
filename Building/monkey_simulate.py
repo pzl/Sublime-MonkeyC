@@ -70,10 +70,11 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 			"device": "{name}{sim}".format(name=kwargs["device"],sim="_sim" if run_tests else ""),
 			"do": "test" if run_tests else "build"
 		}
-		compile_cmd = CommandBuilder(build_args, self.vars["folder"], self.sdk_path, self.key).build()
+		builder = CommandBuilder(build_args, self.vars["folder"], self.sdk_path, self.key)
+		compile_cmd = builder.build()
 
-
-		sublime.set_timeout_async(lambda: self.compile_and_sim(compile_cmd, kwargs["device"], run_tests))
+		output_file = builder.output_name()
+		sublime.set_timeout_async(lambda: self.compile_and_sim(compile_cmd, output_file, kwargs["device"], run_tests))
 
 
 
@@ -85,7 +86,7 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		#self.window.show_quick_panel(["a","b","c"],noop)
 
 
-	def compile_and_sim(self, cmd, device, tests):
+	def compile_and_sim(self, cmd, file, device, tests):
 		sublime.status_message("Compiling for simulator")
 		err,stdout,stderr = Compiler(self.vars["folder"],sdk_path=self.sdk_path).compile(cmd)
 
@@ -96,10 +97,10 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 			return
 
 		sublime.status_message("Simulating...")
-		cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"bin","App.prg"), device, test=tests)
+		sim_cmd = self.simulator.simulate(os.path.join(self.vars["folder"],"bin",file), device, test=tests)
 		
 		self.window.run_command("exec",{
-			"shell_cmd":cmd,
+			"shell_cmd":sim_cmd,
 			"syntax":"MonkeyDoTests.sublime-syntax"
 		})
 

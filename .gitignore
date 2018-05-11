@@ -2,3 +2,5 @@ venv/
 samples/
 TODO.md
 manifest.xml
+*.der
+*.jungle

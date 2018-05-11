@@ -15,9 +15,13 @@ class MonkeyGenerateCommand(sublime_plugin.WindowCommand):
 
 	def key(self, *args, **kwargs):
 		self.window.run_command("exec",{
-			"shell_cmd": "openssl genrsa 4096 | openssl pkcs8 -topk8 -inform PEM -outform DER -out ~/tmp/ciq_new_key -nocrypt"
+			"shell_cmd": "openssl genrsa 4096 | openssl pkcs8 -topk8 -inform PEM -outform DER -out ciq_key.der -nocrypt",
+			"working_dir": self.vars["folder"]
 		})
-		self.settings.set("key","~/tmp/ciq_new_key")
+		settings = sublime.load_settings("MonkeyCBuild.sublime-settings")
+		settings.set("sdk",settings.get("sdk","")) # make sure the key continues to exist
+		settings.set("key",os.path.join(self.vars["folder"],"ciq_key.der"))
+		sublime.save_settings("MonkeyCBuild.sublime-settings")
 		sublime.status_message("Key generated")
 
 	def uuid(self, *args, **kwargs):

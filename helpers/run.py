@@ -118,7 +118,7 @@ class CommandBuilder(object):
 			program=os.path.join(self.sdk_path,"bin",program) if self.sdk_path else program,
 			output=os.path.join(self.curdir,"bin",name),
 			jungle=os.path.join(self.curdir,"monkey.jungle"),
-			key="-y {}".format(self.private_key,) if program in ["monkeyc","barreltest"] else "",
+			key="-y {}".format(self.private_key,) if program in ("monkeyc","barreltest") and self.private_key else "",
 			device="-d {}".format(device,) if device else "",
 			flags=" ".join(flags) if flags else ""
 		)

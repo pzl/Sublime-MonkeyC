@@ -80,13 +80,12 @@ class CommandBuilder(object):
 		else:
 			self.sdk = False
 
-
-
-	def build(self):
 		# apps compile with monkeyc, barrels(modules) with barrelbuild
 		# so we need to know which we are dealing with
 		self.build_for = self.detect_app_vs_barrel()
-		
+
+
+	def build(self, cb):	
 		compiler_args = {
 			"flags": self.flags,
 			"name": self.output_name(),
@@ -107,7 +106,11 @@ class CommandBuilder(object):
 			else:
 				cmd = self.combine("barrelbuild", **compiler_args)
 
-		return cmd
+		if self.do == "custom":
+			sublime.active_window().show_input_panel("command",cmd,cb,None,None)
+			return
+
+		return cb(cmd)
 
 	def combine(self, program, name="App.prg", device=None, flags=None):
 		cmd = "{program} -w -o {output} -f {jungle} {key} {device} {flags}"

@@ -64,19 +64,22 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 
 		self.get_settings()
 		self.simulator = Simulator(self.bin)
-		run_tests = "tests" in kwargs and kwargs["tests"] == True
+		self.run_tests = "tests" in kwargs and kwargs["tests"] == True
+		self.device = kwargs["device"]
 
 		build_args = {
-			"device": "{name}_sim".format(name=kwargs["device"],),
-			"do": "test" if run_tests else "build"
+			"device": "{name}_sim".format(name=self.device,),
+			"do": "test" if self.run_tests else "build"
 		}
 		builder = CommandBuilder(build_args, self.vars["folder"], self.sdk_path, self.key)
-		compile_cmd = builder.build()
-
-		output_file = builder.output_name()
-		sublime.set_timeout_async(lambda: self.compile_and_sim(compile_cmd, output_file, kwargs["device"], run_tests))
+		self.output_file = builder.output_name()
+		builder.build(self.run_cmd)
 
 
+
+	def run_cmd(self, cmd):
+		filename = self.output_file
+		sublime.set_timeout_async(lambda: self.compile_and_sim(cmd, filename, self.device, self.run_tests))		
 
 
 		#self.window.show_input_panel("caption","initial text",noop,noop,noop)

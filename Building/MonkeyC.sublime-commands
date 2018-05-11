@@ -34,17 +34,18 @@
 	{
 		"caption": "MonkeyC: Generate Developer Key",
 		"command": "monkey_generate",
-		"args": {
-			"gen": "key"
-		}
+		"args": { "gen": "key" }
 	},
 	{
 		"caption": "MonkeyC: Generate App ID",
 		"command": "monkey_generate",
-		"args": {
-			"gen": "uuid"
-		}
+		"args": { "gen": "uuid" }
 	},
+	{
+		"caption": "MonkeyC: Run Custom...",
+		"command": "monkey_build",
+		"args": { "do": "custom" }
+	}
 	/*
 	{
 		"caption": "MonkeyC: Create App",

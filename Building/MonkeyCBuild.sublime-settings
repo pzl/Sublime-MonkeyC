@@ -1,4 +1,14 @@
 {
-	"sdk":"~/dev/connectiq/connectiq-sdk-lin-2.4.5",
-	"key": "~/tmp/ciq_developer_key"
+	// MonkeyC Preferences - Default
+	// ================================================================
+
+	// Provide the full path to your downloaded SDK folder here.
+	// This should be to the SDK root, do not include /bin at the end
+	"sdk":"",
+
+
+	// Provide the full path to your Connect IQ Developer Private Key.
+	// Or you can generate a new one under Tools > MonkeyC
+	// which will update this setting automatically
+	"key": ""
 }

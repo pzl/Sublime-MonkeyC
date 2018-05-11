@@ -48,7 +48,7 @@
 								"caption": "Settings",
 								"args": {
 									"base_file": "${packages}/MonkeyC/Building/MonkeyCBuild.sublime-settings",
-									"default": "{\n\t\"sdk\":\"\",\n\t\"key\":\"\"\n}"
+									"default": "{\n\t// MonkeyC User Prefereces\n\t\"sdk\":\"\",\n\t\"key\":\"\"\n}"
 								},
 								"command": "edit_settings"
 							},

@@ -11,8 +11,8 @@ from MonkeyC.helpers.parsers import Manifest, SDK
 class Simulator(object):
 	"""Proxy for running CIQ apps in the simulator"""
 
-	port=1234 # known connectiq simulator port
-	#@todo: can be between 1234 - 1238
+	port_low=1234 # known connectiq simulator ports
+	port_high=1237
 
 	def __init__(self, sdk_path):
 		super(Simulator, self).__init__()
@@ -20,14 +20,16 @@ class Simulator(object):
 
 	@classmethod
 	def is_running(cls):
-		""" Checks port 1234 to see if the simulator is running """
-		with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-			try:
-				sock.bind(("0.0.0.0",cls.port))
-			except OSError:
-				return True
-			else:
-				return False
+		""" Checks known ports to see if the simulator is running """
+		for p in range(cls.port_low,cls.port_high+1):
+			with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+				try:
+					sock.bind(("0.0.0.0",p))
+				except OSError:
+					return True
+				else:
+					continue
+		return False
 
 	def start(self):
 		subprocess.Popen(["./connectiq"],shell=True,cwd=self.sdk_path)

@@ -115,7 +115,7 @@ class CommandBuilder(object):
 	def combine(self, program, name="App.prg", device=None, flags=None):
 		cmd = "{program} -w -o {output} -f {jungle} {key} {device} {flags}"
 		cmd = cmd.format(
-			program=os.path.join(self.sdk_path,"bin",program),
+			program=os.path.join(self.sdk_path,"bin",program) if self.sdk_path else program,
 			output=os.path.join(self.curdir,"bin",name),
 			jungle=os.path.join(self.curdir,"monkey.jungle"),
 			key="-y {}".format(self.private_key,) if program in ["monkeyc","barreltest"] else "",

@@ -40,7 +40,7 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 			return False
 		# being checked otherwise, e.g. through command palette
 		self.get_settings()
-		return has_manifest_and_jungle(self.vars["folder"])
+		return "folder" in self.vars and has_manifest_and_jungle(self.vars["folder"])
 
 
 

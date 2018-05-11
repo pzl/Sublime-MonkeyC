@@ -28,7 +28,7 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 		# being checked otherwise, e.g. through command palette
 		self.get_settings()
 
-		has_files = has_manifest_and_jungle(self.vars["folder"])
+		has_files = "folder" in self.vars and has_manifest_and_jungle(self.vars["folder"])
 		if not has_files:
 			return False
 

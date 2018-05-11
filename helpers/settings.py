@@ -22,6 +22,8 @@ def get_settings(window=False):
 	return settings,window_vars
 
 
+#@todo: read manifest.xml path/name from monkey.jungle. Could be named something else.
+#@todo: monkey.jungle is also an assumptive file name
 def has_manifest_and_jungle(project_dir):
 	"""Verify that both files exist at the project root"""
 	curdir = expanduser(project_dir)

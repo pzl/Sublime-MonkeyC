@@ -10,6 +10,7 @@ class Manifest(object):
 
 	ns = { "iq": "http://www.garmin.com/xml/connectiq" }
 
+	#@todo: read manifest.xml file name from monkey.jungle, whatever THAT filename might be too
 	def __init__(self, folder):
 		super(Manifest, self).__init__()
 		ET.register_namespace("iq",self.ns["iq"])

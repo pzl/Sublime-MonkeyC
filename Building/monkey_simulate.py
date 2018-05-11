@@ -48,7 +48,7 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 
 		if len(self.device_select.list_items()) == 1:
 			# skip selection when there's only one supported device
-			self.device = self.device_select.list_items()[1]
+			self.device = self.device_select.list_items()[0]
 			return None
 
 		return self.device_select

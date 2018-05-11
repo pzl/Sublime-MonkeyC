@@ -61,7 +61,7 @@ class MonkeyBuildCommand(sublime_plugin.WindowCommand):
 
 			# Only one device, so don't make a picker for it, just use it
 			if len(self.device_select.list_items()) == 1:
-				self.device = self.device_select.list_items()[1]
+				self.device = self.device_select.list_items()[0]
 				if ask_for_sdk:
 					return SDKInput(self.sdk_path, self.device)
 

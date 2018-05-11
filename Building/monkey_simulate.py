@@ -87,15 +87,12 @@ class MonkeySimulateCommand(sublime_plugin.WindowCommand):
 
 	def compile_and_sim(self, cmd, device, tests):
 		sublime.status_message("Compiling for simulator")
-		proc = Compiler(self.vars["folder"]).compile(cmd)
-		ret = proc.wait()
-		if ret != 0:
-			stdout,stderr = proc.communicate()
-			if stdout:
-				print(stdout.decode("utf8"))
-			if stderr:
-				print(stderr.decode("utf8"))
-			sublime.message_dialog("Compilation failed")
+		err,stdout,stderr = Compiler(self.vars["folder"],sdk_path=self.sdk_path).compile(cmd)
+
+		if stdout: print(stdout)
+		if stderr: print(stderr)
+		if err:
+			sublime.message_dialog("Compilation failed: {}. Check sublime console".format(err,))
 			return
 
 		sublime.status_message("Simulating...")

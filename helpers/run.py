@@ -141,10 +141,11 @@ class CommandBuilder(object):
 class Compiler(object):
 	"""Generic wrapper class for compiling a monkeyc project"""
 
-	def __init__(self, cwd, window=False):
+	def __init__(self, cwd, window=False, sdk_path=None):
 		super(Compiler, self).__init__()
 		self.cwd = cwd
 		self.window = window
+		self.sdk_path=sdk_path
 	
 	# basically just run `cmd`.
 	# if window was provided to constructor
@@ -158,5 +159,17 @@ class Compiler(object):
 				"syntax": "MonkeyCBuild.sublime-syntax"
 			})
 		else:
-			return subprocess.Popen(cmd,shell=True,cwd=self.cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
-		""" @TODO: exit code message parsing with SDK/bin/compilerInfo.xml -> exitCodes """
+			p = subprocess.Popen(cmd,shell=True,cwd=self.cwd,stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+			retcode = p.wait()
+			stdout,stderr = p.communicate()
+			if stdout:
+				stdout = stdout.decode("utf8")
+			if stderr:
+				stderr = stderr.decode("utf8")
+
+			if retcode == 0:
+				err = None
+			else:
+				err = SDK(self.sdk_path).exitCodeMessage(retcode)
+
+			return err,stdout,stderr

@@ -5,7 +5,7 @@ import subprocess
 import time
 import socket # for checking simulator tcp port
 
-from MonkeyC.helpers.parsers import Manifest
+from MonkeyC.helpers.parsers import Manifest, SDK
 
 
 class Simulator(object):
@@ -65,8 +65,18 @@ class CommandBuilder(object):
 
 		self.flags = subl_args["flags"] if "flags" in subl_args else []
 		self.device = subl_args["device"] if "device" in subl_args and subl_args["device"] != "prompt" else False
-		self.sdk = subl_args["sdk"].replace(".x",".0") if "sdk" in subl_args else False #todo: sdk string may be 1.4.x, need to match SDKTargets where x = .*
 		self.do = subl_args["do"] if "do" in subl_args else "build"
+
+		if "sdk" in subl_args:
+			target_sdks = SDK(os.path.dirname(sdk_path)).targetSDKs()
+			match = [x for x in target_sdks if subl_args["sdk"].replace(".x","") == ".".join(x.split(".")[:2])]
+			if len(match):
+				self.sdk = match[0]
+			else:
+				self.sdk = False
+				sublime.message_dialog("unsupported SDK target: {}".format(subl_args["sdk"],))
+		else:
+			self.sdk = False
 
 
 

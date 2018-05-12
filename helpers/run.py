@@ -36,7 +36,7 @@ class Simulator(object):
 		if os.name == "nt": # hide console window on Windows
 			startupinfo = subprocess.STARTUPINFO()
 			startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-		subprocess.Popen(["./connectiq"],shell=True,cwd=self.sdk_path,startupinfo=startupinfo)
+		subprocess.Popen(os.path.join(self.sdk_path,"connectiq"),shell=True,startupinfo=startupinfo)
 
 	def simulate(self, app, device, test=False):
 		if not self.is_running():

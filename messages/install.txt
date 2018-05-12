@@ -1,4 +1,4 @@
-🐵 Thanks for installing the monkeyc syntax package!! 🐵
+🐵 Thanks for installing the MonkeyC sublime package!! 🐵
 
 bugs, improvements and feature requests are always welcome. 🐒
 You can file any issues here: https://github.com/pzl/Sublime-MonkeyC/issues

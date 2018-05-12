@@ -68,13 +68,13 @@ If you wanted to customize any of these actions, or make them key-bindings, they
 
 *compiles* your project. Accepts the following arguments:
 
-- **do** _string_ (optional): `"release"` or `"test"`. 
+- **do** _string_ (optional): `"release"`,`"test"` or `"custom"`. 
     - `release` applies the `-r -e` flags to the compiler, and makes the default file extension `.iq`
     - `test` applies the `-t` flag for applications. For barrels, it runs the `barreltest` command to run unit tests
-- **name** _string_ (optional): the file name of the generated app. Defaults to `App.prg` (or `App.iq` for release)
+    - `custom` prompts the user with the command to use right before running, allowing edits
+- **name** _string_ (optional): the file name of the generated app. Defaults to the project folder name
 - **device** _string_ (optional): adds `-d <device>` as a compiler option. Use the string `"prompt"` to have the plugin ask for device selection each time (based on the supported devices in your `manifest.xml` file)
 - **sdk** _string_ (optional): adds `-s <sdk>` as a compiler option to target an SDK. Use the string `"prompt"` to have the plugin determine the supported SDK targets for the given device (a device is required).
-- **tests** _boolean_ (optional): if true, runs the simulator
 - **flags** _list_ (optional): Any additional flags or command-line arguments you wish to specify. E.g. `run_command("monkey_build",{"flags":["-r"]})` to run a simple compile with the release flag (disables asserts, debug things).
 
 #### monkey_simulate
@@ -94,6 +94,10 @@ Small helper creators. Like developer keys, or app IDs. Accepts the following ar
 
 Versions
 --------
+
+### 3.1.0
+
+Adds SDK integration. Compiles, simulates, and runs unit tests. See the [Release Notes](messages/3.1.0.txt) for full details.
 
 ### 3.0.0
 
